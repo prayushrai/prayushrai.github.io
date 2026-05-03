@@ -1,0 +1,29 @@
+
+=== Scraping NIT (code=NIT) ===
+[NIT] parsed 6255 rows
+Wrote /sessions/amazing-cool-knuth/mnt/outputs/josaa_2025_r6_nit.csv (6255 rows)
+
+=== Scraping IIIT (code=3IT) ===
+[IIIT] parsed 1189 rows
+Wrote /sessions/amazing-cool-knuth/mnt/outputs/josaa_2025_r6_iiit.csv (1189 rows)
+
+=== Scraping GFTI (code=CFI) ===
+[GFTI] parsed 1385 rows
+Wrote /sessions/amazing-cool-knuth/mnt/outputs/josaa_2025_r6_gfti.csv (1385 rows)
+
+Wrote /sessions/amazing-cool-knuth/mnt/outputs/josaa_2025_r6_all.csv (8829 rows)
+Wrote /sessions/amazing-cool-knuth/mnt/outputs/josaa_2025_r6_all.xlsx
+
+Row counts:
+  NIT: 6255
+  IIIT: 1189
+  GFTI: 1385
+  TOTAL: 8829
+
+First 5 rows of combined CSV:
+  Institute Type                                                     Institute                             Academic Program Name Quota Seat Type                                 Gender Opening Rank Closing Rank  Opening Rank (int)  Closing Rank (int)
+0            NIT  Dr. B R Ambedkar National Institute of Technology, Jalandhar  Bio Technology (4 Years, Bachelor of Technology)    HS      OPEN                         Gender-Neutral        58341        79511               58341               79511
+1            NIT  Dr. B R Ambedkar National Institute of Technology, Jalandhar  Bio Technology (4 Years, Bachelor of Technology)    HS      OPEN  Female-only (including Supernumerary)        53648        65917               53648               65917
+2            NIT  Dr. B R Ambedkar National Institute of Technology, Jalandhar  Bio Technology (4 Years, Bachelor of Technology)    HS       EWS                         Gender-Neutral        12569        12569               12569               12569
+3            NIT  Dr. B R Ambedkar National Institute of Technology, Jalandhar  Bio Technology (4 Years, Bachelor of Technology)    HS       EWS  Female-only (including Supernumerary)        16293        16293               16293               16293
+4            NIT  Dr. B R Ambedkar National Institute of Technology, Jalandhar  Bio Technology (4 Years, Bachelor of Technology)    HS   OBC-NCL                         Gender-Neutral        33291        60996               33291               60996
