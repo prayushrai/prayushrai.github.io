@@ -4,3 +4,9 @@ __pycache__/
 .DS_Store
 audit.jsonl
 shim.sh
+shim-lib/
+shim-perm/
+
+# UPTAC source artifacts that are regenerable / too large
+UPTAC/uploads/
+UPTAC/uptac_2025_all.csv
