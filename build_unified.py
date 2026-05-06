@@ -144,15 +144,15 @@ jac = load_jac()
 merged = pd.concat([josaa, csab, uptac, ggsipu, jac], ignore_index=True)
 print(f"JoSAA: {len(josaa):,}  CSAB: {len(csab):,}  UPTAC: {len(uptac):,}  GGSIPU: {len(ggsipu):,}  JAC: {len(jac):,}  TOTAL pre-filter: {len(merged):,}")
 
-# Drop architecture courses entirely. This catches:
-#   - JoSAA / CSAB:  "Architecture  (5 Years, Bachelor of Architecture)"
-#   - GGSIPU:        "B.Tech. (Architecture & interior Decoration)"
-# (B.Plan / B.Planning rows are kept — they are not architecture.)
-arch_re = re.compile(r"architecture", re.I)
+# Drop architecture and planning courses entirely (Paper-2 / non-B.Tech).
+#   - JoSAA / CSAB: "Architecture  (5 Years, Bachelor of Architecture)"
+#   - JoSAA / CSAB: "Planning (4 Years, Bachelor of Planning)"
+#   - GGSIPU:       "B.Tech. (Architecture & interior Decoration)"
+arch_re = re.compile(r"architecture|planning", re.I)
 arch_mask = merged["prog"].astype(str).str.contains(arch_re, na=False)
 dropped_arch = int(arch_mask.sum())
 merged = merged[~arch_mask].reset_index(drop=True)
-print(f"Dropped {dropped_arch} architecture rows · TOTAL: {len(merged):,}")
+print(f"Dropped {dropped_arch} architecture/planning rows · TOTAL: {len(merged):,}")
 
 # UPTAC = UP; GGSIPU & JAC = Delhi for HS quota gating
 INST_STATE = dict(NIT_GFTI_STATE)
