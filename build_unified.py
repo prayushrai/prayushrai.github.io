@@ -1,4 +1,5 @@
-"""Build the unified PRAYUSH predictor — JoSAA R6 + CSAB Special R3 + UPTAC final + GGSIPU R3.
+"""Build the unified PRAYUSH predictor — 5 counsellings:
+JoSAA R6 + CSAB Special R3 + UPTAC final + GGSIPU R3 + JAC Delhi R5.
 
 Self-contained HTML output (index.html). No external requests at runtime.
 """
@@ -11,6 +12,7 @@ JOSAA_CSV = ROOT / "josaa_2025_r6_all.csv"
 CSAB_CSV = ROOT / "csab_2025_final_all.csv"
 UPTAC_CSV = ROOT / "UPTAC" / "uptac_2025_final.csv"
 GGSIPU_CSV = ROOT / "ggsipu_2025_final.csv"
+JAC_CSV = ROOT / "jac_2025_final.csv"
 OUT = ROOT / "index.html"
 
 NIT_GFTI_STATE = {
@@ -115,20 +117,39 @@ def load_ggsipu() -> pd.DataFrame:
     return df[["round", "type", "inst", "prog", "quota", "seat", "gender", "open", "close", "note"]]
 
 
+def load_jac() -> pd.DataFrame:
+    df = pd.read_csv(JAC_CSV)
+    df = df.rename(columns={
+        "Institute": "inst", "Program": "prog", "Quota": "quota",
+        "Seat": "seat", "Gender": "gender", "Note": "note",
+        "Opening Rank (int)": "open", "Closing Rank (int)": "close",
+    })
+    df = df.dropna(subset=["open", "close"])
+    df["open"] = df["open"].astype(int)
+    df["close"] = df["close"].astype(int)
+    df["round"] = "JAC"
+    df["type"] = "JAC"
+    df["note"] = df["note"].fillna("")
+    return df[["round", "type", "inst", "prog", "quota", "seat", "gender", "open", "close", "note"]]
+
+
 josaa = load_jc(JOSAA_CSV, "JoSAA")
 csab = load_jc(CSAB_CSV, "CSAB")
 csab["quota"] = csab["quota"].map(lambda q: CSAB_QUOTA_MAP.get(q, q))
 uptac = load_uptac()
 ggsipu = load_ggsipu()
+jac = load_jac()
 
-merged = pd.concat([josaa, csab, uptac, ggsipu], ignore_index=True)
-print(f"JoSAA: {len(josaa):,}  CSAB: {len(csab):,}  UPTAC: {len(uptac):,}  GGSIPU: {len(ggsipu):,}  TOTAL: {len(merged):,}")
+merged = pd.concat([josaa, csab, uptac, ggsipu, jac], ignore_index=True)
+print(f"JoSAA: {len(josaa):,}  CSAB: {len(csab):,}  UPTAC: {len(uptac):,}  GGSIPU: {len(ggsipu):,}  JAC: {len(jac):,}  TOTAL: {len(merged):,}")
 
-# UPTAC = Uttar Pradesh, GGSIPU = Delhi for HS quota gating
+# UPTAC = UP; GGSIPU & JAC = Delhi for HS quota gating
 INST_STATE = dict(NIT_GFTI_STATE)
 for inst in uptac["inst"].unique():
     INST_STATE[inst] = "Uttar Pradesh"
 for inst in ggsipu["inst"].unique():
+    INST_STATE[inst] = "Delhi"
+for inst in jac["inst"].unique():
     INST_STATE[inst] = "Delhi"
 
 STATES = sorted(set(INST_STATE.values()) | {
@@ -145,7 +166,7 @@ HTML = r"""<!DOCTYPE html>
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>PRAYUSH · Unified JEE Counselling Predictor — JoSAA + CSAB + UPTAC + GGSIPU</title>
+<title>PRAYUSH · Unified JEE Counselling Predictor — JoSAA + CSAB + UPTAC + GGSIPU + JAC Delhi</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,700;9..144,900&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
@@ -171,6 +192,7 @@ HTML = r"""<!DOCTYPE html>
     --csab: #ff4d8b;
     --uptac: #ffb547;
     --ggsipu: #a3e635;
+    --jac: #818cf8;
   }
   * { box-sizing: border-box; }
   html, body { height: 100%; }
@@ -194,6 +216,7 @@ HTML = r"""<!DOCTYPE html>
       radial-gradient(at 18% 88%, #a855f733 0%, transparent 50%),
       radial-gradient(at 78% 78%, #2dd4bf22 0%, transparent 45%),
       radial-gradient(at 38% 50%, #a3e63522 0%, transparent 50%),
+      radial-gradient(at 65% 35%, #818cf822 0%, transparent 50%),
       radial-gradient(at 50% 50%, #6366f122 0%, transparent 60%),
       linear-gradient(180deg, #0a0625 0%, #08061a 60%, #050414 100%);
   }
@@ -207,6 +230,7 @@ HTML = r"""<!DOCTYPE html>
   .blob.b3 { bottom: -10vw; left: 25vw; width: 55vw; height: 55vw; background: radial-gradient(circle, var(--violet) 0%, transparent 70%); animation: drift3 32s ease-in-out infinite; }
   .blob.b4 { bottom: 5vw; right: 15vw; width: 30vw; height: 30vw; background: radial-gradient(circle, var(--jade) 0%, transparent 70%); animation: drift1 26s ease-in-out infinite reverse; opacity: 0.4; }
   .blob.b5 { top: 35vw; left: 38vw; width: 28vw; height: 28vw; background: radial-gradient(circle, var(--ggsipu) 0%, transparent 70%); animation: drift2 24s ease-in-out infinite reverse; opacity: 0.3; }
+  .blob.b6 { top: 18vw; right: 28vw; width: 26vw; height: 26vw; background: radial-gradient(circle, var(--jac) 0%, transparent 70%); animation: drift3 30s ease-in-out infinite; opacity: 0.32; }
   @keyframes drift1 { 0%,100% { transform: translate(0,0) scale(1); } 50% { transform: translate(6vw,4vw) scale(1.18); } }
   @keyframes drift2 { 0%,100% { transform: translate(0,0) scale(1); } 50% { transform: translate(-5vw,8vw) scale(1.12); } }
   @keyframes drift3 { 0%,100% { transform: translate(0,0) scale(1); } 50% { transform: translate(4vw,-6vw) scale(0.9); } }
@@ -249,6 +273,7 @@ HTML = r"""<!DOCTYPE html>
   .top-pill.c { color: var(--csab); } .top-pill.c .dot { background: var(--csab); }
   .top-pill.u { color: var(--uptac); } .top-pill.u .dot { background: var(--uptac); }
   .top-pill.g { color: var(--ggsipu); } .top-pill.g .dot { background: var(--ggsipu); }
+  .top-pill.a { color: var(--jac); } .top-pill.a .dot { background: var(--jac); }
 
   /* === Hero === */
   .hero { margin-bottom: 36px; max-width: 940px; }
@@ -283,6 +308,7 @@ HTML = r"""<!DOCTYPE html>
   .stat-mini .v.c { color: var(--csab); }
   .stat-mini .v.u { color: var(--uptac); }
   .stat-mini .v.g { color: var(--ggsipu); }
+  .stat-mini .v.a { color: var(--jac); }
   .stat-mini .v.t { background: linear-gradient(135deg, var(--rose-2), var(--gold-2)); -webkit-background-clip: text; background-clip: text; color: transparent; }
   .stat-mini .l { font-size: 10px; text-transform: uppercase; letter-spacing: 0.18em; color: var(--ink-faint); }
 
@@ -384,12 +410,14 @@ HTML = r"""<!DOCTYPE html>
   .round-card[data-round="CSAB"]  { --card-color: var(--csab);  --card-glow: var(--csab);  --card-glow-shadow: rgba(255,77,139,0.3); }
   .round-card[data-round="UPTAC"] { --card-color: var(--uptac); --card-glow: var(--uptac); --card-glow-shadow: rgba(255,181,71,0.3); }
   .round-card[data-round="GGSIPU"] { --card-color: var(--ggsipu); --card-glow: var(--ggsipu); --card-glow-shadow: rgba(163,230,53,0.3); }
+  .round-card[data-round="JAC"] { --card-color: var(--jac); --card-glow: var(--jac); --card-glow-shadow: rgba(129,140,248,0.32); }
   .round-card .head { display: flex; align-items: center; gap: 10px; margin-bottom: 6px; }
   .round-card .name { font-weight: 700; font-size: 14px; letter-spacing: -0.01em; }
   .round-card.on[data-round="JoSAA"] .name { color: var(--josaa); }
   .round-card.on[data-round="CSAB"] .name { color: var(--csab); }
   .round-card.on[data-round="UPTAC"] .name { color: var(--uptac); }
   .round-card.on[data-round="GGSIPU"] .name { color: var(--ggsipu); }
+  .round-card.on[data-round="JAC"] .name { color: var(--jac); }
   .round-card .name .check { font-size: 10px; opacity: 0; margin-left: auto; transition: opacity 0.15s; }
   .round-card.on .check { opacity: 1; }
   .round-card .desc { font-size: 11px; color: var(--ink-faint); }
@@ -420,6 +448,7 @@ HTML = r"""<!DOCTYPE html>
   .stat-sub .c { color: var(--csab); font-weight: 600; }
   .stat-sub .u { color: var(--uptac); font-weight: 600; }
   .stat-sub .g { color: var(--ggsipu); font-weight: 600; }
+  .stat-sub .a { color: var(--jac); font-weight: 600; }
 
   /* === Filter bar === */
   .filter-bar { display: flex; gap: 16px; flex-wrap: wrap; align-items: flex-end; }
@@ -442,6 +471,7 @@ HTML = r"""<!DOCTYPE html>
   .chip[data-src="CSAB"].on  { background: linear-gradient(135deg, rgba(255,77,139,0.2), rgba(255,77,139,0.08)); border-color: var(--csab);  color: var(--csab);  box-shadow: 0 0 16px rgba(255,77,139,0.3); }
   .chip[data-src="UPTAC"].on { background: linear-gradient(135deg, rgba(255,181,71,0.2), rgba(255,181,71,0.08)); border-color: var(--uptac); color: var(--uptac); box-shadow: 0 0 16px rgba(255,181,71,0.3); }
   .chip[data-src="GGSIPU"].on { background: linear-gradient(135deg, rgba(163,230,53,0.2), rgba(163,230,53,0.08)); border-color: var(--ggsipu); color: var(--ggsipu); box-shadow: 0 0 16px rgba(163,230,53,0.3); }
+  .chip[data-src="JAC"].on { background: linear-gradient(135deg, rgba(129,140,248,0.22), rgba(129,140,248,0.08)); border-color: var(--jac); color: var(--jac); box-shadow: 0 0 16px rgba(129,140,248,0.3); }
 
   /* === Table === */
   .table-wrap {
@@ -477,10 +507,12 @@ HTML = r"""<!DOCTYPE html>
   .pill-GFTI  { background: rgba(255,181,71,0.18); color: var(--gold); }
   .pill-UPTAC { background: linear-gradient(135deg, rgba(255,181,71,0.25), rgba(255,77,139,0.15)); color: var(--gold); }
   .pill-GGSIPU { background: linear-gradient(135deg, rgba(163,230,53,0.25), rgba(34,211,238,0.10)); color: var(--ggsipu); }
+  .pill-JAC { background: linear-gradient(135deg, rgba(129,140,248,0.28), rgba(168,85,247,0.12)); color: var(--jac); }
   .pill-JoSAA { background: rgba(34,211,238,0.16); color: var(--josaa); border: 1px solid rgba(34,211,238,0.4); }
   .pill-CSAB  { background: rgba(255,77,139,0.16); color: var(--csab);  border: 1px solid rgba(255,77,139,0.4); }
   .pill-UPTAC-r { background: rgba(255,181,71,0.16); color: var(--uptac); border: 1px solid rgba(255,181,71,0.4); }
   .pill-GGSIPU-r { background: rgba(163,230,53,0.16); color: var(--ggsipu); border: 1px solid rgba(163,230,53,0.4); }
+  .pill-JAC-r { background: rgba(129,140,248,0.18); color: var(--jac); border: 1px solid rgba(129,140,248,0.4); }
   .pill-quota { background: rgba(255,255,255,0.07); color: var(--ink-dim); }
   .pill-note { background: rgba(168,85,247,0.18); color: var(--plum); margin-left: 4px; }
 
@@ -543,6 +575,7 @@ HTML = r"""<!DOCTYPE html>
 <div class="blob b3"></div>
 <div class="blob b4"></div>
 <div class="blob b5"></div>
+<div class="blob b6"></div>
 <div class="grain"></div>
 
 <div class="shell">
@@ -571,18 +604,20 @@ HTML = r"""<!DOCTYPE html>
       <div class="top-pill c"><span class="dot"></span>CSAB · Special</div>
       <div class="top-pill u"><span class="dot"></span>UPTAC · Final</div>
       <div class="top-pill g"><span class="dot"></span>GGSIPU · R3</div>
+      <div class="top-pill a"><span class="dot"></span>JAC Delhi · R5</div>
     </div>
   </header>
 
   <section class="hero">
     <h1>Every seat,<br><span class="ital">one search.</span></h1>
-    <p>From <b>NIT Trichy</b> to <b>IPU Dwarka</b> — PRAYUSH unifies <b>JoSAA Round 6</b>, <b>CSAB Special Round 3</b>, <b>UPTAC final round</b>, and <b>GGSIPU Round 3</b> cutoffs into a single ranked predictor. Type your JEE Main rank. Walk away with a defensible choice list.</p>
+    <p>From <b>NIT Trichy</b> to <b>DTU Bawana</b> — PRAYUSH unifies <b>JoSAA R6</b>, <b>CSAB Special R3</b>, <b>UPTAC final</b>, <b>GGSIPU R3</b>, and <b>JAC Delhi R5</b> (DTU · NSUT · IGDTUW) cutoffs into a single ranked predictor. Type your JEE Main rank. Walk away with a defensible choice list.</p>
     <div class="stat-mini-row">
       <div class="stat-mini"><div class="v t" id="totalCount">0</div><div class="l">Total Cutoffs</div></div>
       <div class="stat-mini"><div class="v j" id="josaaCountTop">0</div><div class="l">JoSAA</div></div>
       <div class="stat-mini"><div class="v c" id="csabCountTop">0</div><div class="l">CSAB</div></div>
       <div class="stat-mini"><div class="v u" id="uptacCountTop">0</div><div class="l">UPTAC</div></div>
       <div class="stat-mini"><div class="v g" id="ggsipuCountTop">0</div><div class="l">GGSIPU</div></div>
+      <div class="stat-mini"><div class="v a" id="jacCountTop">0</div><div class="l">JAC Delhi</div></div>
     </div>
   </section>
 
@@ -637,6 +672,11 @@ HTML = r"""<!DOCTYPE html>
           <div class="desc">Round 3 (final) · IPU-affiliated B.Tech colleges in Delhi.</div>
           <div class="count" id="cGGSIPU">0 cutoffs</div>
         </div>
+        <div class="round-card on" data-round="JAC">
+          <div class="head"><div class="name">JAC Delhi <span class="check">✓</span></div></div>
+          <div class="desc">Round 5 · DTU · NSUT · IGDTUW · joint Delhi B.Tech counselling.</div>
+          <div class="count" id="cJAC">0 cutoffs</div>
+        </div>
       </div>
     </div>
 
@@ -660,6 +700,7 @@ HTML = r"""<!DOCTYPE html>
             <div class="chip on" data-type="GFTI">GFTI</div>
             <div class="chip on" data-type="UPTAC">UPTAC</div>
             <div class="chip on" data-type="GGSIPU">GGSIPU</div>
+            <div class="chip on" data-type="JAC">JAC</div>
           </div>
         </div>
         <div class="filter-group">
@@ -669,6 +710,7 @@ HTML = r"""<!DOCTYPE html>
             <div class="chip on" data-src="CSAB">CSAB</div>
             <div class="chip on" data-src="UPTAC">UPTAC</div>
             <div class="chip on" data-src="GGSIPU">GGSIPU</div>
+            <div class="chip on" data-src="JAC">JAC</div>
           </div>
         </div>
         <div class="filter-group">
@@ -718,7 +760,7 @@ HTML = r"""<!DOCTYPE html>
         </table>
       </div>
       <div class="footer-note">
-        <b>How the bandwidth search works:</b> starts at your chosen ± window around the rank, then expands by 10% steps until it finds at least the minimum number of options. <b>Quotas</b> (HS / OS / AI / GO / JK / LA) are auto-gated against your home state. <b>UPTAC</b> sub-quotas (AF / TF / FF) and <b>GGSIPU</b> sub-quotas (Defence / Jain / Kashmiri / Sikh) appear as small purple tags. <span class="deva">शुभकामनाएँ</span> · Sources: <a href="https://josaa.admissions.nic.in" target="_blank">JoSAA</a> · <a href="https://admissions.nic.in/csabspl/" target="_blank">CSAB</a> · <a href="https://admissions.nic.in/UPTAC/" target="_blank">UPTAC</a> · <a href="https://admissions.nic.in/UPTAC/" target="_blank">GGSIPU</a>.
+        <b>How the bandwidth search works:</b> starts at your chosen ± window around the rank, then expands by 10% steps until it finds at least the minimum number of options. <b>Quotas</b> (HS / OS / AI / GO / JK / LA) are auto-gated against your home state. Sub-quotas — <b>UPTAC</b> (AF / TF / FF), <b>GGSIPU</b> (Defence / Jain / Kashmiri / Sikh), <b>JAC</b> (Defence / Single Girl / Kashmiri Migrant) — appear as small purple tags. <span class="deva">शुभकामनाएँ</span> · Sources: <a href="https://josaa.admissions.nic.in" target="_blank">JoSAA</a> · <a href="https://admissions.nic.in/csabspl/" target="_blank">CSAB</a> · <a href="https://admissions.nic.in/UPTAC/" target="_blank">UPTAC</a> · <a href="https://admissions.nic.in/UPTAC/" target="_blank">GGSIPU</a> · <a href="https://jacdelhi.admissions.nic.in" target="_blank">JAC Delhi</a>.
       </div>
     </div>
   </div>
@@ -726,7 +768,7 @@ HTML = r"""<!DOCTYPE html>
   <div id="emptyHero" class="empty-hero" style="margin-top:22px;">
     <div class="icon">✦</div>
     <h2>Ready when you are</h2>
-    <p>Enter your JEE Main rank and PRAYUSH will surface every NIT, IIIT, GFTI, UPTAC, and GGSIPU seat where your rank stands a real chance — across <b style="color:var(--josaa)">JoSAA</b>, <b style="color:var(--csab)">CSAB</b>, <b style="color:var(--uptac)">UPTAC</b>, and <b style="color:var(--ggsipu)">GGSIPU</b> in one ranked list.</p>
+    <p>Enter your JEE Main rank and PRAYUSH will surface every NIT, IIIT, GFTI, UPTAC, GGSIPU, and JAC Delhi seat where your rank stands a real chance — across <b style="color:var(--josaa)">JoSAA</b>, <b style="color:var(--csab)">CSAB</b>, <b style="color:var(--uptac)">UPTAC</b>, <b style="color:var(--ggsipu)">GGSIPU</b>, and <b style="color:var(--jac)">JAC Delhi</b> in one ranked list.</p>
   </div>
 
 </div>
@@ -761,7 +803,7 @@ function animateCount(el, target, dur=900){
 
   // Per-counselling counts (top + cards)
   const counts = ROWS.reduce((a, r) => { a[r.round] = (a[r.round]||0)+1; return a; }, {});
-  ['JoSAA','CSAB','UPTAC','GGSIPU'].forEach(rd => {
+  ['JoSAA','CSAB','UPTAC','GGSIPU','JAC'].forEach(rd => {
     const c = counts[rd] || 0;
     $('c'+rd).textContent = c.toLocaleString('en-IN') + ' cutoffs';
   });
@@ -772,6 +814,7 @@ function animateCount(el, target, dur=900){
     animateCount($('csabCountTop'), counts['CSAB']||0);
     animateCount($('uptacCountTop'), counts['UPTAC']||0);
     animateCount($('ggsipuCountTop'), counts['GGSIPU']||0);
+    animateCount($('jacCountTop'), counts['JAC']||0);
   }, 200);
 
   $('roundToggle').addEventListener('click', e => {
@@ -886,7 +929,7 @@ function renderStats(rank, seat, gender, home, eligibleCount, tried){
     <div class="stat-card"><div class="stat-label">Your Rank</div><div class="stat-value">${fmt(rank)}</div><div class="stat-sub">${seat} · ${gender==='F'?'Female':'Male'} · ${home}</div></div>
     <div class="stat-card violet"><div class="stat-label">Eligible Pool</div><div class="stat-value">${fmt(eligibleCount)}</div><div class="stat-sub">rows after quota &amp; gender gates</div></div>
     <div class="stat-card gold"><div class="stat-label">Bandwidth Used</div><div class="stat-value">${bwTxt}</div><div class="stat-sub">${range || 'nearest-rank fallback'}</div></div>
-    <div class="stat-card jade"><div class="stat-label">Total Options</div><div class="stat-value">${fmt(currentResults.length)}</div><div class="stat-sub"><span class="j">JoSAA ${counts['JoSAA']||0}</span> · <span class="c">CSAB ${counts['CSAB']||0}</span> · <span class="u">UPTAC ${counts['UPTAC']||0}</span> · <span class="g">GGSIPU ${counts['GGSIPU']||0}</span></div></div>
+    <div class="stat-card jade"><div class="stat-label">Total Options</div><div class="stat-value">${fmt(currentResults.length)}</div><div class="stat-sub"><span class="j">JoSAA ${counts['JoSAA']||0}</span> · <span class="c">CSAB ${counts['CSAB']||0}</span> · <span class="u">UPTAC ${counts['UPTAC']||0}</span> · <span class="g">GGSIPU ${counts['GGSIPU']||0}</span> · <span class="a">JAC ${counts['JAC']||0}</span></div></div>
   `;
 }
 
@@ -943,7 +986,7 @@ function renderTable(){
   const frag = document.createDocumentFragment();
   rows.forEach((r,i)=>{
     const tr = document.createElement('tr');
-    const roundPill = r.round === 'UPTAC' ? 'UPTAC-r' : r.round === 'GGSIPU' ? 'GGSIPU-r' : r.round;
+    const roundPill = r.round === 'UPTAC' ? 'UPTAC-r' : r.round === 'GGSIPU' ? 'GGSIPU-r' : r.round === 'JAC' ? 'JAC-r' : r.round;
     const noteHtml = r.note ? `<span class="pill pill-note">${r.note}</span>` : '';
     tr.innerHTML = `
       <td>${i+1}</td>
