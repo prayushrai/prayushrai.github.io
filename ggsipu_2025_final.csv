@@ -1,0 +1,664 @@
+Institute,Program,Quota,Seat,Gender,Note,Code,Opening Rank (int),Closing Rank (int)
+"Bhagwan Parshuram Institute of Technology, P.S.P-4, Sector-17, Rohini, Delhi-110085",Computer Science & Engineering,HS,OPEN,Gender-Neutral,Defence,OPDFHS,267901,345801
+"Bhagwan Parshuram Institute of Technology, P.S.P-4, Sector-17, Rohini, Delhi-110085",Computer Science & Engineering,HS,OPEN,Gender-Neutral,,OPNOHS,103410,179114
+"Bhagwan Parshuram Institute of Technology, P.S.P-4, Sector-17, Rohini, Delhi-110085",Computer Science & Engineering,HS,SC,Gender-Neutral,,SCNOHS,545736,1059550
+"Bhagwan Parshuram Institute of Technology, P.S.P-4, Sector-17, Rohini, Delhi-110085",Computer Science & Engineering,OS,OPEN,Gender-Neutral,Defence,OPDFOS,101084,101084
+"Bhagwan Parshuram Institute of Technology, P.S.P-4, Sector-17, Rohini, Delhi-110085",Computer Science & Engineering,OS,OPEN,Gender-Neutral,,OPNOOS,58591,79034
+"Bhagwan Parshuram Institute of Technology, P.S.P-4, Sector-17, Rohini, Delhi-110085",Computer Science & Engineering,OS,OPEN (PwD),Gender-Neutral,,OPPHOS,574211,574211
+"Bhagwan Parshuram Institute of Technology, P.S.P-4, Sector-17, Rohini, Delhi-110085",Computer Science & Engineering,OS,SC,Gender-Neutral,,SCNOOS,308701,353184
+"Bhagwan Parshuram Institute of Technology, P.S.P-4, Sector-17, Rohini, Delhi-110085",Computer Science & Engineering,OS,ST,Gender-Neutral,,STNOOS,576006,576006
+Bhagwan Parshuram Institute of Delhi-110085,Engineering,HS,OPEN,Gender-Neutral,Defence,OPDFHS,735201,735201
+Bhagwan Parshuram Institute of Delhi-110085,Engineering,HS,OPEN,Gender-Neutral,,OPNOHS,354619,354619
+Bhagwan Parshuram Institute of Delhi-110085,Engineering,HS,SC,Gender-Neutral,,SCNOHS,914782,914782
+Bhagwan Parshuram Institute of Delhi-110085,Engineering,OS,OPEN,Gender-Neutral,,OPNOOS,112421,112421
+Bhagwan Parshuram Institute of Delhi-110085,Engineering,OS,SC,Gender-Neutral,,SCNOOS,504057,504057
+"Bhagwan Parshuram Institute of Technology, P.S.P-4, Sector-17, Rohini, Delhi-110085",Electronics & Communication Engineering,HS,OPEN,Gender-Neutral,Defence,OPDFHS,402308,503220
+"Bhagwan Parshuram Institute of Technology, P.S.P-4, Sector-17, Rohini, Delhi-110085",Electronics & Communication Engineering,HS,OPEN,Gender-Neutral,,OPNOHS,201392,286487
+"Bhagwan Parshuram Institute of Technology, P.S.P-4, Sector-17, Rohini, Delhi-110085",Electronics & Communication Engineering,HS,SC,Gender-Neutral,,SCNOHS,505444,1277133
+"Bhagwan Parshuram Institute of Technology, P.S.P-4, Sector-17, Rohini, Delhi-110085",Electronics & Communication Engineering,OS,OPEN,Gender-Neutral,Defence,OPDFOS,107704,107704
+"Bhagwan Parshuram Institute of Technology, P.S.P-4, Sector-17, Rohini, Delhi-110085",Electronics & Communication Engineering,OS,OPEN,Gender-Neutral,,OPNOOS,85798,100042
+"Bhagwan Parshuram Institute of Technology, P.S.P-4, Sector-17, Rohini, Delhi-110085",Electronics & Communication Engineering,OS,SC,Gender-Neutral,,SCNOOS,468961,531339
+"Bhagwan Parshuram Institute of Technology, P.S.P-4, Sector-17, Rohini, Delhi-110085",Information Technology,HS,OPEN,Gender-Neutral,Defence,OPDFHS,297086,366544
+"Bhagwan Parshuram Institute of Technology, P.S.P-4, Sector-17, Rohini, Delhi-110085",Information Technology,HS,OPEN,Gender-Neutral,,OPNOHS,172125,215269
+"Bhagwan Parshuram Institute of Technology, P.S.P-4, Sector-17, Rohini, Delhi-110085",Information Technology,HS,SC,Gender-Neutral,,SCNOHS,1134228,1355426
+"Bhagwan Parshuram Institute of Technology, P.S.P-4, Sector-17, Rohini, Delhi-110085",Information Technology,OS,OPEN,Gender-Neutral,Defence,OPDFOS,106147,106147
+"Bhagwan Parshuram Institute of Technology, P.S.P-4, Sector-17, Rohini, Delhi-110085",Information Technology,OS,OPEN,Gender-Neutral,,OPNOOS,71440,71440
+"Bhagwan Parshuram Institute of Technology, P.S.P-4, Sector-17, Rohini, Delhi-110085",Information Technology,OS,SC,Gender-Neutral,,SCNOOS,364917,408843
+Bharati Vidyapeeths College of Engineering,Computer Science & |Engineering,AI,OPEN,Gender-Neutral,Kashmiri Migrant,NOKMAI,228906,228906
+Bharati Vidyapeeths College of Engineering,Computer Science & |Engineering,HS,OPEN,Gender-Neutral,Defence,OPDFHS,210711,303162
+Bharati Vidyapeeths College of Engineering,Computer Science & |Engineering,HS,OPEN,Gender-Neutral,,OPNOHS,81514,159959
+Bharati Vidyapeeths College of Engineering,Computer Science & |Engineering,HS,OPEN (PwD),Gender-Neutral,,OPPHHS,425888,425888
+Bharati Vidyapeeths College of Engineering,Computer Science & |Engineering,HS,SC,Gender-Neutral,,SCNOHS,396798,963389
+Bharati Vidyapeeths College of Engineering,Computer Science & |Engineering,OS,OPEN,Gender-Neutral,Defence,OPDFOS,85414,85414
+Bharati Vidyapeeths College of Engineering,Computer Science & |Engineering,OS,OPEN,Gender-Neutral,,OPNOOS,65507,79459
+Bharati Vidyapeeths College of Engineering,Computer Science & |Engineering,OS,SC,Gender-Neutral,Defence,SCDFOS,758968,758968
+Bharati Vidyapeeths College of Engineering,Computer Science & |Engineering,OS,SC,Gender-Neutral,,SCNOOS,302012,340873
+Bharati Vidyapeeths College of Engineering,Computer Science & |Engineering,OS,ST,Gender-Neutral,,STNOOS,1215890,1215890
+Bharati Vidyapeeths College of Engineering,CSE- AIML,HS,OPEN,Gender-Neutral,Defence,OPDFHS,217359,330119
+Bharati Vidyapeeths College of Engineering,CSE- AIML,HS,OPEN,Gender-Neutral,,OPNOHS,101096,167623
+Bharati Vidyapeeths College of Engineering,CSE- AIML,HS,SC,Gender-Neutral,,SCNOHS,650898,1002370
+Bharati Vidyapeeths College of Engineering,CSE- AIML,HS,ST,Gender-Neutral,,STNOHS,666401,666401
+Bharati Vidyapeeths College of Engineering,CSE- AIML,OS,OPEN,Gender-Neutral,Defence,OPDFOS,496458,496458
+Bharati Vidyapeeths College of Engineering,CSE- AIML,OS,OPEN,Gender-Neutral,,OPNOOS,67452,67452
+Bharati Vidyapeeths College of Engineering,CSE- AIML,OS,SC,Gender-Neutral,,SCNOOS,283207,285157
+Bharati Vidyapeeths College of Engineering,CSE- AIML,OS,ST,Gender-Neutral,,STNOOS,836071,836071
+Bharati Vidyapeeths College of Engineering,Electrical & Electronics Engineering,HS,OPEN,Gender-Neutral,Defence,OPDFHS,718484,718484
+Bharati Vidyapeeths College of Engineering,Electrical & Electronics Engineering,HS,OPEN,Gender-Neutral,,OPNOHS,233709,325165
+Bharati Vidyapeeths College of Engineering,Electrical & Electronics Engineering,HS,SC,Gender-Neutral,,SCNOHS,1088009,1088009
+Bharati Vidyapeeths College of Engineering,Electrical & Electronics Engineering,OS,OPEN,Gender-Neutral,,OPNOOS,83873,110304
+Bharati Vidyapeeths College of Engineering,Electrical & Electronics Engineering,OS,SC,Gender-Neutral,,SCNOOS,550106,571477
+Bharati Vidyapeeths College of Engineering,Electronics & Communication Engineering,HS,OPEN,Gender-Neutral,Defence,OPDFHS,364876,530060
+Bharati Vidyapeeths College of Engineering,Electronics & Communication Engineering,HS,OPEN,Gender-Neutral,,OPNOHS,142087,257480
+Bharati Vidyapeeths College of Engineering,Electronics & Communication Engineering,HS,OPEN (PwD),Gender-Neutral,,OPPHHS,514611,514611
+Bharati Vidyapeeths College of Engineering,Electronics & Communication Engineering,HS,SC,Gender-Neutral,,SCNOHS,1269205,1340769
+Bharati Vidyapeeths College of Engineering,Electronics & Communication Engineering,OS,OPEN,Gender-Neutral,Defence,OPDFOS,117852,117852
+Bharati Vidyapeeths College of Engineering,Electronics & Communication Engineering,OS,OPEN,Gender-Neutral,,OPNOOS,86956,96114
+Bharati Vidyapeeths College of Engineering,Electronics & Communication Engineering,OS,SC,Gender-Neutral,,SCNOOS,413095,454509
+Bharati Vidyapeeths College of Engineering,Information Technology,HS,OPEN,Gender-Neutral,Defence,OPDFHS,316489,350168
+Bharati Vidyapeeths College of Engineering,Information Technology,HS,OPEN,Gender-Neutral,,OPNOHS,102406,188921
+Bharati Vidyapeeths College of Engineering,Information Technology,HS,SC,Gender-Neutral,,SCNOHS,996156,1233316
+Bharati Vidyapeeths College of Engineering,Information Technology,OS,OPEN,Gender-Neutral,Defence,OPDFOS,102380,102380
+Bharati Vidyapeeths College of Engineering,Information Technology,OS,OPEN,Gender-Neutral,,OPNOOS,81810,84481
+Bharati Vidyapeeths College of Engineering,Information Technology,OS,SC,Gender-Neutral,,SCNOOS,344672,360637
+Bharati Vidyapeeths College of Engineering,Instrumentation & Control Engineering (Shift!),HS,OPEN,Gender-Neutral,Defence,OPDFHS,579143,579143
+Bharati Vidyapeeths College of Engineering,Instrumentation & Control Engineering (Shift!),HS,OPEN,Gender-Neutral,,OPNOHS,264835,377275
+Bharati Vidyapeeths College of Engineering,Instrumentation & Control Engineering (Shift!),OS,OPEN,Gender-Neutral,,OPNOOS,109261,117932
+Bharati Vidyapeeths College of Engineering,Instrumentation & Control Engineering (Shift!),OS,SC,Gender-Neutral,,SCNOOS,600749,600749
+"Delhi Institute of Sciences & Technology (formerty Delhi Institute of Rural Development), (Sister Branch of DIRD) Behind Le Gardens Victorian Palace, G.T. _ Karnal Road, Nangli Poona, Delhi- 110036",Computer Science & |Engineering,HS,OPEN,Gender-Neutral,Defence,OPDFHS,759820,956093
+"Delhi Institute of Sciences & Technology (formerty Delhi Institute of Rural Development), (Sister Branch of DIRD) Behind Le Gardens Victorian Palace, G.T. _ Karnal Road, Nangli Poona, Delhi- 110036",Computer Science & |Engineering,HS,OPEN,Gender-Neutral,,OPNOHS,179136,179136
+"Delhi Institute of Sciences & Technology (formerty Delhi Institute of Rural Development), (Sister Branch of DIRD) Behind Le Gardens Victorian Palace, G.T. _ Karnal Road, Nangli Poona, Delhi- 110036",Computer Science & |Engineering,OS,OPEN,Gender-Neutral,Defence,OPDFOS,244136,244136
+"Delhi Institute of Sciences & Technology (formerty Delhi Institute of Rural Development), (Sister Branch of DIRD) Behind Le Gardens Victorian Palace, G.T. _ Karnal Road, Nangli Poona, Delhi- 110036",Computer Science & |Engineering,OS,OPEN,Gender-Neutral,,OPNOOS,110045,187551
+"Delhi Institute of Sciences & Technology (formerty Delhi Institute of Rural Development), (Sister Branch of DIRD) Behind Le Gardens Victorian Palace, G.T. _ Karnal Road, Nangli Poona, Delhi- 110036",Computer Science & |Engineering,OS,SC,Gender-Neutral,,SCNOOS,532492,744844
+"ae Park, Ill, Greater NOIDA, UP",Data Science,HS,OPEN,Gender-Neutral,,OPNOHS,1424341,1424341
+"ae Park, Ill, Greater NOIDA, UP",Data Science,OS,OPEN,Gender-Neutral,,OPNOOS,2313,231380
+"ae Park, Ill, Greater NOIDA, UP",Data Science,OS,SC,Gender-Neutral,,SCNOOS,6586,658476
+"ee Park, Ill, Greater NOIDA, UP",Machine Learning,HS,OPEN,Gender-Neutral,,OPNOHS,1365234,1365234
+"ee Park, Ill, Greater NOIDA, UP",Machine Learning,OS,OPEN,Gender-Neutral,,OPNOOS,2317,231770
+"ee Park, Ill, Greater NOIDA, UP",Machine Learning,OS,SC,Gender-Neutral,,SCNOOS,9754,975460
+"ae Park, Ill, Greater NOIDA, UP",ere & Applied Mathematics),HS,OPEN,Gender-Neutral,,OPNOHS,1401259,1401259
+"ae Park, Ill, Greater NOIDA, UP",ere & Applied Mathematics),OS,OPEN,Gender-Neutral,,OPNOOS,20603,236425
+"ae Park, Ill, Greater NOIDA, UP",ere & Applied Mathematics),OS,SC,Gender-Neutral,,SCNOOS,10625,1062587
+"Delhi Technical Campus, 28/1, Knowledge Park, lil, Greater NOIDA, UP",Computer Science & Engineering,HS,OPEN,Gender-Neutral,Defence,OPDFHS,1143344,1143344
+"Delhi Technical Campus, 28/1, Knowledge Park, lil, Greater NOIDA, UP",Computer Science & Engineering,HS,OPEN,Gender-Neutral,,OPNOHS,164365,164365
+"Delhi Technical Campus, 28/1, Knowledge Park, lil, Greater NOIDA, UP",Computer Science & Engineering,HS,SC,Gender-Neutral,,SCNOHS,1400323,1400323
+"Delhi Technical Campus, 28/1, Knowledge Park, lil, Greater NOIDA, UP",Computer Science & Engineering,OS,OPEN,Gender-Neutral,Defence,OPDFOS,216661,241855
+"Delhi Technical Campus, 28/1, Knowledge Park, lil, Greater NOIDA, UP",Computer Science & Engineering,OS,OPEN,Gender-Neutral,,OPNOOS,109025,214611
+"Delhi Technical Campus, 28/1, Knowledge Park, lil, Greater NOIDA, UP",Computer Science & Engineering,OS,SC,Gender-Neutral,,SCNOOS,454971,946166
+"Delhi Technical Campus, 28/1, Knowledge Park, III, Greater NOIDA, UP",Computer Science & Technology,HS,OPEN,Gender-Neutral,,OPNOHS,369269,1344834
+"Delhi Technical Campus, 28/1, Knowledge Park, III, Greater NOIDA, UP",Computer Science & Technology,OS,OPEN,Gender-Neutral,Defence,OPDFOS,267136,267136
+"Delhi Technical Campus, 28/1, Knowledge Park, III, Greater NOIDA, UP",Computer Science & Technology,OS,OPEN,Gender-Neutral,,OPNOOS,179643,224777
+"Delhi Technical Campus, 28/1, Knowledge Park, III, Greater NOIDA, UP",Computer Science & Technology,OS,SC,Gender-Neutral,Defence,SCDFOS,1194032,1194032
+"Delhi Technical Campus, 28/1, Knowledge Park, III, Greater NOIDA, UP",Computer Science & Technology,OS,SC,Gender-Neutral,,SCNOOS,548740,548740
+"nate Delhi Technical Campus, 28/1, Knowledge Park, Ill, Greater NOIDA, UP",course CSE (Cyber Security),HS,OPEN,Gender-Neutral,,OPNOHS,367415,1469925
+"nate Delhi Technical Campus, 28/1, Knowledge Park, Ill, Greater NOIDA, UP",course CSE (Cyber Security),OS,OPEN,Gender-Neutral,,OPNOOS,189703,232312
+"nate Delhi Technical Campus, 28/1, Knowledge Park, Ill, Greater NOIDA, UP",course CSE (Cyber Security),OS,SC,Gender-Neutral,,SCNOOS,469132,744922
+"Dr. Akhilesh Das Gupta Institute of Professional Studies ( formerly Dr. Akhilesh Das Gupta Institute of Technology & Management), FC-26, Shastri Park, New Delhi - 110053",Artificial Intelligence & Data Science,HS,OPEN,Gender-Neutral,Defence,OPDFHS,581588,913799
+"Dr. Akhilesh Das Gupta Institute of Professional Studies ( formerly Dr. Akhilesh Das Gupta Institute of Technology & Management), FC-26, Shastri Park, New Delhi - 110053",Artificial Intelligence & Data Science,HS,OPEN,Gender-Neutral,,OPNOHS,220016,381339
+"Dr. Akhilesh Das Gupta Institute of Professional Studies ( formerly Dr. Akhilesh Das Gupta Institute of Technology & Management), FC-26, Shastri Park, New Delhi - 110053",Artificial Intelligence & Data Science,OS,OPEN,Gender-Neutral,Defence,OPDFOS,191061,191061
+"Dr. Akhilesh Das Gupta Institute of Professional Studies ( formerly Dr. Akhilesh Das Gupta Institute of Technology & Management), FC-26, Shastri Park, New Delhi - 110053",Artificial Intelligence & Data Science,OS,OPEN,Gender-Neutral,,OPNOOS,91692,148999
+"Dr. Akhilesh Das Gupta Institute of Professional Studies ( formerly Dr. Akhilesh Das Gupta Institute of Technology & Management), FC-26, Shastri Park, New Delhi - 110053",Artificial Intelligence & Data Science,OS,SC,Gender-Neutral,,SCNOOS,551161,604839
+"Dr. Akhilesh Das Gupta Institute of Professional Studies ( formerly Dr. Akhilesh Das Gupta Institute of Technology & Management), FC-26, Shastri Park, New Delhi - 110053",Artificial Intelligence & Data Science (Shift II),HS,OPEN,Gender-Neutral,Defence,OPDFHS,844430,921301
+"Dr. Akhilesh Das Gupta Institute of Professional Studies ( formerly Dr. Akhilesh Das Gupta Institute of Technology & Management), FC-26, Shastri Park, New Delhi - 110053",Artificial Intelligence & Data Science (Shift II),HS,OPEN,Gender-Neutral,,OPNOHS,218804,397263
+"Dr. Akhilesh Das Gupta Institute of Professional Studies ( formerly Dr. Akhilesh Das Gupta Institute of Technology & Management), FC-26, Shastri Park, New Delhi - 110053",Artificial Intelligence & Data Science (Shift II),OS,OPEN,Gender-Neutral,,OPNOOS,147809,152663
+"Dr. Akhilesh Das Gupta Institute of Professional Studies ( formerly Dr. Akhilesh Das Gupta Institute of Technology & Management), FC-26, Shastri Park, New Delhi - 110053",Artificial Intelligence & Data Science (Shift II),OS,SC,Gender-Neutral,,SCNOOS,633242,649331
+"Or. Akhilesh Das Gupta institute of Professional Studies ( formerly Dr. Akhilesh Das Gupta Institute of Technology & Management), FC-26, Shastri Park, New Delhi - 110053",Artificial Intelligence & Machine Learning,HS,OPEN,Gender-Neutral,Defence,OPDFHS,422600,716181
+"Or. Akhilesh Das Gupta institute of Professional Studies ( formerly Dr. Akhilesh Das Gupta Institute of Technology & Management), FC-26, Shastri Park, New Delhi - 110053",Artificial Intelligence & Machine Learning,HS,OPEN,Gender-Neutral,,OPNOHS,189441,369157
+"Or. Akhilesh Das Gupta institute of Professional Studies ( formerly Dr. Akhilesh Das Gupta Institute of Technology & Management), FC-26, Shastri Park, New Delhi - 110053",Artificial Intelligence & Machine Learning,HS,SC,Gender-Neutral,,SCNOHS,681577,1207484
+"Or. Akhilesh Das Gupta institute of Professional Studies ( formerly Dr. Akhilesh Das Gupta Institute of Technology & Management), FC-26, Shastri Park, New Delhi - 110053",Artificial Intelligence & Machine Learning,OS,OPEN,Gender-Neutral,Defence,OPDFOS,154098,154098
+"Or. Akhilesh Das Gupta institute of Professional Studies ( formerly Dr. Akhilesh Das Gupta Institute of Technology & Management), FC-26, Shastri Park, New Delhi - 110053",Artificial Intelligence & Machine Learning,OS,OPEN,Gender-Neutral,,OPNOOS,104229,147793
+"Or. Akhilesh Das Gupta institute of Professional Studies ( formerly Dr. Akhilesh Das Gupta Institute of Technology & Management), FC-26, Shastri Park, New Delhi - 110053",Artificial Intelligence & Machine Learning,OS,SC,Gender-Neutral,,SCNOOS,390978,544166
+"Dr. Akhilesh Das Gupta Institute of Professional Studies ( formerly Or. Akhilesh Das Gupta Institute of Technology & Management), FC-26, Shastri Park, New Delhi - 110053",Artificial Intelligence & Machine Learning (Shift II),HS,OPEN,Gender-Neutral,Defence,OPDFHS,524063,918729
+"Dr. Akhilesh Das Gupta Institute of Professional Studies ( formerly Or. Akhilesh Das Gupta Institute of Technology & Management), FC-26, Shastri Park, New Delhi - 110053",Artificial Intelligence & Machine Learning (Shift II),HS,OPEN,Gender-Neutral,,OPNOHS,265508,395466
+"Dr. Akhilesh Das Gupta Institute of Professional Studies ( formerly Or. Akhilesh Das Gupta Institute of Technology & Management), FC-26, Shastri Park, New Delhi - 110053",Artificial Intelligence & Machine Learning (Shift II),HS,SC,Gender-Neutral,,SCNOHS,1251571,1251571
+"Dr. Akhilesh Das Gupta Institute of Professional Studies ( formerly Or. Akhilesh Das Gupta Institute of Technology & Management), FC-26, Shastri Park, New Delhi - 110053",Artificial Intelligence & Machine Learning (Shift II),OS,OPEN,Gender-Neutral,,OPNOOS,147822,154302
+"Dr. Akhilesh Das Gupta Institute of Professional Studies ( formerly Or. Akhilesh Das Gupta Institute of Technology & Management), FC-26, Shastri Park, New Delhi - 110053",Artificial Intelligence & Machine Learning (Shift II),OS,SC,Gender-Neutral,,SCNOOS,546269,546269
+"Or. Akhilesh Das Gupta Institute of Professional Studies ( formerly Dr. Akhilesh Das Gupta Institute of Technology & Management), FC-26, Shastri Park, New Delhi - 110053","B. Tech, (Computer Science)",HS,OPEN,Gender-Neutral,Defence,OPDFHS,623160,623160
+"Or. Akhilesh Das Gupta Institute of Professional Studies ( formerly Dr. Akhilesh Das Gupta Institute of Technology & Management), FC-26, Shastri Park, New Delhi - 110053","B. Tech, (Computer Science)",HS,OPEN,Gender-Neutral,,OPNOHS,222606,322333
+"Or. Akhilesh Das Gupta Institute of Professional Studies ( formerly Dr. Akhilesh Das Gupta Institute of Technology & Management), FC-26, Shastri Park, New Delhi - 110053","B. Tech, (Computer Science)",OS,OPEN,Gender-Neutral,Defence,OPDFOS,130672,130672
+"Or. Akhilesh Das Gupta Institute of Professional Studies ( formerly Dr. Akhilesh Das Gupta Institute of Technology & Management), FC-26, Shastri Park, New Delhi - 110053","B. Tech, (Computer Science)",OS,OPEN,Gender-Neutral,,OPNOOS,103159,129879
+"Or. Akhilesh Das Gupta Institute of Professional Studies ( formerly Dr. Akhilesh Das Gupta Institute of Technology & Management), FC-26, Shastri Park, New Delhi - 110053","B. Tech, (Computer Science)",OS,SC,Gender-Neutral,,SCNOOS,456928,534431
+"Dr. Akhilesh Das Gupta Institute of Professional Studies ( formerly Dr. Akhilesh Das Gupta Institute of Technology & Management), FC-26, Shastri Park, New Delhi - 110053",B.Tech (CS) II- Shift,HS,OPEN,Gender-Neutral,Defence,OPDFHS,643348,657746
+"Dr. Akhilesh Das Gupta Institute of Professional Studies ( formerly Dr. Akhilesh Das Gupta Institute of Technology & Management), FC-26, Shastri Park, New Delhi - 110053",B.Tech (CS) II- Shift,HS,OPEN,Gender-Neutral,,OPNOHS,249928,354073
+"Dr. Akhilesh Das Gupta Institute of Professional Studies ( formerly Dr. Akhilesh Das Gupta Institute of Technology & Management), FC-26, Shastri Park, New Delhi - 110053",B.Tech (CS) II- Shift,HS,SC,Gender-Neutral,,SCNOHS,1147170,1147170
+"Dr. Akhilesh Das Gupta Institute of Professional Studies ( formerly Dr. Akhilesh Das Gupta Institute of Technology & Management), FC-26, Shastri Park, New Delhi - 110053",B.Tech (CS) II- Shift,OS,OPEN,Gender-Neutral,,OPNOOS,130453,137636
+"Dr. Akhilesh Das Gupta Institute of Professional Studies ( formerly Dr. Akhilesh Das Gupta Institute of Technology & Management), FC-26, Shastri Park, New Delhi - 110053",B.Tech (CS) II- Shift,OS,SC,Gender-Neutral,,SCNOOS,547482,547482
+"Dr. Akhilesh Das Gupta Institute of Professional Studies ( formerly Dr. Akhilesh Das Gupta Institute of Technology & Management), FC-26, Shastri Park, New Delhi - 110053",Civil Engineering,HS,OPEN,Gender-Neutral,,OPNOHS,7940,238773
+"Dr. Akhilesh Das Gupta Institute of Professional Studies ( formerly Dr. Akhilesh Das Gupta Institute of Technology & Management), FC-26, Shastri Park, New Delhi - 110053",Civil Engineering,HS,SC,Gender-Neutral,,SCNOHS,573380,775212
+"Dr. Akhilesh Das Gupta Institute of Professional Studies ( formerly Dr. Akhilesh Das Gupta Institute of Technology & Management), FC-26, Shastri Park, New Delhi - 110053",Civil Engineering,OS,OPEN,Gender-Neutral,,OPNOOS,126448,189286
+"Dr. Akhilesh Das Gupta Institute of Professional Studies ( formerly Dr. Akhilesh Das Gupta Institute of Technology & Management), FC-26, Shastri Park, New Delhi - 110053",Civil Engineering,OS,SC,Gender-Neutral,,SCNOOS,565863,565863
+"Dr. Akhilesh Das Gupta Institute of Professional Studies ( formerly Dr. Akhilesh Das Gupta Institute of Technology & Management), FC-26, Shastri Park, New Delhi - 110053",Computer Science & Engineering (Shift 1),HS,OPEN,Gender-Neutral,Defence,OPDFHS,326105,557893
+"Dr. Akhilesh Das Gupta Institute of Professional Studies ( formerly Dr. Akhilesh Das Gupta Institute of Technology & Management), FC-26, Shastri Park, New Delhi - 110053",Computer Science & Engineering (Shift 1),HS,OPEN,Gender-Neutral,,OPNOHS,111661,287513
+"Dr. Akhilesh Das Gupta Institute of Professional Studies ( formerly Dr. Akhilesh Das Gupta Institute of Technology & Management), FC-26, Shastri Park, New Delhi - 110053",Computer Science & Engineering (Shift 1),HS,SC,Gender-Neutral,,SCNOHS,631817,1458043
+"Dr. Akhilesh Das Gupta Institute of Professional Studies ( formerly Dr. Akhilesh Das Gupta Institute of Technology & Management), FC-26, Shastri Park, New Delhi - 110053",Computer Science & Engineering (Shift 1),OS,OPEN,Gender-Neutral,Defence,OPDFOS,135019,135019
+"Dr. Akhilesh Das Gupta Institute of Professional Studies ( formerly Dr. Akhilesh Das Gupta Institute of Technology & Management), FC-26, Shastri Park, New Delhi - 110053",Computer Science & Engineering (Shift 1),OS,OPEN,Gender-Neutral,,OPNOOS,96330,122166
+"Dr. Akhilesh Das Gupta Institute of Professional Studies ( formerly Dr. Akhilesh Das Gupta Institute of Technology & Management), FC-26, Shastri Park, New Delhi - 110053",Computer Science & Engineering (Shift 1),OS,SC,Gender-Neutral,Defence,SCDFOS,778645,778645
+"Dr. Akhilesh Das Gupta Institute of Professional Studies ( formerly Dr. Akhilesh Das Gupta Institute of Technology & Management), FC-26, Shastri Park, New Delhi - 110053",Computer Science & Engineering (Shift 1),OS,SC,Gender-Neutral,,SCNOOS,345663,462758
+"Dr. Akhilesh Das Gupta Institute of Professional Studies ( formerly Dr. Akhilesh Das Gupta Institute of Technology & Management), FC-26, Shastri Park, New Delhi - 110053",‘Computer Science & Engineering (Shift II),HS,OPEN,Gender-Neutral,Defence,OPDFHS,373024,373024
+"Dr. Akhilesh Das Gupta Institute of Professional Studies ( formerly Dr. Akhilesh Das Gupta Institute of Technology & Management), FC-26, Shastri Park, New Delhi - 110053",‘Computer Science & Engineering (Shift II),HS,OPEN,Gender-Neutral,,OPNOHS,231175,305489
+"Dr. Akhilesh Das Gupta Institute of Professional Studies ( formerly Dr. Akhilesh Das Gupta Institute of Technology & Management), FC-26, Shastri Park, New Delhi - 110053",‘Computer Science & Engineering (Shift II),OS,OPEN,Gender-Neutral,,OPNOOS,107275,125075
+"Dr. Akhilesh Das Gupta Institute of Professional Studies ( formerly Dr. Akhilesh Das Gupta Institute of Technology & Management), FC-26, Shastri Park, New Delhi - 110053",‘Computer Science & Engineering (Shift II),OS,SC,Gender-Neutral,,SCNOOS,479737,481685
+"Dr. Akhilesh Das Gupta Institute of Professional Studies ( formerly Dr. Akhilesh Das Gupta Institute of Technology & Management), FC-26, Shastri Park, New Delhi - 110053",Computer Science & Technology,HS,OPEN,Gender-Neutral,Defence,OPDFHS,576385,596751
+"Dr. Akhilesh Das Gupta Institute of Professional Studies ( formerly Dr. Akhilesh Das Gupta Institute of Technology & Management), FC-26, Shastri Park, New Delhi - 110053",Computer Science & Technology,HS,OPEN,Gender-Neutral,,OPNOHS,210514,326896
+"Dr. Akhilesh Das Gupta Institute of Professional Studies ( formerly Dr. Akhilesh Das Gupta Institute of Technology & Management), FC-26, Shastri Park, New Delhi - 110053",Computer Science & Technology,OS,OPEN,Gender-Neutral,,OPNOOS,93816,131295
+"Dr. Akhilesh Das Gupta Institute of Professional Studies ( formerly Dr. Akhilesh Das Gupta Institute of Technology & Management), FC-26, Shastri Park, New Delhi - 110053",Computer Science & Technology,OS,SC,Gender-Neutral,,SCNOOS,433898,513963
+"Dr. Akhilesh Das Gupta Institute of Professional Studies ( formerly Dr. Akhilesh Das Gupta Institute of Technology & Management), FC-26, Shastri Park, New Delhi - 110053",Computer Science and Technology (II Shift),HS,OPEN,Gender-Neutral,Defence,OPDFHS,678183,680725
+"Dr. Akhilesh Das Gupta Institute of Professional Studies ( formerly Dr. Akhilesh Das Gupta Institute of Technology & Management), FC-26, Shastri Park, New Delhi - 110053",Computer Science and Technology (II Shift),HS,OPEN,Gender-Neutral,,OPNOHS,247360,371589
+"Dr. Akhilesh Das Gupta Institute of Professional Studies ( formerly Dr. Akhilesh Das Gupta Institute of Technology & Management), FC-26, Shastri Park, New Delhi - 110053",Computer Science and Technology (II Shift),OS,OPEN,Gender-Neutral,Defence,OPDFOS,154261,154261
+"Dr. Akhilesh Das Gupta Institute of Professional Studies ( formerly Dr. Akhilesh Das Gupta Institute of Technology & Management), FC-26, Shastri Park, New Delhi - 110053",Computer Science and Technology (II Shift),OS,OPEN,Gender-Neutral,,OPNOOS,133851,133851
+"Dr. Akhilesh Das Gupta Institute of Professional Studies ( formerly Dr. Akhilesh Das Gupta Institute of Technology & Management), FC-26, Shastri Park, New Delhi - 110053",Computer Science and Technology (II Shift),OS,SC,Gender-Neutral,,SCNOOS,536198,536198
+"Dr. Akhilesh Das Gupta Institute of Professional Studies ( formerly Dr. Akhilesh Das Gupta Institute of Technology & Management), FC-26, Shastri Park, New Delhi - 110053",Electronics & Communication Engineering (Shift !),HS,OPEN,Gender-Neutral,Defence,OPDFHS,738499,900598
+"Dr. Akhilesh Das Gupta Institute of Professional Studies ( formerly Dr. Akhilesh Das Gupta Institute of Technology & Management), FC-26, Shastri Park, New Delhi - 110053",Electronics & Communication Engineering (Shift !),HS,OPEN,Gender-Neutral,,OPNOHS,295268,431522
+"Dr. Akhilesh Das Gupta Institute of Professional Studies ( formerly Dr. Akhilesh Das Gupta Institute of Technology & Management), FC-26, Shastri Park, New Delhi - 110053",Electronics & Communication Engineering (Shift !),OS,OPEN,Gender-Neutral,,OPNOOS,99215,154976
+"Dr. Akhilesh Das Gupta Institute of Professional Studies ( formerly Dr. Akhilesh Das Gupta Institute of Technology & Management), FC-26, Shastri Park, New Delhi - 110053",Electronics & Communication Engineering (Shift !),OS,SC,Gender-Neutral,,SCNOOS,704364,759300
+"Institute Dr. Akhilesh Das Gupta Institute of Professional Studies ( formerly Dr. Akhilesh Das Gupta Institute of Technology & Management), FC-26, Shastri Park, New Delhi - 110053",[Course Electronics & Communication Engineering (Shift Il,HS,OPEN,Gender-Neutral,Defence,OPDFHS,1196044,1196044
+"Institute Dr. Akhilesh Das Gupta Institute of Professional Studies ( formerly Dr. Akhilesh Das Gupta Institute of Technology & Management), FC-26, Shastri Park, New Delhi - 110053",[Course Electronics & Communication Engineering (Shift Il,HS,OPEN,Gender-Neutral,,OPNOHS,314064,443939
+"Institute Dr. Akhilesh Das Gupta Institute of Professional Studies ( formerly Dr. Akhilesh Das Gupta Institute of Technology & Management), FC-26, Shastri Park, New Delhi - 110053",[Course Electronics & Communication Engineering (Shift Il,OS,OPEN,Gender-Neutral,Defence,OPDFOS,196866,196866
+"Institute Dr. Akhilesh Das Gupta Institute of Professional Studies ( formerly Dr. Akhilesh Das Gupta Institute of Technology & Management), FC-26, Shastri Park, New Delhi - 110053",[Course Electronics & Communication Engineering (Shift Il,OS,OPEN,Gender-Neutral,,OPNOOS,129000,163125
+"Institute Dr. Akhilesh Das Gupta Institute of Professional Studies ( formerly Dr. Akhilesh Das Gupta Institute of Technology & Management), FC-26, Shastri Park, New Delhi - 110053",[Course Electronics & Communication Engineering (Shift Il,OS,SC,Gender-Neutral,,SCNOOS,689740,771182
+"Dr. Akhilesh Das Gupta Institute of Professional Studies ( formerly Dr. Akhilesh Das Gupta Institute of Technology & Management), FC-26, Shastri Park, New Delhi - 110053",Information Technology (Shift 1),HS,OPEN,Gender-Neutral,Defence,OPDFHS,579540,872542
+"Dr. Akhilesh Das Gupta Institute of Professional Studies ( formerly Dr. Akhilesh Das Gupta Institute of Technology & Management), FC-26, Shastri Park, New Delhi - 110053",Information Technology (Shift 1),HS,OPEN,Gender-Neutral,,OPNOHS,192317,405657
+"Dr. Akhilesh Das Gupta Institute of Professional Studies ( formerly Dr. Akhilesh Das Gupta Institute of Technology & Management), FC-26, Shastri Park, New Delhi - 110053",Information Technology (Shift 1),HS,SC,Gender-Neutral,,SCNOHS,867153,1183786
+"Dr. Akhilesh Das Gupta Institute of Professional Studies ( formerly Dr. Akhilesh Das Gupta Institute of Technology & Management), FC-26, Shastri Park, New Delhi - 110053",Information Technology (Shift 1),OS,OPEN,Gender-Neutral,Defence,OPDFOS,171513,171513
+"Dr. Akhilesh Das Gupta Institute of Professional Studies ( formerly Dr. Akhilesh Das Gupta Institute of Technology & Management), FC-26, Shastri Park, New Delhi - 110053",Information Technology (Shift 1),OS,OPEN,Gender-Neutral,,OPNOOS,127316,148171
+"Dr. Akhilesh Das Gupta Institute of Professional Studies ( formerly Dr. Akhilesh Das Gupta Institute of Technology & Management), FC-26, Shastri Park, New Delhi - 110053",Information Technology (Shift 1),OS,SC,Gender-Neutral,,SCNOOS,504953,687674
+"Dr. Akhilesh Das Gupta Institute of Professional Studies ( formerly Dr. Akhilesh Das Gupta Institute of Technology & Management), FC-26, Shastri Park, New Delhi - 110053",Information Technology (Shift 11},HS,OPEN,Gender-Neutral,Defence,OPDFHS,945117,1019755
+"Dr. Akhilesh Das Gupta Institute of Professional Studies ( formerly Dr. Akhilesh Das Gupta Institute of Technology & Management), FC-26, Shastri Park, New Delhi - 110053",Information Technology (Shift 11},HS,OPEN,Gender-Neutral,,OPNOHS,354653,417130
+"Dr. Akhilesh Das Gupta Institute of Professional Studies ( formerly Dr. Akhilesh Das Gupta Institute of Technology & Management), FC-26, Shastri Park, New Delhi - 110053",Information Technology (Shift 11},OS,OPEN,Gender-Neutral,,OPNOOS,119090,151404
+"Dr. Akhilesh Das Gupta Institute of Professional Studies ( formerly Dr. Akhilesh Das Gupta Institute of Technology & Management), FC-26, Shastri Park, New Delhi - 110053",Information Technology (Shift 11},OS,SC,Gender-Neutral,,SCNOOS,749566,765458
+"Dr. Akhilesh Das Gupta Institute of Professional Studies ( formerly Dr. Akhilesh Das Gupta Institute of Technology & Management), FC-26, Shastri Park, New Delhi - 110053",Mechanical Engineering,HS,OPEN,Gender-Neutral,Defence,OPDFHS,524952,524952
+"Dr. Akhilesh Das Gupta Institute of Professional Studies ( formerly Dr. Akhilesh Das Gupta Institute of Technology & Management), FC-26, Shastri Park, New Delhi - 110053",Mechanical Engineering,HS,OPEN,Gender-Neutral,,OPNOHS,308663,308663
+"Dr. Akhilesh Das Gupta Institute of Professional Studies ( formerly Dr. Akhilesh Das Gupta Institute of Technology & Management), FC-26, Shastri Park, New Delhi - 110053",Mechanical Engineering,HS,SC,Gender-Neutral,,SCNOHS,949768,949768
+"Dr. Akhilesh Das Gupta Institute of Professional Studies ( formerly Dr. Akhilesh Das Gupta Institute of Technology & Management), FC-26, Shastri Park, New Delhi - 110053",Mechanical Engineering,OS,OPEN,Gender-Neutral,,OPNOOS,158342,171348
+"Dr. Akhilesh Das Gupta Institute of Professional Studies ( formerly Dr. Akhilesh Das Gupta Institute of Technology & Management), FC-26, Shastri Park, New Delhi - 110053",Mechanical Engineering,OS,SC,Gender-Neutral,,SCNOOS,686748,686748
+"Echelon Institute of Technology, Village Kabulpur, Kheri-Manjhawali Road, Nahar Paar Faridabad, Haryana-121101. (Jain Minority)",Artificial Intelligence & Data Science,HS,OPEN,Gender-Neutral,,OPNOHS,340574,1274533
+"Echelon Institute of Technology, Village Kabulpur, Kheri-Manjhawali Road, Nahar Paar Faridabad, Haryana-121101. (Jain Minority)",Artificial Intelligence & Data Science,OS,OPEN,Gender-Neutral,,OPNOOS,225949,273386
+"Echelon Institute of Technology, Village Kabulpur, Kheri-Manjhawali Road, Nahar Paar Faridabad, Haryana-121101. (Jain Minority)",Artificial Intelligence & Data Science,OS,SC,Gender-Neutral,,SCNOOS,605346,605346
+"Echelon Institute of Technology, Village Kabulpur, Kheri-Manjhawali Road, Nahar Paar Faridabad, Haryana-121101. (Jain Minority)",B.Tech. (3D Modelling & Animation),OS,OPEN,Gender-Neutral,,OPNOOS,272158,289578
+"Echelon Institute of Technology, Village Kabulpur, Kheri-Manjhawali Road, Nahar Paar Faridabad, Haryana-121101. (Jain Minority)",B.Tech. (Architecture & interior Decoration),HS,OPEN,Gender-Neutral,,OPNOHS,1215621,1215621
+"Echelon Institute of Technology, Village Kabulpur, Kheri-Manjhawali Road, Nahar Paar Faridabad, Haryana-121101. (Jain Minority)",B.Tech. (Architecture & interior Decoration),OS,OPEN,Gender-Neutral,,OPNOOS,272522,291452
+"Echelon Institute of Technology, Village Kabulpur, Kheri-Manjhawali Road, Nahar Paar Faridabad, Haryana-121101. (Jain Minority)",B.Tech. (Nanoscience & Technology),OS,OPEN,Gender-Neutral,,OPNOOS,270820,290715
+"Echelon Institute of Technology, Village Kabulpur, Kheri-Manjhawali Road, Nahar Paar Faridabad, Haryana-121101. (Jain Minority)",B.Tech. (Robotics & Artificial Intelligence),HS,OPEN,Gender-Neutral,,OPNOHS,662099,1409354
+"Echelon Institute of Technology, Village Kabulpur, Kheri-Manjhawali Road, Nahar Paar Faridabad, Haryana-121101. (Jain Minority)",B.Tech. (Robotics & Artificial Intelligence),OS,OPEN,Gender-Neutral,,OPNOOS,246615,270141
+"Echelon Institute of Technology, Village Kabulpur, Kheri-Manjhawali Road, Nahar Paar Faridabad, Haryana-121101. (Jain Minority)",B.Tech. (Robotics & Artificial Intelligence),OS,SC,Gender-Neutral,,SCNOOS,1409784,1409784
+"Echelon Institute of Technology, Village Kabulpur, Kheri-Manjhawali Road, Nahar Paar Faridabad, Haryana-121101. (Jain Minority)",B. Tech. CSE (OT) & CS including Blockchain Technology,HS,OPEN,Gender-Neutral,,OPNOHS,325262,1070864
+"Echelon Institute of Technology, Village Kabulpur, Kheri-Manjhawali Road, Nahar Paar Faridabad, Haryana-121101. (Jain Minority)",B. Tech. CSE (OT) & CS including Blockchain Technology,OS,OPEN,Gender-Neutral,,OPNOOS,226519,271082
+"Echelon Institute of Technology, Village Kabulpur, Kheri-Manjhawali Road, Nahar Paar Faridabad, Haryana-121101. (Jain Minority’",Computer Science & Engineering,AI,OPEN,Gender-Neutral,Jain Minority,NOJNAI,738480,738480
+"Echelon Institute of Technology, Village Kabulpur, Kheri-Manjhawali Road, Nahar Paar Faridabad, Haryana-121101. (Jain Minority’",Computer Science & Engineering,HS,OPEN,Gender-Neutral,,OPNOHS,403989,1414970
+"Echelon Institute of Technology, Village Kabulpur, Kheri-Manjhawali Road, Nahar Paar Faridabad, Haryana-121101. (Jain Minority’",Computer Science & Engineering,OS,OPEN,Gender-Neutral,Defence,OPDFOS,308231,308231
+"Echelon Institute of Technology, Village Kabulpur, Kheri-Manjhawali Road, Nahar Paar Faridabad, Haryana-121101. (Jain Minority’",Computer Science & Engineering,OS,OPEN,Gender-Neutral,,OPNOOS,145154,258621
+"Echelon Institute of Technology, Village Kabulpur, Kheri-Manjhawali Road, Nahar Paar Faridabad, Haryana-121101. (Jain Minority’",Computer Science & Engineering,OS,SC,Gender-Neutral,,SCNOOS,1177898,1419559
+"Echelon Institute of Technology, Village Kabulpur, Kheri-Manjhawali Road, Nahar Paar Faridabad, Haryana-121101. (Jain Minority)",CSE (Cyber Security),HS,OPEN,Gender-Neutral,,OPNOHS,389458,1464383
+"Echelon Institute of Technology, Village Kabulpur, Kheri-Manjhawali Road, Nahar Paar Faridabad, Haryana-121101. (Jain Minority)",CSE (Cyber Security),OS,OPEN,Gender-Neutral,,OPNOOS,260143,270750
+"Echelon Institute of Technology, Village Kabulpur, Kheri-Manjhawali Road, Nahar Paar Faridabad, Haryana-121101. (Jain Minority)",CSE- AIML,AI,OPEN,Gender-Neutral,Jain Minority,NOJNAI,699127,1159445
+"Echelon Institute of Technology, Village Kabulpur, Kheri-Manjhawali Road, Nahar Paar Faridabad, Haryana-121101. (Jain Minority)",CSE- AIML,HS,OPEN,Gender-Neutral,,OPNOHS,361521,1459433
+"Echelon Institute of Technology, Village Kabulpur, Kheri-Manjhawali Road, Nahar Paar Faridabad, Haryana-121101. (Jain Minority)",CSE- AIML,OS,OPEN,Gender-Neutral,,OPNOOS,195943,254706
+"Echelon Institute of Technology, Village Kabulpur, Kheri-Manjhawali Road, Nahar Paar Faridabad, Haryana-121101. (Jain Minority)",CSE- AIML,OS,SC,Gender-Neutral,,SCNOOS,858818,894742
+"Echelon Institute of Technology, Village Kabulpur, Kheri-Manjhawali Road, Nahar Paar Faridabad, Haryana-121101, (Jain Minority",Electronics & Communication Engineering,HS,OPEN,Gender-Neutral,,OPNOHS,492448,1277450
+"Echelon Institute of Technology, Village Kabulpur, Kheri-Manjhawali Road, Nahar Paar Faridabad, Haryana-121101, (Jain Minority",Electronics & Communication Engineering,OS,OPEN,Gender-Neutral,,OPNOOS,221582,248727
+"Echelon Institute of Technology, Village Kabulpur, Kheri-Manjhawali Road, Nahar Paar Faridabad, Haryana-121101. (Jain Minority)",g :,HS,OPEN,Gender-Neutral,,OPNOHS,677961,1460192
+"Echelon Institute of Technology, Village Kabulpur, Kheri-Manjhawali Road, Nahar Paar Faridabad, Haryana-121101. (Jain Minority)",g :,OS,OPEN,Gender-Neutral,,OPNOOS,231226,264180
+"Echelon Institute of Technology, Village Kabulpur, Kheri-Manjhawali Road, Nahar Paar Faridabad, Haryana-121101. (Jain Minority)",Mechatronics,HS,OPEN,Gender-Neutral,,OPNOHS,713083,766408
+"Echelon Institute of Technology, Village Kabulpur, Kheri-Manjhawali Road, Nahar Paar Faridabad, Haryana-121101. (Jain Minority)",Mechatronics,OS,OPEN,Gender-Neutral,,OPNOOS,243598,282930
+Institute Fairfield Institute of Management & Sees New Delhi - 110037,Course ie Machine Learning,HS,OPEN,Gender-Neutral,,OPNOHS,670434,670434
+Institute Fairfield Institute of Management & Sees New Delhi - 110037,Course ie Machine Learning,OS,OPEN,Gender-Neutral,,OPNOOS,254241,254241
+Institute Fairfield Institute of Management & Sees New Delhi - 110037,Course ie Machine Learning,OS,SC,Gender-Neutral,,SCNOOS,886548,886548
+"Fairfield Institute of Management & Technology, Plot No, 1037/1, Kapashera, New Delhi - 110037",Computer Science & Engineering,HS,OPEN,Gender-Neutral,Defence,OPDFHS,677407,872394
+"Fairfield Institute of Management & Technology, Plot No, 1037/1, Kapashera, New Delhi - 110037",Computer Science & Engineering,HS,OPEN,Gender-Neutral,,OPNOHS,245254,624880
+"Fairfield Institute of Management & Technology, Plot No, 1037/1, Kapashera, New Delhi - 110037",Computer Science & Engineering,HS,SC,Gender-Neutral,,SCNOHS,1017229,1017229
+"Fairfield Institute of Management & Technology, Plot No, 1037/1, Kapashera, New Delhi - 110037",Computer Science & Engineering,OS,OPEN,Gender-Neutral,,OPNOOS,227603,250247
+"Fairfield Institute of Management & Technology, Plot No, 1037/1, Kapashera, New Delhi - 110037",Computer Science & Engineering,OS,SC,Gender-Neutral,,SCNOOS,766644,821225
+Fairfield Institute of Management & New Delhi - 110037,Electronics & a Engineering,HS,OPEN,Gender-Neutral,,OPNOHS,983938,983938
+Fairfield Institute of Management & New Delhi - 110037,Electronics & a Engineering,OS,OPEN,Gender-Neutral,,OPNOOS,266935,266935
+"Fairfield Institute of Management & Technology, Plot No. 1037/1, Kapashera, New Delhi - 110037",Information Technolo,HS,OPEN,Gender-Neutral,Defence,OPDFHS,901188,1016470
+"Fairfield Institute of Management & Technology, Plot No. 1037/1, Kapashera, New Delhi - 110037",Information Technolo,HS,OPEN,Gender-Neutral,,OPNOHS,414498,828630
+"Fairfield Institute of Management & Technology, Plot No. 1037/1, Kapashera, New Delhi - 110037",Information Technolo,OS,OPEN,Gender-Neutral,Defence,OPDFOS,277102,277102
+"Fairfield Institute of Management & Technology, Plot No. 1037/1, Kapashera, New Delhi - 110037",Information Technolo,OS,OPEN,Gender-Neutral,,OPNOOS,255072,260954
+"Fairfield Institute of Management & Technology, Plot No. 1037/1, Kapashera, New Delhi - 110037",Information Technolo,OS,SC,Gender-Neutral,,SCNOOS,1259628,1259628
+Greater Noida Institute of Technolo,Artificial Intelligence & Machine Learning,HS,OPEN,Gender-Neutral,,OPNOHS,282136,1312632
+Greater Noida Institute of Technolo,Artificial Intelligence & Machine Learning,OS,OPEN,Gender-Neutral,,OPNOOS,129898,218092
+Greater Noida Institute of Technolo,Artificial Intelligence & Machine Learning,OS,SC,Gender-Neutral,,SCNOOS,855656,947602
+Greater Noida Institute of Technology,Computer Science & Engineering,HS,OPEN,Gender-Neutral,,OPNOHS,287956,1133110
+Greater Noida Institute of Technology,Computer Science & Engineering,OS,OPEN,Gender-Neutral,Defence,OPDFOS,256821,256821
+Greater Noida Institute of Technology,Computer Science & Engineering,OS,OPEN,Gender-Neutral,,OPNOOS,93805,217947
+Greater Noida Institute of Technology,Computer Science & Engineering,OS,SC,Gender-Neutral,,SCNOOS,554429,837764
+"Guru Teg Bahadur Institute of Technology, (Sikh Minority Institute)",Computer Science & Engineering (Shift |),AI,OPEN,Gender-Neutral,Kashmiri Migrant,NOKMAI,264392,264392
+"Guru Teg Bahadur Institute of Technology, (Sikh Minority Institute)",Computer Science & Engineering (Shift |),AI,OPEN,Gender-Neutral,Sikh Minority,NOSMAI,109006,109006
+"Guru Teg Bahadur Institute of Technology, (Sikh Minority Institute)",Computer Science & Engineering (Shift |),HS,OPEN,Gender-Neutral,Defence,OPDFHS,395978,397889
+"Guru Teg Bahadur Institute of Technology, (Sikh Minority Institute)",Computer Science & Engineering (Shift |),HS,OPEN,Gender-Neutral,,OPNOHS,169080,223597
+"Guru Teg Bahadur Institute of Technology, (Sikh Minority Institute)",Computer Science & Engineering (Shift |),HS,SC,Gender-Neutral,,SCNOHS,730429,1326228
+"Guru Teg Bahadur Institute of Technology, (Sikh Minority Institute)",Computer Science & Engineering (Shift |),OS,OPEN,Gender-Neutral,,OPNOOS,87486,94662
+"Guru Teg Bahadur Institute of Technology, (Sikh Minority Institute)",Computer Science & Engineering (Shift |),OS,SC,Gender-Neutral,,SCNOOS,338187,428095
+"Guru Teg Bahadur Institute of Technology, (Sikh Minority Institute)",Computer Science & Engineering (Shift I!),AI,OPEN,Gender-Neutral,Sikh Minority,NOSMAI,282937,1049530
+"Guru Teg Bahadur Institute of Technology, (Sikh Minority Institute)",Computer Science & Engineering (Shift I!),HS,OPEN,Gender-Neutral,Defence,OPDFHS,406879,406879
+"Guru Teg Bahadur Institute of Technology, (Sikh Minority Institute)",Computer Science & Engineering (Shift I!),HS,OPEN,Gender-Neutral,,OPNOHS,141880,230520
+"Guru Teg Bahadur Institute of Technology, (Sikh Minority Institute)",Computer Science & Engineering (Shift I!),HS,SC,Gender-Neutral,,SCNOHS,771927,799661
+"Guru Teg Bahadur Institute of Technology, (Sikh Minority Institute)",Computer Science & Engineering (Shift I!),OS,OPEN,Gender-Neutral,,OPNOOS,94926,96509
+"Guru Teg Bahadur Institute of Technology, sikh Minority Institute)",CSE- AIML,AI,OPEN,Gender-Neutral,Sikh Minority,NOSMAI,164156,615693
+"Guru Teg Bahadur Institute of Technology, sikh Minority Institute)",CSE- AIML,HS,OPEN,Gender-Neutral,,OPNOHS,162240,213360
+"Guru Teg Bahadur Institute of Technology, sikh Minority Institute)",CSE- AIML,HS,SC,Gender-Neutral,,SCNOHS,460429,1304047
+"Guru Teg Bahadur Institute of Technology, sikh Minority Institute)",CSE- AIML,OS,OPEN,Gender-Neutral,,OPNOOS,97055,98499
+"Guru Teg Bahadur Institute of Technology, (Sikh Minority Institute)",Electronics & |Communication Engineering,AI,OPEN,Gender-Neutral,Sikh Minority,NOSMAI,439028,1386907
+"Guru Teg Bahadur Institute of Technology, (Sikh Minority Institute)",Electronics & |Communication Engineering,HS,OPEN,Gender-Neutral,Defence,OPDFHS,568549,568549
+"Guru Teg Bahadur Institute of Technology, (Sikh Minority Institute)",Electronics & |Communication Engineering,HS,OPEN,Gender-Neutral,,OPNOHS,266666,358743
+"Guru Teg Bahadur Institute of Technology, (Sikh Minority Institute)",Electronics & |Communication Engineering,OS,OPEN,Gender-Neutral,,OPNOOS,101427,115721
+"Guru Teg Bahadur Institute of Technology, (Sikh Minority Institute)",Electronics & |Communication Engineering,OS,SC,Gender-Neutral,,SCNOOS,455066,455066
+"Guru Teg Bahadur Institute of Technology, Sikh Minority Institute)",Information Technology Shift 1),AI,OPEN,Gender-Neutral,Sikh Minority,NOSMAI,379624,1459263
+"Guru Teg Bahadur Institute of Technology, Sikh Minority Institute)",Information Technology Shift 1),HS,OPEN,Gender-Neutral,Defence,OPDFHS,462881,463596
+"Guru Teg Bahadur Institute of Technology, Sikh Minority Institute)",Information Technology Shift 1),HS,OPEN,Gender-Neutral,,OPNOHS,223096,271460
+"Guru Teg Bahadur Institute of Technology, Sikh Minority Institute)",Information Technology Shift 1),HS,SC,Gender-Neutral,,SCNOHS,1117114,1117114
+"Guru Teg Bahadur Institute of Technology, Sikh Minority Institute)",Information Technology Shift 1),OS,OPEN,Gender-Neutral,,OPNOOS,99005,105637
+"Guru Teg Bahadur Institute of Technology, Sikh Minority Institute)",Information Technology Shift 1),OS,SC,Gender-Neutral,,SCNOOS,457473,485868
+"Guru Teg Bahadur Institute of Technology, (Sikh Minority Institute)",Information Technology (Shift tl),AI,OPEN,Gender-Neutral,Sikh Minority,NOSMAI,1070117,1394955
+"Guru Teg Bahadur Institute of Technology, (Sikh Minority Institute)",Information Technology (Shift tl),HS,OPEN,Gender-Neutral,Defence,OPDFHS,516018,516018
+"Guru Teg Bahadur Institute of Technology, (Sikh Minority Institute)",Information Technology (Shift tl),HS,OPEN,Gender-Neutral,,OPNOHS,271478,271478
+"Guru Teg Bahadur Institute of Technology, (Sikh Minority Institute)",Information Technology (Shift tl),OS,OPEN,Gender-Neutral,,OPNOOS,107009,109158
+"Guru Tegh Bahadur 4th Centenary Engineering College, G-8 Area, Rajouri Garden, New Delhi-110064",Computer Science & Engineering,HS,OPEN,Gender-Neutral,Defence,OPDFHS,407887,499970
+"Guru Tegh Bahadur 4th Centenary Engineering College, G-8 Area, Rajouri Garden, New Delhi-110064",Computer Science & Engineering,HS,OPEN,Gender-Neutral,,OPNOHS,190042,318341
+"Guru Tegh Bahadur 4th Centenary Engineering College, G-8 Area, Rajouri Garden, New Delhi-110064",Computer Science & Engineering,HS,SC,Gender-Neutral,,SCNOHS,321365,1372630
+"Guru Tegh Bahadur 4th Centenary Engineering College, G-8 Area, Rajouri Garden, New Delhi-110064",Computer Science & Engineering,OS,OPEN,Gender-Neutral,Defence,OPDFOS,134490,134490
+"Guru Tegh Bahadur 4th Centenary Engineering College, G-8 Area, Rajouri Garden, New Delhi-110064",Computer Science & Engineering,OS,OPEN,Gender-Neutral,,OPNOOS,87338,121312
+"Guru Tegh Bahadur 4th Centenary Engineering College, G-8 Area, Rajouri Garden, New Delhi-110064",Computer Science & Engineering,OS,SC,Gender-Neutral,,SCNOOS,494773,611861
+"Guru Tegh Bahadur 4th Centenary Engineering College, G-8 Area, Rajouri Garden, New Delhi-110064",Computer Science & Engineering,OS,ST,Gender-Neutral,,STNOOS,766272,766272
+"Guru Tegh Bahadur 4th Centenary Engineering College, G-8 Area, Rajouri Garden, New Delhi-110064",CSE (Data Science),HS,OPEN,Gender-Neutral,Defence,OPDFHS,523143,523143
+"Guru Tegh Bahadur 4th Centenary Engineering College, G-8 Area, Rajouri Garden, New Delhi-110064",CSE (Data Science),HS,OPEN,Gender-Neutral,,OPNOHS,188606,351308
+"Guru Tegh Bahadur 4th Centenary Engineering College, G-8 Area, Rajouri Garden, New Delhi-110064",CSE (Data Science),HS,SC,Gender-Neutral,,SCNOHS,1194278,1309403
+"Guru Tegh Bahadur 4th Centenary Engineering College, G-8 Area, Rajouri Garden, New Delhi-110064",CSE (Data Science),OS,OPEN,Gender-Neutral,,OPNOOS,114052,136306
+"Guru Tegh Bahadur 4th Centenary Engineering College, G-8 Area, Rajouri Garden, New Delhi-110064",CSE (Data Science),OS,SC,Gender-Neutral,,SCNOOS,503870,612708
+"Guru Tegh Bahadur 4th Centenary Engineering College, G-8 Area, Rajouri Garden, New Delhi-110064",CSE- AIML,AI,OPEN,Gender-Neutral,Kashmiri Migrant,NOKMAI,275822,275822
+"Guru Tegh Bahadur 4th Centenary Engineering College, G-8 Area, Rajouri Garden, New Delhi-110064",CSE- AIML,HS,OPEN,Gender-Neutral,Defence,OPDFHS,528226,539514
+"Guru Tegh Bahadur 4th Centenary Engineering College, G-8 Area, Rajouri Garden, New Delhi-110064",CSE- AIML,HS,OPEN,Gender-Neutral,,OPNOHS,173639,325106
+"Guru Tegh Bahadur 4th Centenary Engineering College, G-8 Area, Rajouri Garden, New Delhi-110064",CSE- AIML,HS,SC,Gender-Neutral,,SCNOHS,835315,835315
+"Guru Tegh Bahadur 4th Centenary Engineering College, G-8 Area, Rajouri Garden, New Delhi-110064",CSE- AIML,OS,OPEN,Gender-Neutral,,OPNOOS,84540,135246
+"Guru Tegh Bahadur 4th Centenary Engineering College, G-8 Area, Rajouri Garden, New Delhi-110064",CSE- AIML,OS,SC,Gender-Neutral,,SCNOOS,575844,608584
+"Guru Tegh Bahadur 4th Centenary Engineering College, G-8 Area, Rajouri Garden, New Delhi-110064",Electronics & Communication Engineering,HS,OPEN,Gender-Neutral,Defence,OPDFHS,604732,669278
+"Guru Tegh Bahadur 4th Centenary Engineering College, G-8 Area, Rajouri Garden, New Delhi-110064",Electronics & Communication Engineering,HS,OPEN,Gender-Neutral,,OPNOHS,262421,422062
+"Guru Tegh Bahadur 4th Centenary Engineering College, G-8 Area, Rajouri Garden, New Delhi-110064",Electronics & Communication Engineering,HS,SC,Gender-Neutral,,SCNOHS,1202383,1202383
+"Guru Tegh Bahadur 4th Centenary Engineering College, G-8 Area, Rajouri Garden, New Delhi-110064",Electronics & Communication Engineering,OS,OPEN,Gender-Neutral,Defence,OPDFOS,206356,206356
+"Guru Tegh Bahadur 4th Centenary Engineering College, G-8 Area, Rajouri Garden, New Delhi-110064",Electronics & Communication Engineering,OS,OPEN,Gender-Neutral,,OPNOOS,145000,159170
+"Guru Tegh Bahadur 4th Centenary Engineering College, G-8 Area, Rajouri Garden, New Delhi-110064",Electronics & Communication Engineering,OS,SC,Gender-Neutral,,SCNOOS,733424,733424
+"Guru Tegh Bahadur 4th Centenary Engineering College, G-8 Area, Rajouri Garden, New Delhi-110064",Information Technology,HS,OPEN,Gender-Neutral,Defence,OPDFHS,529113,545600
+"Guru Tegh Bahadur 4th Centenary Engineering College, G-8 Area, Rajouri Garden, New Delhi-110064",Information Technology,HS,OPEN,Gender-Neutral,,OPNOHS,310814,378320
+"Guru Tegh Bahadur 4th Centenary Engineering College, G-8 Area, Rajouri Garden, New Delhi-110064",Information Technology,OS,OPEN,Gender-Neutral,,OPNOOS,137380,145654
+"Guru Tegh Bahadur 4th Centenary Engineering College, G-8 Area, Rajouri Garden, New Delhi-110064",Information Technology,OS,SC,Gender-Neutral,,SCNOOS,657761,723556
+Management,Data Science,HS,OPEN,Gender-Neutral,,OPNOHS,691709,691709
+Management,Data Science,OS,OPEN,Gender-Neutral,,OPNOOS,208077,208077
+Management,Data Science,OS,SC,Gender-Neutral,,SCNOOS,986760,986760
+HMR Institute of Technology & Management,Artificial Intelligence & Machine Learning,HS,OPEN,Gender-Neutral,,OPNOHS,437696,789707
+HMR Institute of Technology & Management,Artificial Intelligence & Machine Learning,OS,OPEN,Gender-Neutral,Defence,OPDFOS,262126,262126
+HMR Institute of Technology & Management,Artificial Intelligence & Machine Learning,OS,OPEN,Gender-Neutral,,OPNOOS,162946,220494
+HMR Institute of Technology & Management,Artificial Intelligence & Machine Learning,OS,SC,Gender-Neutral,,SCNOOS,1099319,1099319
+en HMR Institute of Technology &,eee Computer Science & Engineering (Shift |),AI,OPEN,Gender-Neutral,Kashmiri Migrant,NOKMAI,433795,433795
+en HMR Institute of Technology &,eee Computer Science & Engineering (Shift |),HS,OPEN,Gender-Neutral,Defence,OPDFHS,631745,631745
+en HMR Institute of Technology &,eee Computer Science & Engineering (Shift |),HS,OPEN,Gender-Neutral,,OPNOHS,252843,494393
+en HMR Institute of Technology &,eee Computer Science & Engineering (Shift |),OS,OPEN,Gender-Neutral,Defence,OPDFOS,246126,246126
+en HMR Institute of Technology &,eee Computer Science & Engineering (Shift |),OS,OPEN,Gender-Neutral,,OPNOOS,84128,176201
+en HMR Institute of Technology &,eee Computer Science & Engineering (Shift |),OS,SC,Gender-Neutral,,SCNOOS,604018,841367
+Management HMR Institute of Technology & 72|Management,Computer Science & Engineering (Shift I!),HS,OPEN,Gender-Neutral,Defence,OPDFHS,649294,841692
+Management HMR Institute of Technology & 72|Management,Computer Science & Engineering (Shift I!),HS,OPEN,Gender-Neutral,,OPNOHS,357782,550390
+Management HMR Institute of Technology & 72|Management,Computer Science & Engineering (Shift I!),HS,SC,Gender-Neutral,,SCNOHS,952183,952183
+Management HMR Institute of Technology & 72|Management,Computer Science & Engineering (Shift I!),OS,OPEN,Gender-Neutral,,OPNOOS,179386,188501
+Management HMR Institute of Technology & 72|Management,Computer Science & Engineering (Shift I!),OS,SC,Gender-Neutral,,SCNOOS,858953,899425
+HMR Institute of Technology & Management,Computer Science & Technology,HS,OPEN,Gender-Neutral,Defence,OPDFHS,1274393,1274393
+HMR Institute of Technology & Management,Computer Science & Technology,HS,OPEN,Gender-Neutral,,OPNOHS,368124,368124
+HMR Institute of Technology & Management,Computer Science & Technology,OS,OPEN,Gender-Neutral,Defence,OPDFOS,257390,257390
+HMR Institute of Technology & Management,Computer Science & Technology,OS,OPEN,Gender-Neutral,,OPNOOS,155285,211713
+HMR Institute of Technology & Management,Computer Science & Technology,OS,SC,Gender-Neutral,,SCNOOS,765014,765014
+HMR Institute of Technology & Management,CSE (Cyber Security),HS,OPEN,Gender-Neutral,,OPNOHS,365606,627069
+HMR Institute of Technology & Management,CSE (Cyber Security),OS,OPEN,Gender-Neutral,,OPNOOS,95621,177070
+HMR Institute of Technology &,CSE- AIML,HS,OPEN,Gender-Neutral,Defence,OPDFHS,1067821,1076216
+HMR Institute of Technology &,CSE- AIML,HS,OPEN,Gender-Neutral,,OPNOHS,370760,370760
+HMR Institute of Technology &,CSE- AIML,OS,OPEN,Gender-Neutral,,OPNOOS,155545,197450
+HMR Institute of Technology &,CSE- AIML,OS,SC,Gender-Neutral,,SCNOOS,872243,941513
+Management HMR Institute of Technology &,CSE- DS,HS,OPEN,Gender-Neutral,,OPNOHS,427804,774847
+Management HMR Institute of Technology &,CSE- DS,OS,OPEN,Gender-Neutral,,OPNOOS,199471,216456
+Management HMR Institute of Technology &,CSE- DS,OS,SC,Gender-Neutral,,SCNOOS,1040555,1070510
+Management HMR Institute of Technology & Management,Information Technology,HS,OPEN,Gender-Neutral,,OPNOHS,818989,818989
+Management HMR Institute of Technology & Management,Information Technology,OS,OPEN,Gender-Neutral,,OPNOOS,189067,212621
+Management HMR Institute of Technology & Management,Information Technology,OS,SC,Gender-Neutral,,SCNOOS,861852,894993
+"JIMS Engineering Management Technical Campus, 48/4, Knowledge Park - Ili Greater Noida",Artificial Intelligence & Data Science,HS,OPEN,Gender-Neutral,,OPNOHS,329727,1412240
+"JIMS Engineering Management Technical Campus, 48/4, Knowledge Park - Ili Greater Noida",Artificial Intelligence & Data Science,OS,OPEN,Gender-Neutral,Defence,OPDFOS,288621,288621
+"JIMS Engineering Management Technical Campus, 48/4, Knowledge Park - Ili Greater Noida",Artificial Intelligence & Data Science,OS,OPEN,Gender-Neutral,,OPNOOS,222320,248167
+"JIMS Engineering Management Technical Campus, 48/4, Knowledge Park - Ili Greater Noida",Artificial Intelligence & Data Science,OS,SC,Gender-Neutral,,SCNOOS,1402957,1402957
+"JIMS Engineering Management Technical Campus, 48/4, Knowledge Park - Ill Greater Noida",Artificial Intelligence & Machine Learning,HS,OPEN,Gender-Neutral,,OPNOHS,474133,1438118
+"JIMS Engineering Management Technical Campus, 48/4, Knowledge Park - Ill Greater Noida",Artificial Intelligence & Machine Learning,OS,OPEN,Gender-Neutral,,OPNOOS,167225,243690
+"JIMS Engineering Management Technical Campus, 48/4, Knowledge Park - Ill Greater Noida",Artificial Intelligence & Machine Learning,OS,SC,Gender-Neutral,,SCNOOS,675096,1225895
+"JIMS Engineering Management Technical Campus, 48/4, Knowledge Park - Ill Greater Noida",Computer Science & Engineerini,HS,OPEN,Gender-Neutral,,OPNOHS,230614,1204953
+"JIMS Engineering Management Technical Campus, 48/4, Knowledge Park - Ill Greater Noida",Computer Science & Engineerini,OS,OPEN,Gender-Neutral,Defence,OPDFOS,246447,254427
+"JIMS Engineering Management Technical Campus, 48/4, Knowledge Park - Ill Greater Noida",Computer Science & Engineerini,OS,OPEN,Gender-Neutral,,OPNOOS,158572,241374
+"JIMS Engineering Management Technical Campus, 48/4, Knowledge Park - Ill Greater Noida",Computer Science & Engineerini,OS,SC,Gender-Neutral,,SCNOOS,657318,1198371
+"JIMS Engineering Management Technical Campus, 48/4, Knowledge Park - Ill Greater Noida",Computer Science & Technology,HS,OPEN,Gender-Neutral,,OPNOHS,452429,1466559
+"JIMS Engineering Management Technical Campus, 48/4, Knowledge Park - Ill Greater Noida",Computer Science & Technology,OS,OPEN,Gender-Neutral,,OPNOOS,190832,242471
+"JIMS Engineering Management Technical Campus, 48/4, Knowledge Park - Ill Greater Noida",Computer Science & Technology,OS,SC,Gender-Neutral,,SCNOOS,1276057,1276057
+"Maharaja Agrasen Institute of Technology, Sector-22, Rohini, Delhi 4€” 110085",Computer Science & Engineering (Shift!),AI,OPEN,Gender-Neutral,Kashmiri Migrant,NOKMAI,95372,95372
+"Maharaja Agrasen Institute of Technology, Sector-22, Rohini, Delhi 4€” 110085",Computer Science & Engineering (Shift!),HS,OPEN,Gender-Neutral,Defence,OPDFHS,1340967,1340967
+"Maharaja Agrasen Institute of Technology, Sector-22, Rohini, Delhi 4€” 110085",Computer Science & Engineering (Shift!),HS,OPEN,Gender-Neutral,,OPNOHS,19737,85429
+"Maharaja Agrasen Institute of Technology, Sector-22, Rohini, Delhi 4€” 110085",Computer Science & Engineering (Shift!),HS,OPEN (PwD),Gender-Neutral,,OPPHHS,384108,1456807
+"Maharaja Agrasen Institute of Technology, Sector-22, Rohini, Delhi 4€” 110085",Computer Science & Engineering (Shift!),HS,SC,Gender-Neutral,Defence,SCDFHS,1025346,1025346
+"Maharaja Agrasen Institute of Technology, Sector-22, Rohini, Delhi 4€” 110085",Computer Science & Engineering (Shift!),HS,SC,Gender-Neutral,,SCNOHS,309259,565164
+"Maharaja Agrasen Institute of Technology, Sector-22, Rohini, Delhi 4€” 110085",Computer Science & Engineering (Shift!),HS,ST,Gender-Neutral,,STNOHS,432099,879631
+"Maharaja Agrasen Institute of Technology, Sector-22, Rohini, Delhi 4€” 110085",Computer Science & Engineering (Shift!),OS,OPEN,Gender-Neutral,Defence,OPDFOS,253881,417357
+"Maharaja Agrasen Institute of Technology, Sector-22, Rohini, Delhi 4€” 110085",Computer Science & Engineering (Shift!),OS,OPEN,Gender-Neutral,,OPNOOS,29267,54096
+"Maharaja Agrasen Institute of Technology, Sector-22, Rohini, Delhi 4€” 110085",Computer Science & Engineering (Shift!),OS,OPEN (PwD),Gender-Neutral,,OPPHOS,267923,267923
+"Maharaja Agrasen Institute of Technology, Sector-22, Rohini, Delhi 4€” 110085",Computer Science & Engineering (Shift!),OS,SC,Gender-Neutral,Defence,SCDFOS,278099,278099
+"Maharaja Agrasen Institute of Technology, Sector-22, Rohini, Delhi 4€” 110085",Computer Science & Engineering (Shift!),OS,SC,Gender-Neutral,,SCNOOS,185586,222092
+"Maharaja Agrasen Institute of Technology, Sector-22, Rohini, Delhi 4€” 110085",Computer Science & Engineering (Shift!),OS,ST,Gender-Neutral,,STNOOS,476070,531662
+"Maharaja Agrasen Institute of Technology, Sector-22, Rohini, Delhi 4€” 110085",Computer Science & Engineering (Shift!),OS,ST (PwD),Gender-Neutral,,STPHOS,1007465,1007465
+"Maharaja Agrasen Institute of Technology, Sector-22, Rohini, Delhi 4€* 110085",Computer Science & Engineering (Shift Il),HS,OPEN,Gender-Neutral,Defence,OPDFHS,181432,193904
+"Maharaja Agrasen Institute of Technology, Sector-22, Rohini, Delhi 4€* 110085",Computer Science & Engineering (Shift Il),HS,OPEN,Gender-Neutral,,OPNOHS,74100,91234
+"Maharaja Agrasen Institute of Technology, Sector-22, Rohini, Delhi 4€* 110085",Computer Science & Engineering (Shift Il),HS,SC,Gender-Neutral,,SCNOHS,414155,584887
+"Maharaja Agrasen Institute of Technology, Sector-22, Rohini, Delhi 4€* 110085",Computer Science & Engineering (Shift Il),OS,OPEN,Gender-Neutral,,OPNOOS,52373,55785
+"Maharaja Agrasen Institute of Technology, Sector-22, Rohini, Delhi 4€* 110085",Computer Science & Engineering (Shift Il),OS,SC,Gender-Neutral,,SCNOOS,242413,242413
+"Maharaja Agrasen Institute of Technology, Sector-22, Rohini, Delhi 4€* 110085",Computer Science & Engineering (Shift Il),OS,ST,Gender-Neutral,,STNOOS,626592,626592
+"Maharaja Agrasen Institute of Technology, Sector-22, Rohini, Delhi 4€"" 110085",Computer Science & Technology,HS,OPEN,Gender-Neutral,Defence,OPDFHS,154095,228318
+"Maharaja Agrasen Institute of Technology, Sector-22, Rohini, Delhi 4€"" 110085",Computer Science & Technology,HS,OPEN,Gender-Neutral,,OPNOHS,78599,109371
+"Maharaja Agrasen Institute of Technology, Sector-22, Rohini, Delhi 4€"" 110085",Computer Science & Technology,HS,OPEN (PwD),Gender-Neutral,,OPPHHS,1011183,1011183
+"Maharaja Agrasen Institute of Technology, Sector-22, Rohini, Delhi 4€"" 110085",Computer Science & Technology,HS,SC,Gender-Neutral,,SCNOHS,381809,686829
+"Maharaja Agrasen Institute of Technology, Sector-22, Rohini, Delhi 4€"" 110085",Computer Science & Technology,OS,OPEN,Gender-Neutral,Defence,OPDFOS,62979,62979
+"Maharaja Agrasen Institute of Technology, Sector-22, Rohini, Delhi 4€"" 110085",Computer Science & Technology,OS,OPEN,Gender-Neutral,,OPNOOS,51459,60512
+"Maharaja Agrasen Institute of Technology, Sector-22, Rohini, Delhi 4€"" 110085",Computer Science & Technology,OS,OPEN (PwD),Gender-Neutral,,OPPHOS,776719,776719
+"Maharaja Agrasen Institute of Technology, Sector-22, Rohini, Delhi 4€"" 110085",Computer Science & Technology,OS,SC,Gender-Neutral,,SCNOOS,245120,285483
+"Maharaja Agrasen Institute of Technology, Sector-22, Rohini, Delhi 4€"" 110085",Computer Science & Technology,OS,ST,Gender-Neutral,,STNOOS,420871,633615
+"Maharaja Agrasen Institute of Technology, Sector-22, Rohini, Delhi 4€"" 110085",CSE-Al,HS,OPEN,Gender-Neutral,Defence,OPDFHS,177390,197621
+"Maharaja Agrasen Institute of Technology, Sector-22, Rohini, Delhi 4€"" 110085",CSE-Al,HS,OPEN,Gender-Neutral,,OPNOHS,41156,92818
+"Maharaja Agrasen Institute of Technology, Sector-22, Rohini, Delhi 4€"" 110085",CSE-Al,HS,OPEN (PwD),Gender-Neutral,,OPPHHS,631197,631197
+"Maharaja Agrasen Institute of Technology, Sector-22, Rohini, Delhi 4€"" 110085",CSE-Al,HS,SC,Gender-Neutral,,SCNOHS,291361,600203
+"Maharaja Agrasen Institute of Technology, Sector-22, Rohini, Delhi 4€"" 110085",CSE-Al,OS,OPEN,Gender-Neutral,Defence,OPDFOS,584687,584687
+"Maharaja Agrasen Institute of Technology, Sector-22, Rohini, Delhi 4€"" 110085",CSE-Al,OS,OPEN,Gender-Neutral,,OPNOOS,45545,55923
+"Maharaja Agrasen Institute of Technology, Sector-22, Rohini, Delhi 4€"" 110085",CSE-Al,OS,OPEN (PwD),Gender-Neutral,,OPPHOS,578264,578264
+"Maharaja Agrasen Institute of Technology, Sector-22, Rohini, Delhi 4€"" 110085",CSE-Al,OS,SC,Gender-Neutral,,SCNOOS,241016,241016
+"Maharaja Agrasen Institute of Technology, Sector-22, Rohini, Delhi 4€* 110085",CSE- AIML,HS,OPEN,Gender-Neutral,Defence,OPDFHS,184615,187003
+"Maharaja Agrasen Institute of Technology, Sector-22, Rohini, Delhi 4€* 110085",CSE- AIML,HS,OPEN,Gender-Neutral,,OPNOHS,36395,36395
+"Maharaja Agrasen Institute of Technology, Sector-22, Rohini, Delhi 4€* 110085",CSE- AIML,HS,OPEN (PwD),Gender-Neutral,,OPPHHS,405355,405355
+"Maharaja Agrasen Institute of Technology, Sector-22, Rohini, Delhi 4€* 110085",CSE- AIML,HS,SC,Gender-Neutral,,SCNOHS,288922,571629
+"Maharaja Agrasen Institute of Technology, Sector-22, Rohini, Delhi 4€* 110085",CSE- AIML,OS,OPEN,Gender-Neutral,,OPNOOS,21436,54071
+"Maharaja Agrasen Institute of Technology, Sector-22, Rohini, Delhi 4€* 110085",CSE- AIML,OS,SC,Gender-Neutral,,SCNOOS,251523,251523
+"Maharaja Agrasen Institute of Technology, Sector-22, Rohini, Delhi 4€* 110085",CSE- AIML,OS,ST,Gender-Neutral,,STNOOS,417624,417624
+"Institute Maharaja Agrasen Institute of Technology, Sector-22, Rohini, Delhi 4€"" 110085",Course CSE- DS,HS,OPEN,Gender-Neutral,Defence,OPDFHS,211235,214307
+"Institute Maharaja Agrasen Institute of Technology, Sector-22, Rohini, Delhi 4€"" 110085",Course CSE- DS,HS,OPEN,Gender-Neutral,,OPNOHS,63592,63592
+"Institute Maharaja Agrasen Institute of Technology, Sector-22, Rohini, Delhi 4€"" 110085",Course CSE- DS,HS,SC,Gender-Neutral,,SCNOHS,454787,610264
+"Institute Maharaja Agrasen Institute of Technology, Sector-22, Rohini, Delhi 4€"" 110085",Course CSE- DS,OS,OPEN,Gender-Neutral,,OPNOOS,52632,57886
+"Institute Maharaja Agrasen Institute of Technology, Sector-22, Rohini, Delhi 4€"" 110085",Course CSE- DS,OS,SC,Gender-Neutral,,SCNOOS,253430,253430
+"Institute Maharaja Agrasen Institute of Technology, Sector-22, Rohini, Delhi 4€"" 110085",Course CSE- DS,OS,ST,Gender-Neutral,,STNOOS,589299,589299
+"Maharaja Agrasen Institute of Technology, Sector-22, Rohini, Delhi 4€"" 110085",Electrical & Electronics Engineering,HS,OPEN,Gender-Neutral,Defence,OPDFHS,417587,431761
+"Maharaja Agrasen Institute of Technology, Sector-22, Rohini, Delhi 4€"" 110085",Electrical & Electronics Engineering,HS,OPEN,Gender-Neutral,,OPNOHS,100885,223405
+"Maharaja Agrasen Institute of Technology, Sector-22, Rohini, Delhi 4€"" 110085",Electrical & Electronics Engineering,HS,SC,Gender-Neutral,,SCNOHS,607678,1149172
+"Maharaja Agrasen Institute of Technology, Sector-22, Rohini, Delhi 4€"" 110085",Electrical & Electronics Engineering,OS,OPEN,Gender-Neutral,,OPNOOS,67457,83363
+"Maharaja Agrasen Institute of Technology, Sector-22, Rohini, Delhi 4€"" 110085",Electrical & Electronics Engineering,OS,SC,Gender-Neutral,,SCNOOS,290215,290215
+"Maharaja Agrasen Institute of Technology, Sector-22, Rohini, Delhi 4€"" 110085",Electronics & Comm.- |Advance Comm. Technology,HS,OPEN,Gender-Neutral,Defence,OPDFHS,350977,356395
+"Maharaja Agrasen Institute of Technology, Sector-22, Rohini, Delhi 4€"" 110085",Electronics & Comm.- |Advance Comm. Technology,HS,OPEN,Gender-Neutral,,OPNOHS,76396,76396
+"Maharaja Agrasen Institute of Technology, Sector-22, Rohini, Delhi 4€"" 110085",Electronics & Comm.- |Advance Comm. Technology,HS,SC,Gender-Neutral,,SCNOHS,854744,1105499
+"Maharaja Agrasen Institute of Technology, Sector-22, Rohini, Delhi 4€"" 110085",Electronics & Comm.- |Advance Comm. Technology,OS,OPEN,Gender-Neutral,,OPNOOS,59218,80577
+"Maharaja Agrasen Institute of Technology, Sector-22, Rohini, Delhi 4€"" 110085",Electronics & Comm.- |Advance Comm. Technology,OS,SC,Gender-Neutral,,SCNOOS,339684,365112
+"Maharaja Agrasen Institute of Technology, Sector-22, Rohini, Delhi 4€* 110085",Electronics & |Communication Engineering,HS,OPEN,Gender-Neutral,Defence,OPDFHS,164724,345667
+"Maharaja Agrasen Institute of Technology, Sector-22, Rohini, Delhi 4€* 110085",Electronics & |Communication Engineering,HS,OPEN,Gender-Neutral,,OPNOHS,35180,138006
+"Maharaja Agrasen Institute of Technology, Sector-22, Rohini, Delhi 4€* 110085",Electronics & |Communication Engineering,HS,OPEN (PwD),Gender-Neutral,,OPPHHS,1154095,1154095
+"Maharaja Agrasen Institute of Technology, Sector-22, Rohini, Delhi 4€* 110085",Electronics & |Communication Engineering,HS,SC,Gender-Neutral,,SCNOHS,533857,879222
+"Maharaja Agrasen Institute of Technology, Sector-22, Rohini, Delhi 4€* 110085",Electronics & |Communication Engineering,OS,OPEN,Gender-Neutral,,OPNOOS,61961,69754
+"Maharaja Agrasen Institute of Technology, Sector-22, Rohini, Delhi 4€* 110085",Electronics & |Communication Engineering,OS,SC,Gender-Neutral,,SCNOOS,296822,296822
+"Maharaja Agrasen Institute of Technology, Sector-22, Rohini, Delhi 4€* 110085",Electronics & |Communication Engineering,OS,ST,Gender-Neutral,,STNOOS,928899,928899
+"Maharaja Agrasen Institute of Technology, Sector-22, Rohini, Delhi 4€"" 110085",Electronics Engg.- VLSI Design & Technology,HS,OPEN,Gender-Neutral,Defence,OPDFHS,382108,404202
+"Maharaja Agrasen Institute of Technology, Sector-22, Rohini, Delhi 4€"" 110085",Electronics Engg.- VLSI Design & Technology,HS,OPEN,Gender-Neutral,,OPNOHS,55276,192391
+"Maharaja Agrasen Institute of Technology, Sector-22, Rohini, Delhi 4€"" 110085",Electronics Engg.- VLSI Design & Technology,HS,SC,Gender-Neutral,,SCNOHS,869143,1090729
+"Maharaja Agrasen Institute of Technology, Sector-22, Rohini, Delhi 4€"" 110085",Electronics Engg.- VLSI Design & Technology,OS,OPEN,Gender-Neutral,,OPNOOS,67620,78188
+"Maharaja Agrasen Institute of Technology, Sector-22, Rohini, Delhi 4€"" 110085",Electronics Engg.- VLSI Design & Technology,OS,SC,Gender-Neutral,,SCNOOS,343037,363597
+"Maharaja Agrasen Institute of Technology, Sector-22, Rohini, Delhi 4€"" 110085",Information Technology,HS,OPEN,Gender-Neutral,Defence,OPDFHS,199614,255584
+"Maharaja Agrasen Institute of Technology, Sector-22, Rohini, Delhi 4€"" 110085",Information Technology,HS,OPEN,Gender-Neutral,,OPNOHS,89926,135548
+"Maharaja Agrasen Institute of Technology, Sector-22, Rohini, Delhi 4€"" 110085",Information Technology,HS,SC,Gender-Neutral,,SCNOHS,456365,831551
+"Maharaja Agrasen Institute of Technology, Sector-22, Rohini, Delhi 4€"" 110085",Information Technology,OS,OPEN,Gender-Neutral,Defence,OPDFOS,70054,314060
+"Maharaja Agrasen Institute of Technology, Sector-22, Rohini, Delhi 4€"" 110085",Information Technology,OS,OPEN,Gender-Neutral,,OPNOOS,57787,67344
+"Maharaja Agrasen Institute of Technology, Sector-22, Rohini, Delhi 4€"" 110085",Information Technology,OS,SC,Gender-Neutral,,SCNOOS,230982,304484
+"Maharaja Agrasen Institute of Technology, Sector-22, Rohini, Delhi 4€"" 110085",Information Technology,OS,ST,Gender-Neutral,,STNOOS,660085,660085
+"Maharaja Agrasen Institute of Technology, Sector-22, Rohini, Delhi 4€"" 110085",Mechanical Engineering,HS,OPEN,Gender-Neutral,Defence,OPDFHS,336937,448588
+"Maharaja Agrasen Institute of Technology, Sector-22, Rohini, Delhi 4€"" 110085",Mechanical Engineering,HS,OPEN,Gender-Neutral,,OPNOHS,120575,284455
+"Maharaja Agrasen Institute of Technology, Sector-22, Rohini, Delhi 4€"" 110085",Mechanical Engineering,HS,SC,Gender-Neutral,,SCNOHS,549358,1446580
+"Maharaja Agrasen Institute of Technology, Sector-22, Rohini, Delhi 4€"" 110085",Mechanical Engineering,OS,OPEN,Gender-Neutral,Defence,OPDFOS,121247,121247
+"Maharaja Agrasen Institute of Technology, Sector-22, Rohini, Delhi 4€"" 110085",Mechanical Engineering,OS,OPEN,Gender-Neutral,,OPNOOS,85174,99033
+"Maharaja Agrasen Institute of Technology, Sector-22, Rohini, Delhi 4€"" 110085",Mechanical Engineering,OS,SC,Gender-Neutral,,SCNOOS,375434,375434
+Maharaja Surajmal Institute Technolo,Computer Science & Engineering (Shift |),AI,OPEN,Gender-Neutral,Kashmiri Migrant,NOKMAI,182468,182468
+Maharaja Surajmal Institute Technolo,Computer Science & Engineering (Shift |),HS,OPEN,Gender-Neutral,Defence,OPDFHS,201479,285718
+Maharaja Surajmal Institute Technolo,Computer Science & Engineering (Shift |),HS,OPEN,Gender-Neutral,,OPNOHS,52036,117485
+Maharaja Surajmal Institute Technolo,Computer Science & Engineering (Shift |),HS,OPEN (PwD),Gender-Neutral,,OPPHHS,542425,542425
+Maharaja Surajmal Institute Technolo,Computer Science & Engineering (Shift |),HS,SC,Gender-Neutral,,SCNOHS,224128,649445
+Maharaja Surajmal Institute Technolo,Computer Science & Engineering (Shift |),OS,OPEN,Gender-Neutral,Defence,OPDFOS,77500,77500
+Maharaja Surajmal Institute Technolo,Computer Science & Engineering (Shift |),OS,OPEN,Gender-Neutral,,OPNOOS,31517,62496
+Maharaja Surajmal Institute Technolo,Computer Science & Engineering (Shift |),OS,OPEN (PwD),Gender-Neutral,,OPPHOS,631693,631693
+Maharaja Surajmal Institute Technolo,Computer Science & Engineering (Shift |),OS,SC,Gender-Neutral,,SCNOOS,198950,272312
+Maharaja Surajmal Institute Technolo,Computer Science & Engineering (Shift |),OS,ST,Gender-Neutral,,STNOOS,606042,657458
+Maharaja Surajmal Institute Technolo,Computer Science & Engineering (Shift I!),HS,OPEN,Gender-Neutral,Defence,OPDFHS,226480,228360
+Maharaja Surajmal Institute Technolo,Computer Science & Engineering (Shift I!),HS,OPEN,Gender-Neutral,,OPNOHS,98763,123155
+Maharaja Surajmal Institute Technolo,Computer Science & Engineering (Shift I!),HS,SC,Gender-Neutral,,SCNOHS,529146,683103
+Maharaja Surajmal Institute Technolo,Computer Science & Engineering (Shift I!),OS,OPEN,Gender-Neutral,,OPNOOS,38142,64997
+Maharaja Surajmal Institute Technolo,Computer Science & Engineering (Shift I!),OS,SC,Gender-Neutral,,SCNOOS,284460,284460
+Maharaja Surajmal Institute Technolo,Computer Science & Engineering (Shift I!),OS,ST,Gender-Neutral,,STNOOS,719313,719313
+Maharaja Surajmal Institute Technology,Electrical & Electronics Engineering,HS,OPEN,Gender-Neutral,Defence,OPDFHS,362727,372286
+Maharaja Surajmal Institute Technology,Electrical & Electronics Engineering,HS,OPEN,Gender-Neutral,,OPNOHS,133485,268614
+Maharaja Surajmal Institute Technology,Electrical & Electronics Engineering,HS,OPEN (PwD),Gender-Neutral,,OPPHHS,814722,814722
+Maharaja Surajmal Institute Technology,Electrical & Electronics Engineering,HS,SC,Gender-Neutral,,SCNOHS,509752,718371
+Maharaja Surajmal Institute Technology,Electrical & Electronics Engineering,OS,OPEN,Gender-Neutral,Defence,OPDFOS,111838,111838
+Maharaja Surajmal Institute Technology,Electrical & Electronics Engineering,OS,OPEN,Gender-Neutral,,OPNOOS,85818,88974
+Maharaja Surajmal Institute Technology,Electrical & Electronics Engineering,OS,SC,Gender-Neutral,,SCNOOS,403774,416754
+Maharaja Surajmal Institute Technolo,Electronics & ‘Communication Engineering (Shift 1!),HS,OPEN,Gender-Neutral,Defence,OPDFHS,326883,353117
+Maharaja Surajmal Institute Technolo,Electronics & ‘Communication Engineering (Shift 1!),HS,OPEN,Gender-Neutral,,OPNOHS,100021,199561
+Maharaja Surajmal Institute Technolo,Electronics & ‘Communication Engineering (Shift 1!),HS,SC,Gender-Neutral,,SCNOHS,822706,1208398
+Maharaja Surajmal Institute Technolo,Electronics & ‘Communication Engineering (Shift 1!),OS,OPEN,Gender-Neutral,Defence,OPDFOS,93342,93342
+Maharaja Surajmal Institute Technolo,Electronics & ‘Communication Engineering (Shift 1!),OS,OPEN,Gender-Neutral,,OPNOOS,73762,82193
+Maharaja Surajmal Institute Technolo,Electronics & ‘Communication Engineering (Shift 1!),OS,SC,Gender-Neutral,Defence,SCDFOS,735090,735090
+Maharaja Surajmal Institute Technolo,Electronics & ‘Communication Engineering (Shift 1!),OS,SC,Gender-Neutral,,SCNOOS,243368,359161
+Maharaja Surajmal Institute Technology,Electronics & Communication Engineering (Shift Il),HS,OPEN,Gender-Neutral,Defence,OPDFHS,381383,391081
+Maharaja Surajmal Institute Technology,Electronics & Communication Engineering (Shift Il),HS,OPEN,Gender-Neutral,,OPNOHS,160989,215297
+Maharaja Surajmal Institute Technology,Electronics & Communication Engineering (Shift Il),HS,SC,Gender-Neutral,,SCNOHS,605956,605956
+Maharaja Surajmal Institute Technology,Electronics & Communication Engineering (Shift Il),OS,OPEN,Gender-Neutral,,OPNOOS,82566,85518
+Maharaja Surajmal Institute Technology,Electronics & Communication Engineering (Shift Il),OS,SC,Gender-Neutral,,SCNOOS,396376,396376
+Maharaja Surajmal Institute Technolo,Information Technology (Shift 1),HS,OPEN,Gender-Neutral,Defence,OPDFHS,229034,256081
+Maharaja Surajmal Institute Technolo,Information Technology (Shift 1),HS,OPEN,Gender-Neutral,,OPNOHS,118748,149164
+Maharaja Surajmal Institute Technolo,Information Technology (Shift 1),HS,SC,Gender-Neutral,,SCNOHS,469709,900545
+Maharaja Surajmal Institute Technolo,Information Technology (Shift 1),OS,OPEN,Gender-Neutral,Defence,OPDFOS,83894,83894
+Maharaja Surajmal Institute Technolo,Information Technology (Shift 1),OS,OPEN,Gender-Neutral,,OPNOOS,65998,70646
+Maharaja Surajmal Institute Technolo,Information Technology (Shift 1),OS,OPEN (PwD),Gender-Neutral,,OPPHOS,650992,650992
+Maharaja Surajmal Institute Technolo,Information Technology (Shift 1),OS,SC,Gender-Neutral,,SCNOOS,286851,319192
+Maharaja Surajmal Institute Technolo,Information Technology (Shift 1),OS,ST,Gender-Neutral,,STNOOS,1156154,1156154
+Maharaja Surajmal Institute Technology,Information Technology (Shift tl),HS,OPEN,Gender-Neutral,Defence,OPDFHS,257268,263287
+Maharaja Surajmal Institute Technology,Information Technology (Shift tl),HS,OPEN,Gender-Neutral,,OPNOHS,123150,155081
+Maharaja Surajmal Institute Technology,Information Technology (Shift tl),HS,SC,Gender-Neutral,,SCNOHS,768072,922284
+Maharaja Surajmal Institute Technology,Information Technology (Shift tl),OS,OPEN,Gender-Neutral,,OPNOOS,70690,72620
+Maharaja Surajmal Institute Technology,Information Technology (Shift tl),OS,SC,Gender-Neutral,,SCNOOS,325421,325884
+"Shri Balwant Institute of Technology, Merrut Road (Pallri), Sonipat, NCR Delhi), Haryana (Jain Minority Institute)",Computer Science & Engineering,AI,OPEN,Gender-Neutral,Jain Minority,NOJNAI,1079933,1079933
+"Shri Balwant Institute of Technology, Merrut Road (Pallri), Sonipat, NCR Delhi), Haryana (Jain Minority Institute)",Computer Science & Engineering,HS,OPEN,Gender-Neutral,,OPNOHS,383160,1342898
+"Shri Balwant Institute of Technology, Merrut Road (Pallri), Sonipat, NCR Delhi), Haryana (Jain Minority Institute)",Computer Science & Engineering,OS,OPEN,Gender-Neutral,,OPNOOS,200557,243432
+"Shri Balwant Institute of Technology, Merrut Road (Pallri), Sonipat, NCR Delhi), Haryana (Jain Minority Institute)",Computer Science & Engineering,OS,SC,Gender-Neutral,,SCNOOS,838577,838577
+"Shri Balwant Institute of Technology, Merrut Road (Pallri), Sonipat, NCR Delhi), Haryana (Jain Minority Institute)",Electrical & Electronics Engineering,HS,OPEN,Gender-Neutral,,OPNOHS,787235,1096075
+"Shri Balwant Institute of Technology, Merrut Road (Pallri), Sonipat, NCR Delhi), Haryana (Jain Minority Institute)",Electrical & Electronics Engineering,OS,OPEN,Gender-Neutral,,OPNOOS,208530,208530
+"Shri Balwant Institute of Technology, Merrut Road (Pallri), Sonipat, NCR Delhi), Haryana (Jain Minority institute)",Electronics & |Communication Engineering,HS,OPEN,Gender-Neutral,,OPNOHS,380448,1155077
+"Shri Balwant Institute of Technology, Merrut Road (Pallri), Sonipat, NCR Delhi), Haryana (Jain Minority institute)",Electronics & |Communication Engineering,OS,OPEN,Gender-Neutral,,OPNOOS,180700,180700
+"Shri Balwant Institute of Technology, Merrut Road (Pallri), Sonipat, NCR Delhi), Haryana (Jain Minority institute)",Electronics & |Communication Engineering,OS,SC,Gender-Neutral,,SCNOOS,1034480,1034480
+"Shri Balwant Institute of Technology, Merrut Road (Paliri), Sonipat, NCR Delhi), Haryana (Jain Minority Institute!",Information Technology,HS,OPEN,Gender-Neutral,,OPNOHS,487648,1116909
+"Shri Balwant Institute of Technology, Merrut Road (Paliri), Sonipat, NCR Delhi), Haryana (Jain Minority Institute!",Information Technology,OS,OPEN,Gender-Neutral,,OPNOOS,210367,244669
+"Shri Balwant Institute of Technology, Merrut Road (Pallri), Sonipat, NCR Delhi), Haryana Jain Minority Institute)",Mechanical Engineering,HS,OPEN,Gender-Neutral,,OPNOHS,396268,1427444
+"Shri Balwant Institute of Technology, Merrut Road (Pallri), Sonipat, NCR Delhi), Haryana Jain Minority Institute)",Mechanical Engineering,OS,OPEN,Gender-Neutral,,OPNOOS,254114,254739
+"institute Tribhuvan College, Plot No. 203 & 204, RIICO, New Industrial complex Majrakath, Neemran, Rajasthan - 301705 (Provisional Basis)",Course B.Tech (Al& DS),HS,OPEN,Gender-Neutral,,OPNOHS,1138263,1138263
+"institute Tribhuvan College, Plot No. 203 & 204, RIICO, New Industrial complex Majrakath, Neemran, Rajasthan - 301705 (Provisional Basis)",Course B.Tech (Al& DS),OS,OPEN,Gender-Neutral,,OPNOOS,258488,265983
+"Tribhuvan College, Plot No. 203 & 204, Neemran, Rajasthan - 301705 (Provisional Basis)",B.Tech (Al&ML),HS,OPEN,Gender-Neutral,,OPNOHS,1427356,1427356
+"Tribhuvan College, Plot No. 203 & 204, Neemran, Rajasthan - 301705 (Provisional Basis)",B.Tech (Al&ML),OS,OPEN,Gender-Neutral,,OPNOOS,266811,266811
+"Tribhuvan College, Plot No. 203 & 204, RICO, New Industrial complex Majrakath, Neemran, Rajasthan - 301705 (Provisional Basis)",Computer Science & Engineering,HS,OPEN,Gender-Neutral,,OPNOHS,408711,1158265
+"Tribhuvan College, Plot No. 203 & 204, RICO, New Industrial complex Majrakath, Neemran, Rajasthan - 301705 (Provisional Basis)",Computer Science & Engineering,OS,OPEN,Gender-Neutral,,OPNOOS,254365,269242
+"Trinity Institute of Innovations in Professional Studies, Plot no 2B/1, Knowledge Park - Ill, Greater Noida, Uttar Pradesh - 2011308",Computer Science & Engineering,HS,OPEN,Gender-Neutral,,OPNOHS,52002,948497
+"Trinity Institute of Innovations in Professional Studies, Plot no 2B/1, Knowledge Park - Ill, Greater Noida, Uttar Pradesh - 2011308",Computer Science & Engineering,OS,OPEN,Gender-Neutral,,OPNOOS,188911,224014
+"Trinity Institute of Innovations in Professional Studies, Plot no 2B/1, Knowledge Park - Ill, Greater Noida, Uttar Pradesh - 2011308",Computer Science & Engineering,OS,SC,Gender-Neutral,,SCNOOS,490431,490431
+"Trinity Institute of Innovations in Professional Studies, Plot no 2B/1, Knowledge Park - Ill, Greater Noida, Uttar Pradesh - 2011308",Computer Science & Technology,HS,OPEN,Gender-Neutral,,OPNOHS,438565,1412818
+"Trinity Institute of Innovations in Professional Studies, Plot no 2B/1, Knowledge Park - Ill, Greater Noida, Uttar Pradesh - 2011308",Computer Science & Technology,OS,OPEN,Gender-Neutral,,OPNOOS,209806,247730
+"Trinity Institute of Innovations in Professional Studies, Plot no 2B/1, Knowledge Park - Ill, Greater Noida, Uttar Pradesh - 2011308",Computer Science & Technology,OS,SC,Gender-Neutral,,SCNOOS,1067620,1152726
+"Trinity Institute of Innovations in Professional Studies, Plot no 2B/1, Knowledge Park - Ill, Greater Noida, Uttar Pradesh - 2011308",Information Technology,HS,OPEN,Gender-Neutral,,OPNOHS,697488,1375947
+"Trinity Institute of Innovations in Professional Studies, Plot no 2B/1, Knowledge Park - Ill, Greater Noida, Uttar Pradesh - 2011308",Information Technology,OS,OPEN,Gender-Neutral,Defence,OPDFOS,264582,264582
+"Trinity Institute of Innovations in Professional Studies, Plot no 2B/1, Knowledge Park - Ill, Greater Noida, Uttar Pradesh - 2011308",Information Technology,OS,OPEN,Gender-Neutral,,OPNOOS,157436,204689
+"Trinity Institute of Innovations in Professional Studies, Plot no 2B/1, Knowledge Park - Ill, Greater Noida, Uttar Pradesh - 2011308",Information Technology,OS,SC,Gender-Neutral,,SCNOOS,1210264,1210264
+University School of Automation & Robotics,B.Tech./M. Tech. (DD) (Al- Ds),AI,OPEN,Gender-Neutral,Kashmiri Migrant,NOKMAI,176765,176765
+University School of Automation & Robotics,B.Tech./M. Tech. (DD) (Al- Ds),HS,OBC-NCL,Gender-Neutral,Defence,BCDFHS,676292,782032
+University School of Automation & Robotics,B.Tech./M. Tech. (DD) (Al- Ds),HS,OBC-NCL,Gender-Neutral,,BCNOHS,191822,258792
+University School of Automation & Robotics,B.Tech./M. Tech. (DD) (Al- Ds),HS,EWS,Gender-Neutral,,EWNOHS,117215,117215
+University School of Automation & Robotics,B.Tech./M. Tech. (DD) (Al- Ds),HS,OPEN,Gender-Neutral,Defence,OPDFHS,253540,253540
+University School of Automation & Robotics,B.Tech./M. Tech. (DD) (Al- Ds),HS,OPEN,Gender-Neutral,,OPNOHS,62074,116805
+University School of Automation & Robotics,B.Tech./M. Tech. (DD) (Al- Ds),HS,SC,Gender-Neutral,,SCNOHS,368304,938789
+University School of Automation & Robotics,B.Tech./M. Tech. (DD) (Al- Ds),OS,EWS,Gender-Neutral,,EWNOOS,76221,79047
+University School of Automation & Robotics,B.Tech./M. Tech. (DD) (Al- Ds),OS,OPEN,Gender-Neutral,Defence,OPDFOS,280603,280603
+University School of Automation & Robotics,B.Tech./M. Tech. (DD) (Al- Ds),OS,OPEN,Gender-Neutral,,OPNOOS,47706,68845
+University School of Automation & Robotics,B.Tech./M. Tech. (DD) (Al- Ds),OS,OPEN (PwD),Gender-Neutral,,OPPHOS,176627,176627
+University School of Automation & Robotics,B.Tech./M. Tech. (DD) (Al- Ds),OS,SC,Gender-Neutral,,SCNOOS,225041,286730
+University School of Automation & Robotics,B.Tech./M. Tech. (DD) (Al- Ds),OS,ST,Gender-Neutral,,STNOOS,488329,515419
+University School of Automation & Robotics,B.Tech./M. Tech. (DD) (Al- ML),HS,OBC-NCL,Gender-Neutral,Defence,BCDFHS,739249,749348
+University School of Automation & Robotics,B.Tech./M. Tech. (DD) (Al- ML),HS,OBC-NCL,Gender-Neutral,,BCNOHS,176661,270227
+University School of Automation & Robotics,B.Tech./M. Tech. (DD) (Al- ML),HS,EWS,Gender-Neutral,,EWNOHS,131316,178905
+University School of Automation & Robotics,B.Tech./M. Tech. (DD) (Al- ML),HS,OPEN,Gender-Neutral,Defence,OPDFHS,140510,140510
+University School of Automation & Robotics,B.Tech./M. Tech. (DD) (Al- ML),HS,OPEN,Gender-Neutral,,OPNOHS,53495,122653
+University School of Automation & Robotics,B.Tech./M. Tech. (DD) (Al- ML),HS,OPEN (PwD),Gender-Neutral,,OPPHHS,1121086,1121086
+University School of Automation & Robotics,B.Tech./M. Tech. (DD) (Al- ML),HS,SC,Gender-Neutral,,SCNOHS,212198,817353
+University School of Automation & Robotics,B.Tech./M. Tech. (DD) (Al- ML),OS,EWS,Gender-Neutral,,EWNOOS,76185,79396
+University School of Automation & Robotics,B.Tech./M. Tech. (DD) (Al- ML),OS,OPEN,Gender-Neutral,Defence,OPDFOS,304050,304050
+University School of Automation & Robotics,B.Tech./M. Tech. (DD) (Al- ML),OS,OPEN,Gender-Neutral,,OPNOOS,55448,72354
+University School of Automation & Robotics,B.Tech./M. Tech. (DD) (Al- ML),OS,SC,Gender-Neutral,,SCNOOS,232204,288449
+University School of Automation & Robotics,B.Tech./M. Tech. (DD) (Al- ML),OS,ST,Gender-Neutral,,STNOOS,379878,642532
+University School of Automation & 117}Robotics,B.Tech./M. Tech. (DD) (AR),HS,OBC-NCL,Gender-Neutral,Defence,BCDFHS,385838,404040
+University School of Automation & 117}Robotics,B.Tech./M. Tech. (DD) (AR),HS,OBC-NCL,Gender-Neutral,,BCNOHS,221076,221076
+University School of Automation & 117}Robotics,B.Tech./M. Tech. (DD) (AR),HS,EWS,Gender-Neutral,,EWNOHS,207986,254967
+University School of Automation & 117}Robotics,B.Tech./M. Tech. (DD) (AR),HS,OPEN,Gender-Neutral,Defence,OPDFHS,296437,296437
+University School of Automation & 117}Robotics,B.Tech./M. Tech. (DD) (AR),HS,OPEN,Gender-Neutral,,OPNOHS,88310,207300
+University School of Automation & 117}Robotics,B.Tech./M. Tech. (DD) (AR),HS,SC,Gender-Neutral,,SCNOHS,715422,1337210
+University School of Automation & 117}Robotics,B.Tech./M. Tech. (DD) (AR),OS,EWS,Gender-Neutral,,EWNOOS,97636,99343
+University School of Automation & 117}Robotics,B.Tech./M. Tech. (DD) (AR),OS,OPEN,Gender-Neutral,Defence,OPDFOS,1023278,1023278
+University School of Automation & 117}Robotics,B.Tech./M. Tech. (DD) (AR),OS,OPEN,Gender-Neutral,,OPNOOS,54262,85427
+University School of Automation & 117}Robotics,B.Tech./M. Tech. (DD) (AR),OS,SC,Gender-Neutral,,SCNOOS,292505,332518
+University School of Automation & 117}Robotics,B.Tech./M. Tech. (DD) (AR),OS,ST,Gender-Neutral,,STNOOS,679283,679283
+University School of Automation & Robotics,"B.Tech./M. Tech, (DD) (HOT)",HS,OBC-NCL,Gender-Neutral,Defence,BCDFHS,947354,952139
+University School of Automation & Robotics,"B.Tech./M. Tech, (DD) (HOT)",HS,OBC-NCL,Gender-Neutral,,BCNOHS,272758,272758
+University School of Automation & Robotics,"B.Tech./M. Tech, (DD) (HOT)",HS,EWS,Gender-Neutral,,EWNOHS,205788,205788
+University School of Automation & Robotics,"B.Tech./M. Tech, (DD) (HOT)",HS,OPEN,Gender-Neutral,Defence,OPDFHS,281876,281876
+University School of Automation & Robotics,"B.Tech./M. Tech, (DD) (HOT)",HS,OPEN,Gender-Neutral,,OPNOHS,124403,203772
+University School of Automation & Robotics,"B.Tech./M. Tech, (DD) (HOT)",HS,SC,Gender-Neutral,,SCNOHS,741743,1282178
+University School of Automation & Robotics,"B.Tech./M. Tech, (DD) (HOT)",OS,EWS,Gender-Neutral,,EWNOOS,97753,100823
+University School of Automation & Robotics,"B.Tech./M. Tech, (DD) (HOT)",OS,OPEN,Gender-Neutral,Defence,OPDFOS,109032,109032
+University School of Automation & Robotics,"B.Tech./M. Tech, (DD) (HOT)",OS,OPEN,Gender-Neutral,,OPNOOS,74987,91639
+University School of Automation & Robotics,"B.Tech./M. Tech, (DD) (HOT)",OS,SC,Gender-Neutral,,SCNOOS,246839,351963
+"University School of Chemical Technology, Sector 16 C, Dwarka, New Delhi - 110078",B. Tech. (Energy),HS,OBC-NCL,Gender-Neutral,,BCNOHS,407816,599324
+"University School of Chemical Technology, Sector 16 C, Dwarka, New Delhi - 110078",B. Tech. (Energy),HS,EWS,Gender-Neutral,,EWNOHS,397119,563194
+"University School of Chemical Technology, Sector 16 C, Dwarka, New Delhi - 110078",B. Tech. (Energy),HS,OPEN,Gender-Neutral,Defence,OPDFHS,828283,828283
+"University School of Chemical Technology, Sector 16 C, Dwarka, New Delhi - 110078",B. Tech. (Energy),HS,OPEN,Gender-Neutral,,OPNOHS,192420,373904
+"University School of Chemical Technology, Sector 16 C, Dwarka, New Delhi - 110078",B. Tech. (Energy),HS,SC,Gender-Neutral,,SCNOHS,785626,1418401
+"University School of Chemical Technology, Sector 16 C, Dwarka, New Delhi - 110078",B. Tech. (Energy),OS,EWS,Gender-Neutral,,EWNOOS,154998,154998
+"University School of Chemical Technology, Sector 16 C, Dwarka, New Delhi - 110078",B. Tech. (Energy),OS,OPEN,Gender-Neutral,,OPNOOS,77926,143287
+"University School of Chemical Technology, Sector 16 C, Dwarka, New Delhi - 110078",B. Tech. (Energy),OS,SC,Gender-Neutral,,SCNOOS,407438,407438
+"University School of Chemical Technology, Sector 16 C, Dwarka, New Delhi - 110078",B. Tech. (Energy),OS,ST,Gender-Neutral,,STNOOS,1129690,1129690
+"University School of Chemical Technology, Sector 16 C, Dwarka, New Delhi - 110078","B. Tech./M. Tech, (Dual Degree in Chemical Engineering",AI,OPEN,Gender-Neutral,Kashmiri Migrant,NOKMAI,465748,465748
+"University School of Chemical Technology, Sector 16 C, Dwarka, New Delhi - 110078","B. Tech./M. Tech, (Dual Degree in Chemical Engineering",HS,OBC-NCL,Gender-Neutral,,BCNOHS,412662,588689
+"University School of Chemical Technology, Sector 16 C, Dwarka, New Delhi - 110078","B. Tech./M. Tech, (Dual Degree in Chemical Engineering",HS,EWS,Gender-Neutral,,EWNOHS,394970,543253
+"University School of Chemical Technology, Sector 16 C, Dwarka, New Delhi - 110078","B. Tech./M. Tech, (Dual Degree in Chemical Engineering",HS,OPEN,Gender-Neutral,Defence,OPDFHS,507252,507252
+"University School of Chemical Technology, Sector 16 C, Dwarka, New Delhi - 110078","B. Tech./M. Tech, (Dual Degree in Chemical Engineering",HS,OPEN,Gender-Neutral,,OPNOHS,117814,388718
+"University School of Chemical Technology, Sector 16 C, Dwarka, New Delhi - 110078","B. Tech./M. Tech, (Dual Degree in Chemical Engineering",HS,SC,Gender-Neutral,,SCNOHS,683130,1386120
+"University School of Chemical Technology, Sector 16 C, Dwarka, New Delhi - 110078","B. Tech./M. Tech, (Dual Degree in Chemical Engineering",OS,EWS,Gender-Neutral,,EWNOOS,163058,166435
+"University School of Chemical Technology, Sector 16 C, Dwarka, New Delhi - 110078","B. Tech./M. Tech, (Dual Degree in Chemical Engineering",OS,OPEN,Gender-Neutral,Defence,OPDFOS,202401,202401
+"University School of Chemical Technology, Sector 16 C, Dwarka, New Delhi - 110078","B. Tech./M. Tech, (Dual Degree in Chemical Engineering",OS,OPEN,Gender-Neutral,,OPNOOS,111242,159799
+"University School of Chemical Technology, Sector 16 C, Dwarka, New Delhi - 110078","B. Tech./M. Tech, (Dual Degree in Chemical Engineering",OS,SC,Gender-Neutral,,SCNOOS,420534,464036
+"University School of Chemical Technology, Sector 16 C, Dwarka, New Delhi - 110078","B. Tech./M. Tech, (Dual Degree in Chemical Engineering",OS,ST,Gender-Neutral,,STNOOS,962470,962470
+"University School of Information & Communication Technology, Sector 16 C, Dwarka, New Delhi - 110078","8B, Tech./M. Tech.(DD) (CSE)",HS,OBC-NCL,Gender-Neutral,Defence,BCDFHS,216382,256664
+"University School of Information & Communication Technology, Sector 16 C, Dwarka, New Delhi - 110078","8B, Tech./M. Tech.(DD) (CSE)",HS,OBC-NCL,Gender-Neutral,,BCNOHS,86440,86440
+"University School of Information & Communication Technology, Sector 16 C, Dwarka, New Delhi - 110078","8B, Tech./M. Tech.(DD) (CSE)",HS,EWS,Gender-Neutral,,EWNOHS,58536,107264
+"University School of Information & Communication Technology, Sector 16 C, Dwarka, New Delhi - 110078","8B, Tech./M. Tech.(DD) (CSE)",HS,OPEN,Gender-Neutral,Defence,OPDFHS,193104,193104
+"University School of Information & Communication Technology, Sector 16 C, Dwarka, New Delhi - 110078","8B, Tech./M. Tech.(DD) (CSE)",HS,OPEN,Gender-Neutral,,OPNOHS,6566,51798
+"University School of Information & Communication Technology, Sector 16 C, Dwarka, New Delhi - 110078","8B, Tech./M. Tech.(DD) (CSE)",HS,OPEN (PwD),Gender-Neutral,,OPPHHS,115948,438569
+"University School of Information & Communication Technology, Sector 16 C, Dwarka, New Delhi - 110078","8B, Tech./M. Tech.(DD) (CSE)",HS,SC,Gender-Neutral,Defence,SCDFHS,839253,839253
+"University School of Information & Communication Technology, Sector 16 C, Dwarka, New Delhi - 110078","8B, Tech./M. Tech.(DD) (CSE)",HS,SC,Gender-Neutral,,SCNOHS,203284,203284
+"University School of Information & Communication Technology, Sector 16 C, Dwarka, New Delhi - 110078","8B, Tech./M. Tech.(DD) (CSE)",HS,ST,Gender-Neutral,,STNOHS,363917,368658
+"University School of Information & Communication Technology, Sector 16 C, Dwarka, New Delhi - 110078","8B, Tech./M. Tech.(DD) (CSE)",OS,EWS,Gender-Neutral,,EWNOOS,38343,38343
+"University School of Information & Communication Technology, Sector 16 C, Dwarka, New Delhi - 110078","8B, Tech./M. Tech.(DD) (CSE)",OS,OPEN,Gender-Neutral,Defence,OPDFOS,209305,209305
+"University School of Information & Communication Technology, Sector 16 C, Dwarka, New Delhi - 110078","8B, Tech./M. Tech.(DD) (CSE)",OS,OPEN,Gender-Neutral,,OPNOOS,12955,35838
+"University School of Information & Communication Technology, Sector 16 C, Dwarka, New Delhi - 110078","8B, Tech./M. Tech.(DD) (CSE)",OS,OPEN (PwD),Gender-Neutral,,OPPHOS,406907,406907
+"University School of Information & Communication Technology, Sector 16 C, Dwarka, New Delhi - 110078","8B, Tech./M. Tech.(DD) (CSE)",OS,SC,Gender-Neutral,,SCNOOS,138700,174270
+"University School of Information & Communication Technology, Sector 16 C, Dwarka, New Delhi - 110078","8B, Tech./M. Tech.(DD) (CSE)",OS,ST,Gender-Neutral,,STNOOS,211092,244454
+"University School of Information & Communication Technology, Sector 16 C, Owarka, New Delhi - 110078","B. Tech,/M. Tech.(DD) (ECE)",HS,OBC-NCL,Gender-Neutral,Defence,BCDFHS,365292,365292
+"University School of Information & Communication Technology, Sector 16 C, Owarka, New Delhi - 110078","B. Tech,/M. Tech.(DD) (ECE)",HS,OBC-NCL,Gender-Neutral,,BCNOHS,178301,243444
+"University School of Information & Communication Technology, Sector 16 C, Owarka, New Delhi - 110078","B. Tech,/M. Tech.(DD) (ECE)",HS,EWS,Gender-Neutral,,EWNOHS,129987,129987
+"University School of Information & Communication Technology, Sector 16 C, Owarka, New Delhi - 110078","B. Tech,/M. Tech.(DD) (ECE)",HS,OPEN,Gender-Neutral,Defence,OPDFHS,119439,119439
+"University School of Information & Communication Technology, Sector 16 C, Owarka, New Delhi - 110078","B. Tech,/M. Tech.(DD) (ECE)",HS,OPEN,Gender-Neutral,,OPNOHS,38907,73324
+"University School of Information & Communication Technology, Sector 16 C, Owarka, New Delhi - 110078","B. Tech,/M. Tech.(DD) (ECE)",HS,OPEN (PwD),Gender-Neutral,,OPPHHS,763964,850842
+"University School of Information & Communication Technology, Sector 16 C, Owarka, New Delhi - 110078","B. Tech,/M. Tech.(DD) (ECE)",HS,SC,Gender-Neutral,,SCNOHS,341791,643892
+"University School of Information & Communication Technology, Sector 16 C, Owarka, New Delhi - 110078","B. Tech,/M. Tech.(DD) (ECE)",OS,EWS,Gender-Neutral,,EWNOOS,60796,61786
+"University School of Information & Communication Technology, Sector 16 C, Owarka, New Delhi - 110078","B. Tech,/M. Tech.(DD) (ECE)",OS,OPEN,Gender-Neutral,Defence,OPDFOS,1105726,1105726
+"University School of Information & Communication Technology, Sector 16 C, Owarka, New Delhi - 110078","B. Tech,/M. Tech.(DD) (ECE)",OS,OPEN,Gender-Neutral,,OPNOOS,43143,43143
+"University School of Information & Communication Technology, Sector 16 C, Owarka, New Delhi - 110078","B. Tech,/M. Tech.(DD) (ECE)",OS,OPEN (PwD),Gender-Neutral,,OPPHOS,786581,786581
+"University School of Information & Communication Technology, Sector 16 C, Owarka, New Delhi - 110078","B. Tech,/M. Tech.(DD) (ECE)",OS,SC,Gender-Neutral,,SCNOOS,210688,227484
+"University School of Information & Communication Technology, Sector 16 C, Owarka, New Delhi - 110078","B. Tech,/M. Tech.(DD) (ECE)",OS,ST,Gender-Neutral,,STNOOS,361005,361005
+"University School of Information & Communication Technology, Sector 16 C, Dwarka, New Delhi - 110078",B. Tech./M. Tech.(DD) (IT),HS,OBC-NCL,Gender-Neutral,Defence,BCDFHS,344946,344946
+"University School of Information & Communication Technology, Sector 16 C, Dwarka, New Delhi - 110078",B. Tech./M. Tech.(DD) (IT),HS,OBC-NCL,Gender-Neutral,,BCNOHS,178779,204614
+"University School of Information & Communication Technology, Sector 16 C, Dwarka, New Delhi - 110078",B. Tech./M. Tech.(DD) (IT),HS,EWS,Gender-Neutral,,EWNOHS,111358,121185
+"University School of Information & Communication Technology, Sector 16 C, Dwarka, New Delhi - 110078",B. Tech./M. Tech.(DD) (IT),HS,OPEN,Gender-Neutral,Defence,OPDFHS,100165,108653
+"University School of Information & Communication Technology, Sector 16 C, Dwarka, New Delhi - 110078",B. Tech./M. Tech.(DD) (IT),HS,OPEN,Gender-Neutral,,OPNOHS,55582,61607
+"University School of Information & Communication Technology, Sector 16 C, Dwarka, New Delhi - 110078",B. Tech./M. Tech.(DD) (IT),HS,OPEN (PwD),Gender-Neutral,,OPPHHS,495124,768873
+"University School of Information & Communication Technology, Sector 16 C, Dwarka, New Delhi - 110078",B. Tech./M. Tech.(DD) (IT),HS,SC,Gender-Neutral,Defence,SCDFHS,944192,944192
+"University School of Information & Communication Technology, Sector 16 C, Dwarka, New Delhi - 110078",B. Tech./M. Tech.(DD) (IT),HS,SC,Gender-Neutral,,SCNOHS,376644,491890
+"University School of Information & Communication Technology, Sector 16 C, Dwarka, New Delhi - 110078",B. Tech./M. Tech.(DD) (IT),OS,EWS,Gender-Neutral,,EWNOOS,51337,51867
+"University School of Information & Communication Technology, Sector 16 C, Dwarka, New Delhi - 110078",B. Tech./M. Tech.(DD) (IT),OS,OPEN,Gender-Neutral,Defence,OPDFOS,371343,371343
+"University School of Information & Communication Technology, Sector 16 C, Dwarka, New Delhi - 110078",B. Tech./M. Tech.(DD) (IT),OS,OPEN,Gender-Neutral,,OPNOOS,38047,45706
+"University School of Information & Communication Technology, Sector 16 C, Dwarka, New Delhi - 110078",B. Tech./M. Tech.(DD) (IT),OS,OPEN (PwD),Gender-Neutral,,OPPHOS,586783,586783
+"University School of Information & Communication Technology, Sector 16 C, Dwarka, New Delhi - 110078",B. Tech./M. Tech.(DD) (IT),OS,SC,Gender-Neutral,,SCNOOS,193120,210284
+"University School of Information & Communication Technology, Sector 16 C, Dwarka, New Delhi - 110078",B. Tech./M. Tech.(DD) (IT),OS,ST,Gender-Neutral,,STNOOS,409016,409016
+"University School of Information & Communication Technology, Sector 16 C, Dwarka, New Delhi - 110078",B. Tech/M. Tech.(DD) (CSE- Al),AI,OPEN,Gender-Neutral,Kashmiri Migrant,NOKMAI,50235,50235
+"University School of Information & Communication Technology, Sector 16 C, Dwarka, New Delhi - 110078",B. Tech/M. Tech.(DD) (CSE- Al),HS,OBC-NCL,Gender-Neutral,Defence,BCDFHS,320912,320912
+"University School of Information & Communication Technology, Sector 16 C, Dwarka, New Delhi - 110078",B. Tech/M. Tech.(DD) (CSE- Al),HS,OBC-NCL,Gender-Neutral,,BCNOHS,61565,155297
+"University School of Information & Communication Technology, Sector 16 C, Dwarka, New Delhi - 110078",B. Tech/M. Tech.(DD) (CSE- Al),HS,EWS,Gender-Neutral,,EWNOHS,72059,72059
+"University School of Information & Communication Technology, Sector 16 C, Dwarka, New Delhi - 110078",B. Tech/M. Tech.(DD) (CSE- Al),HS,OPEN,Gender-Neutral,Defence,OPDFHS,71091,71091
+"University School of Information & Communication Technology, Sector 16 C, Dwarka, New Delhi - 110078",B. Tech/M. Tech.(DD) (CSE- Al),HS,OPEN,Gender-Neutral,,OPNOHS,31036,45729
+"University School of Information & Communication Technology, Sector 16 C, Dwarka, New Delhi - 110078",B. Tech/M. Tech.(DD) (CSE- Al),HS,OPEN (PwD),Gender-Neutral,,OPPHHS,337522,337522
+"University School of Information & Communication Technology, Sector 16 C, Dwarka, New Delhi - 110078",B. Tech/M. Tech.(DD) (CSE- Al),HS,SC,Gender-Neutral,,SCNOHS,134006,311622
+"University School of Information & Communication Technology, Sector 16 C, Dwarka, New Delhi - 110078",B. Tech/M. Tech.(DD) (CSE- Al),HS,ST,Gender-Neutral,,STNOHS,735123,1019537
+"University School of Information & Communication Technology, Sector 16 C, Dwarka, New Delhi - 110078",B. Tech/M. Tech.(DD) (CSE- Al),OS,EWS,Gender-Neutral,,EWNOOS,43214,43214
+"University School of Information & Communication Technology, Sector 16 C, Dwarka, New Delhi - 110078",B. Tech/M. Tech.(DD) (CSE- Al),OS,OPEN,Gender-Neutral,,OPNOOS,16413,37487
+"University School of Information & Communication Technology, Sector 16 C, Dwarka, New Delhi - 110078",B. Tech/M. Tech.(DD) (CSE- Al),OS,SC,Gender-Neutral,,SCNOOS,142092,142092
+"University School of Information & Communication Technology, Sector 16 C, Dwarka, New Delhi - 110078",B. Tech/M. Tech.(DD) (CSE- Al),OS,ST,Gender-Neutral,,STNOOS,330521,330521
+"University School of Information & Communication Technology, Sector 16 C, Dwarka, New Delhi - 110078",8. Tech/M. Tech.(DD) (CSE- Ds),HS,OBC-NCL,Gender-Neutral,Defence,BCDFHS,337216,337216
+"University School of Information & Communication Technology, Sector 16 C, Dwarka, New Delhi - 110078",8. Tech/M. Tech.(DD) (CSE- Ds),HS,OBC-NCL,Gender-Neutral,,BCNOHS,164992,189736
+"University School of Information & Communication Technology, Sector 16 C, Dwarka, New Delhi - 110078",8. Tech/M. Tech.(DD) (CSE- Ds),HS,EWS,Gender-Neutral,,EWNOHS,76139,110576
+"University School of Information & Communication Technology, Sector 16 C, Dwarka, New Delhi - 110078",8. Tech/M. Tech.(DD) (CSE- Ds),HS,OPEN,Gender-Neutral,Defence,OPDFHS,99528,99528
+"University School of Information & Communication Technology, Sector 16 C, Dwarka, New Delhi - 110078",8. Tech/M. Tech.(DD) (CSE- Ds),HS,OPEN,Gender-Neutral,,OPNOHS,48858,55844
+"University School of Information & Communication Technology, Sector 16 C, Dwarka, New Delhi - 110078",8. Tech/M. Tech.(DD) (CSE- Ds),HS,OPEN (PwD),Gender-Neutral,,OPPHHS,471856,471856
+"University School of Information & Communication Technology, Sector 16 C, Dwarka, New Delhi - 110078",8. Tech/M. Tech.(DD) (CSE- Ds),HS,SC,Gender-Neutral,,SCNOHS,326421,408849
+"University School of Information & Communication Technology, Sector 16 C, Dwarka, New Delhi - 110078",8. Tech/M. Tech.(DD) (CSE- Ds),OS,EWS,Gender-Neutral,,EWNOOS,44290,44290
+"University School of Information & Communication Technology, Sector 16 C, Dwarka, New Delhi - 110078",8. Tech/M. Tech.(DD) (CSE- Ds),OS,OPEN,Gender-Neutral,,OPNOOS,37840,42737
+"University School of Information & Communication Technology, Sector 16 C, Dwarka, New Delhi - 110078",8. Tech/M. Tech.(DD) (CSE- Ds),OS,SC,Gender-Neutral,,SCNOOS,179319,179319
+"University School of Information & Communication Technology, Sector 16 C, Dwarka, New Delhi - 110078",8. Tech/M. Tech.(DD) (CSE- Ds),OS,ST,Gender-Neutral,,STNOOS,334881,334881
+"Institute. ——~*(| Vivekananda Institute of Professional Studies-Technical Campus, AU Block (Outer Ring Road), Pitampura, New Delhi-110034 _",Course Artificial Intelligence & Data Science,HS,OPEN,Gender-Neutral,Defence,OPDFHS,483932,653799
+"Institute. ——~*(| Vivekananda Institute of Professional Studies-Technical Campus, AU Block (Outer Ring Road), Pitampura, New Delhi-110034 _",Course Artificial Intelligence & Data Science,HS,OPEN,Gender-Neutral,,OPNOHS,91961,281411
+"Institute. ——~*(| Vivekananda Institute of Professional Studies-Technical Campus, AU Block (Outer Ring Road), Pitampura, New Delhi-110034 _",Course Artificial Intelligence & Data Science,HS,SC,Gender-Neutral,,SCNOHS,621257,1276932
+"Institute. ——~*(| Vivekananda Institute of Professional Studies-Technical Campus, AU Block (Outer Ring Road), Pitampura, New Delhi-110034 _",Course Artificial Intelligence & Data Science,OS,OPEN,Gender-Neutral,Defence,OPDFOS,140177,140177
+"Institute. ——~*(| Vivekananda Institute of Professional Studies-Technical Campus, AU Block (Outer Ring Road), Pitampura, New Delhi-110034 _",Course Artificial Intelligence & Data Science,OS,OPEN,Gender-Neutral,,OPNOOS,94880,130061
+"Institute. ——~*(| Vivekananda Institute of Professional Studies-Technical Campus, AU Block (Outer Ring Road), Pitampura, New Delhi-110034 _",Course Artificial Intelligence & Data Science,OS,SC,Gender-Neutral,,SCNOOS,351613,487127
+"Vivekananda Institute of Professional ‘Studies-Technical Campus, AU Block (Outer Ring Road), Pitampura, New Delhi-110034",Artificial Intelligence & Machine Learnin,HS,OPEN,Gender-Neutral,Defence,OPDFHS,355694,669525
+"Vivekananda Institute of Professional ‘Studies-Technical Campus, AU Block (Outer Ring Road), Pitampura, New Delhi-110034",Artificial Intelligence & Machine Learnin,HS,OPEN,Gender-Neutral,,OPNOHS,187109,290309
+"Vivekananda Institute of Professional ‘Studies-Technical Campus, AU Block (Outer Ring Road), Pitampura, New Delhi-110034",Artificial Intelligence & Machine Learnin,HS,SC,Gender-Neutral,,SCNOHS,541607,1445680
+"Vivekananda Institute of Professional ‘Studies-Technical Campus, AU Block (Outer Ring Road), Pitampura, New Delhi-110034",Artificial Intelligence & Machine Learnin,OS,OPEN,Gender-Neutral,Defence,OPDFOS,189368,189368
+"Vivekananda Institute of Professional ‘Studies-Technical Campus, AU Block (Outer Ring Road), Pitampura, New Delhi-110034",Artificial Intelligence & Machine Learnin,OS,OPEN,Gender-Neutral,,OPNOOS,106550,134040
+"Vivekananda Institute of Professional ‘Studies-Technical Campus, AU Block (Outer Ring Road), Pitampura, New Delhi-110034",Artificial Intelligence & Machine Learnin,OS,SC,Gender-Neutral,,SCNOOS,454534,607525
+"Vivekananda Institute of Professional Studies-Technical Campus, AU Block (Outer Ring Road), Pitampura, New Delhi-110034",B. Tech. (Computer Science & Applied Mathematics),HS,OPEN,Gender-Neutral,Defence,OPDFHS,471012,808129
+"Vivekananda Institute of Professional Studies-Technical Campus, AU Block (Outer Ring Road), Pitampura, New Delhi-110034",B. Tech. (Computer Science & Applied Mathematics),HS,OPEN,Gender-Neutral,,OPNOHS,207957,308071
+"Vivekananda Institute of Professional Studies-Technical Campus, AU Block (Outer Ring Road), Pitampura, New Delhi-110034",B. Tech. (Computer Science & Applied Mathematics),HS,SC,Gender-Neutral,,SCNOHS,1158542,1259174
+"Vivekananda Institute of Professional Studies-Technical Campus, AU Block (Outer Ring Road), Pitampura, New Delhi-110034",B. Tech. (Computer Science & Applied Mathematics),OS,OPEN,Gender-Neutral,Defence,OPDFOS,200809,200809
+"Vivekananda Institute of Professional Studies-Technical Campus, AU Block (Outer Ring Road), Pitampura, New Delhi-110034",B. Tech. (Computer Science & Applied Mathematics),OS,OPEN,Gender-Neutral,,OPNOOS,111004,148360
+"Vivekananda Institute of Professional Studies-Technical Campus, AU Block (Outer Ring Road), Pitampura, New Delhi-110034",B. Tech. (Computer Science & Applied Mathematics),OS,SC,Gender-Neutral,,SCNOOS,697214,703036
+"Vivekananda Institute of Professional ‘Studies-Technical Campus, AU Block (Outer Ring Road), Pitampura, New Delhi-110034",Computer Science & [Engineering,HS,OPEN,Gender-Neutral,Defence,OPDFHS,341936,469550
+"Vivekananda Institute of Professional ‘Studies-Technical Campus, AU Block (Outer Ring Road), Pitampura, New Delhi-110034",Computer Science & [Engineering,HS,OPEN,Gender-Neutral,,OPNOHS,79209,230736
+"Vivekananda Institute of Professional ‘Studies-Technical Campus, AU Block (Outer Ring Road), Pitampura, New Delhi-110034",Computer Science & [Engineering,HS,SC,Gender-Neutral,,SCNOHS,731996,1445093
+"Vivekananda Institute of Professional ‘Studies-Technical Campus, AU Block (Outer Ring Road), Pitampura, New Delhi-110034",Computer Science & [Engineering,OS,OPEN,Gender-Neutral,Defence,OPDFOS,128861,128861
+"Vivekananda Institute of Professional ‘Studies-Technical Campus, AU Block (Outer Ring Road), Pitampura, New Delhi-110034",Computer Science & [Engineering,OS,OPEN,Gender-Neutral,,OPNOOS,62327,107324
+"Vivekananda Institute of Professional ‘Studies-Technical Campus, AU Block (Outer Ring Road), Pitampura, New Delhi-110034",Computer Science & [Engineering,OS,SC,Gender-Neutral,Defence,SCDFOS,1337360,1337360
+"Vivekananda Institute of Professional ‘Studies-Technical Campus, AU Block (Outer Ring Road), Pitampura, New Delhi-110034",Computer Science & [Engineering,OS,SC,Gender-Neutral,,SCNOOS,427815,475844
+"Vivekananda Institute of Professional ‘Studies-Technical Campus, AU Block (Outer Ring Road), Pitampura, New Delhi-110034",Computer Science & [Engineering,OS,ST,Gender-Neutral,,STNOOS,924082,924082
+"Vivekananda Institute of Professional Studies-Technical Campus, AU Block (Outer Ring Road), Pitampura, New Delhi-110034",CSE (Cyber Security),HS,OPEN,Gender-Neutral,Defence,OPDFHS,535354,559547
+"Vivekananda Institute of Professional Studies-Technical Campus, AU Block (Outer Ring Road), Pitampura, New Delhi-110034",CSE (Cyber Security),HS,OPEN,Gender-Neutral,,OPNOHS,127345,273530
+"Vivekananda Institute of Professional Studies-Technical Campus, AU Block (Outer Ring Road), Pitampura, New Delhi-110034",CSE (Cyber Security),HS,SC,Gender-Neutral,,SCNOHS,682777,1415746
+"Vivekananda Institute of Professional Studies-Technical Campus, AU Block (Outer Ring Road), Pitampura, New Delhi-110034",CSE (Cyber Security),OS,OPEN,Gender-Neutral,,OPNOOS,83432,123527
+"Vivekananda Institute of Professional Studies-Technical Campus, AU Block (Outer Ring Road), Pitampura, New Delhi-110034",CSE (Cyber Security),OS,SC,Gender-Neutral,,SCNOOS,464578,544423
+"Vivekananda Institute of Professional Studies-Technical Campus, AU Block (Outer Ring Road), Pitampura, New Delhi-110034",Electronics Engg.- VLSI [Design & Technology,HS,OPEN,Gender-Neutral,Defence,OPDFHS,641314,1198988
+"Vivekananda Institute of Professional Studies-Technical Campus, AU Block (Outer Ring Road), Pitampura, New Delhi-110034",Electronics Engg.- VLSI [Design & Technology,HS,OPEN,Gender-Neutral,,OPNOHS,223341,420571
+"Vivekananda Institute of Professional Studies-Technical Campus, AU Block (Outer Ring Road), Pitampura, New Delhi-110034",Electronics Engg.- VLSI [Design & Technology,OS,OPEN,Gender-Neutral,,OPNOOS,116806,169716
+"Vivekananda Institute of Professional Studies-Technical Campus, AU Block (Outer Ring Road), Pitampura, New Delhi-110034",Electronics Engg.- VLSI [Design & Technology,OS,SC,Gender-Neutral,,SCNOOS,744700,784369
+"Vivekananda Institute of Professional Studies-Technical Campus, AU Block (Outer Ring Road), Pitampura, New Delhi-110034 fAbbrevations Full [ORGHSS ere orci ve GS 8 fe 5 scpwo-HS DELHISCPWO SCORHS OC OBCHS E22 ALLS 5 Se EWS: FES ua nr LAREN.",Industrial Internet of [Things Form DEL GENERAL OS 53 DEH GENERAL DEFENCE: IELHISCOEFENCE [DEH Ope ate Rae] DELHI EWS,HS,OPEN,Gender-Neutral,Defence,OPDFHS,883644,951023
+"Vivekananda Institute of Professional Studies-Technical Campus, AU Block (Outer Ring Road), Pitampura, New Delhi-110034 fAbbrevations Full [ORGHSS ere orci ve GS 8 fe 5 scpwo-HS DELHISCPWO SCORHS OC OBCHS E22 ALLS 5 Se EWS: FES ua nr LAREN.",Industrial Internet of [Things Form DEL GENERAL OS 53 DEH GENERAL DEFENCE: IELHISCOEFENCE [DEH Ope ate Rae] DELHI EWS,HS,OPEN,Gender-Neutral,,OPNOHS,261859,382513
+"Vivekananda Institute of Professional Studies-Technical Campus, AU Block (Outer Ring Road), Pitampura, New Delhi-110034 fAbbrevations Full [ORGHSS ere orci ve GS 8 fe 5 scpwo-HS DELHISCPWO SCORHS OC OBCHS E22 ALLS 5 Se EWS: FES ua nr LAREN.",Industrial Internet of [Things Form DEL GENERAL OS 53 DEH GENERAL DEFENCE: IELHISCOEFENCE [DEH Ope ate Rae] DELHI EWS,OS,OPEN,Gender-Neutral,,OPNOOS,136599,157905
+"Vivekananda Institute of Professional Studies-Technical Campus, AU Block (Outer Ring Road), Pitampura, New Delhi-110034 fAbbrevations Full [ORGHSS ere orci ve GS 8 fe 5 scpwo-HS DELHISCPWO SCORHS OC OBCHS E22 ALLS 5 Se EWS: FES ua nr LAREN.",Industrial Internet of [Things Form DEL GENERAL OS 53 DEH GENERAL DEFENCE: IELHISCOEFENCE [DEH Ope ate Rae] DELHI EWS,OS,SC,Gender-Neutral,,SCNOOS,483195,735905
