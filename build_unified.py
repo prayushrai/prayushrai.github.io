@@ -625,7 +625,8 @@ HTML = r"""<!DOCTYPE html>
     <div class="section-title">Your Profile</div>
     <div class="form-grid">
       <div><label>Name (optional)</label><input id="name" placeholder="e.g. Ankit Sharma"></div>
-      <div><label>Category Rank</label><input id="rank" type="number" placeholder="e.g. 12000" min="1"></div>
+      <div><label>JEE Main CRL <span style="color:var(--rose-2)">·</span> required</label><input id="crl" type="number" placeholder="e.g. 50000" min="1"></div>
+      <div><label>Category Rank <span style="color:var(--ink-faint)">· optional · JoSAA only</span></label><input id="rank" type="number" placeholder="e.g. 12000" min="1"></div>
       <div><label>Category</label>
         <select id="seatType">
           <option>OPEN</option><option>EWS</option><option>OBC-NCL</option>
@@ -843,7 +844,8 @@ function animateCount(el, target, dur=900){
     });
   });
 
-  // Allow Enter in rank field to predict
+  // Allow Enter in either rank field to predict
+  $('crl').addEventListener('keydown', e => { if (e.key === 'Enter') runPredict(); });
   $('rank').addEventListener('keydown', e => { if (e.key === 'Enter') runPredict(); });
 })();
 
@@ -854,7 +856,14 @@ function activeRounds(){
   return new Set([...document.querySelectorAll('#roundToggle .round-card.on')].map(c=>c.dataset.round));
 }
 
-function computeEligible(rank, seatType, gender, homeState){
+// Per-row rank: JoSAA uses category rank if entered; everything else
+// (CSAB / UPTAC / GGSIPU / JAC) always uses CRL.
+function rowRank(r, crl, categoryRank){
+  if (r.round === 'JoSAA' && categoryRank) return categoryRank;
+  return crl;
+}
+
+function computeEligible(seatType, gender, homeState){
   const eligibleGenders = gender==='F'
     ? new Set(['Gender-Neutral','Female-only (including Supernumerary)'])
     : new Set(['Gender-Neutral']);
@@ -875,20 +884,23 @@ function computeEligible(rank, seatType, gender, homeState){
   });
 }
 
-function findInBandwidth(eligible, rank, startBw, minCount){
+function findInBandwidth(eligible, crl, categoryRank, startBw, minCount){
   let bw = startBw, hits = [], tried = [];
   while (bw <= 500){
-    const lo = Math.max(1, Math.floor(rank * (1 - bw/100)));
-    const hi = Math.ceil(rank * (1 + bw/100));
-    hits = eligible.filter(r => r.close >= lo && r.close <= hi);
-    tried.push({ bw, lo, hi, count: hits.length });
+    hits = eligible.filter(r => {
+      const useRank = rowRank(r, crl, categoryRank);
+      const lo = Math.max(1, Math.floor(useRank * (1 - bw/100)));
+      const hi = Math.ceil(useRank * (1 + bw/100));
+      return r.close >= lo && r.close <= hi;
+    });
+    tried.push({ bw, count: hits.length });
     if (hits.length >= minCount) break;
     bw += 10;
   }
   if (hits.length < minCount){
     const extra = eligible
       .filter(r => !hits.includes(r))
-      .map(r => ({...r, _d: Math.abs(r.close - rank)}))
+      .map(r => ({...r, _d: Math.abs(r.close - rowRank(r, crl, categoryRank))}))
       .sort((a,b)=>a._d-b._d)
       .slice(0, minCount - hits.length);
     hits = hits.concat(extra);
@@ -898,8 +910,10 @@ function findInBandwidth(eligible, rank, startBw, minCount){
 }
 
 function runPredict(){
-  const rank = parseInt($('rank').value || '0', 10);
-  if (!rank || rank < 1) { alert('Please enter a valid category rank.'); return; }
+  const crl = parseInt($('crl').value || '0', 10);
+  if (!crl || crl < 1) { alert('Please enter your JEE Main CRL — it is required.'); $('crl').focus(); return; }
+  const categoryRankRaw = parseInt($('rank').value || '0', 10);
+  const categoryRank = (categoryRankRaw && categoryRankRaw >= 1) ? categoryRankRaw : null;
   const seat = $('seatType').value;
   const gender = $('gender').value;
   const home = $('homeState').value;
@@ -908,27 +922,36 @@ function runPredict(){
 
   if (activeRounds().size === 0) { alert('Pick at least one counselling.'); return; }
 
-  const eligible = computeEligible(rank, seat, gender, home);
-  const { hits, tried } = findInBandwidth(eligible, rank, startBw, minCount);
+  const eligible = computeEligible(seat, gender, home);
+  const { hits, tried } = findInBandwidth(eligible, crl, categoryRank, startBw, minCount);
 
   currentResults = hits;
   $('emptyHero').classList.add('hidden');
   $('resultsSection').classList.remove('hidden');
-  renderStats(rank, seat, gender, home, eligible.length, tried);
+  renderStats(crl, categoryRank, seat, gender, home, eligible.length, tried);
   buildFilters();
   renderTable();
   $('resultsSection').scrollIntoView({behavior:'smooth', block:'start'});
 }
 
-function renderStats(rank, seat, gender, home, eligibleCount, tried){
+function renderStats(crl, categoryRank, seat, gender, home, eligibleCount, tried){
   const final = tried[tried.length-1];
   const bwTxt = (typeof final.bw === 'number') ? `±${final.bw}%` : 'expanded';
-  const range = (final.lo!=null) ? `(${fmt(final.lo)} – ${fmt(final.hi)})` : '';
+  // Compute the bandwidth window for the CRL (always used) and for the category rank (if any)
+  const bwPct = (typeof final.bw === 'number') ? final.bw : 500;
+  const lo = (k) => Math.max(1, Math.floor(k * (1 - bwPct/100)));
+  const hi = (k) => Math.ceil(k * (1 + bwPct/100));
+  let rangeStr = `CRL ${fmt(lo(crl))}–${fmt(hi(crl))}`;
+  if (categoryRank) rangeStr += ` · Cat ${fmt(lo(categoryRank))}–${fmt(hi(categoryRank))}`;
+
+  const rankCardSub = categoryRank
+    ? `<span class="j">CRL ${fmt(crl)}</span> · Cat <b>${fmt(categoryRank)}</b> (JoSAA only)`
+    : `<span class="j">CRL ${fmt(crl)}</span>`;
   const counts = currentResults.reduce((a,r)=>{ a[r.round]=(a[r.round]||0)+1; return a; }, {});
   $('statsStrip').innerHTML = `
-    <div class="stat-card"><div class="stat-label">Your Rank</div><div class="stat-value">${fmt(rank)}</div><div class="stat-sub">${seat} · ${gender==='F'?'Female':'Male'} · ${home}</div></div>
+    <div class="stat-card"><div class="stat-label">Your Rank</div><div class="stat-value">${fmt(crl)}</div><div class="stat-sub">${rankCardSub}<br>${seat} · ${gender==='F'?'Female':'Male'} · ${home}</div></div>
     <div class="stat-card violet"><div class="stat-label">Eligible Pool</div><div class="stat-value">${fmt(eligibleCount)}</div><div class="stat-sub">rows after quota &amp; gender gates</div></div>
-    <div class="stat-card gold"><div class="stat-label">Bandwidth Used</div><div class="stat-value">${bwTxt}</div><div class="stat-sub">${range || 'nearest-rank fallback'}</div></div>
+    <div class="stat-card gold"><div class="stat-label">Bandwidth Used</div><div class="stat-value">${bwTxt}</div><div class="stat-sub">${rangeStr}</div></div>
     <div class="stat-card jade"><div class="stat-label">Total Options</div><div class="stat-value">${fmt(currentResults.length)}</div><div class="stat-sub"><span class="j">JoSAA ${counts['JoSAA']||0}</span> · <span class="c">CSAB ${counts['CSAB']||0}</span> · <span class="u">UPTAC ${counts['UPTAC']||0}</span> · <span class="g">GGSIPU ${counts['GGSIPU']||0}</span> · <span class="a">JAC ${counts['JAC']||0}</span></div></div>
   `;
 }
@@ -1010,19 +1033,25 @@ function csvEsc(s){ s=String(s); return /[",\n]/.test(s) ? '"'+s.replace(/"/g,'"
 function exportPayload(){
   const rows = sortRows(filteredRows());
   const name = $('name').value.trim();
+  const crl = $('crl').value;
   const rank = $('rank').value;
   const seat = $('seatType').value;
   const gen = $('gender').value==='F'?'Female':'Male';
   const hs = $('homeState').value;
   const meta = [
     ['Generated by','PRAYUSH Unified Predictor'],
-    ['Student',name], ['Rank',rank], ['Category',seat], ['Gender',gen], ['Home State',hs],
+    ['Student', name],
+    ['JEE Main CRL', crl],
+    ['Category Rank (JoSAA only)', rank || '—'],
+    ['Category', seat], ['Gender', gen], ['Home State', hs],
     ['Generated at', new Date().toLocaleString('en-IN')],
-    ['Sources','JoSAA 2025 R6 + CSAB Special 2025 R3 + UPTAC 2025 final'], []
+    ['Sources', 'JoSAA 2025 R6 + CSAB Special 2025 R3 + UPTAC 2025 final + GGSIPU 2025 R3 + JAC Delhi 2025 R5'],
+    [],
   ];
   const header = ['Pref #','Round','Type','Institute','Program','Quota','Sub-quota','Seat','Gender','Open','Close'];
   const body = rows.map((r,i)=>[i+1,r.round,r.type,r.inst,r.prog,r.quota,r.note,r.seat,r.gender.replace(' (including Supernumerary)',''),r.open,r.close]);
-  return { meta, header, body, name, rank };
+  const fileTag = rank || crl || 'rank';
+  return { meta, header, body, name, fileTag };
 }
 
 function dl(blob, filename){
@@ -1033,24 +1062,24 @@ function dl(blob, filename){
 }
 
 function downloadCSV(){
-  const { meta, header, body, name, rank } = exportPayload();
+  const { meta, header, body, name, fileTag } = exportPayload();
   const lines = [];
   meta.forEach(m => lines.push(m.map(csvEsc).join(',')));
   lines.push(header.map(csvEsc).join(','));
   body.forEach(r => lines.push(r.map(csvEsc).join(',')));
   dl(new Blob([lines.join('\n')], {type:'text/csv;charset=utf-8'}),
-     `prayush_${sanitize(name)||'student'}_${rank||'rank'}.csv`);
+     `prayush_${sanitize(name)||'student'}_${fileTag}.csv`);
 }
 
 function downloadXLSX(){
-  const { meta, header, body, name, rank } = exportPayload();
+  const { meta, header, body, name, fileTag } = exportPayload();
   let html = '<html><head><meta charset="utf-8"></head><body><table border="1">';
   meta.forEach(m => html += '<tr>' + m.map(x=>`<td>${String(x||'')}</td>`).join('') + '</tr>');
   html += '<tr>' + header.map(h=>`<th style="background:#ff4d8b;color:#fff">${h}</th>`).join('') + '</tr>';
   body.forEach(r => html += '<tr>' + r.map((x,i)=>`<td${i>=9?' style="text-align:right"':''}>${x}</td>`).join('') + '</tr>');
   html += '</table></body></html>';
   dl(new Blob(['﻿'+html], {type:'application/vnd.ms-excel'}),
-     `prayush_${sanitize(name)||'student'}_${rank||'rank'}.xls`);
+     `prayush_${sanitize(name)||'student'}_${fileTag}.xls`);
 }
 
 function downloadPDF(){
@@ -1072,7 +1101,7 @@ function downloadPDF(){
 }
 
 function resetAll(){
-  ['name','rank','search'].forEach(id=>$(id).value='');
+  ['name','crl','rank','search'].forEach(id=>$(id).value='');
   $('seatType').value = 'OPEN';
   $('gender').value = 'M';
   $('homeState').value = 'Uttar Pradesh';
