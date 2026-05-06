@@ -650,6 +650,17 @@ HTML = r"""<!DOCTYPE html>
         <select id="gender"><option value="M">Male</option><option value="F">Female</option></select>
       </div>
       <div><label>Home State</label><select id="homeState"></select></div>
+      <div><label>Approximate Budget</label>
+        <select id="budget">
+          <option value="">Any</option>
+          <option value="5">under 5 lakhs</option>
+          <option value="10">under 10 lakhs</option>
+          <option value="15">under 15 lakhs</option>
+          <option value="20">under 20 lakhs</option>
+          <option value="25">under 25 lakhs</option>
+          <option value="30">under 30 lakhs</option>
+        </select>
+      </div>
       <div><label>Min options</label><input id="minCount" type="number" value="120" min="10"></div>
       <div><label>Initial bandwidth</label>
         <select id="startBw">
@@ -1116,6 +1127,7 @@ function resetAll(){
   $('seatType').value = 'OPEN';
   $('gender').value = 'M';
   $('homeState').value = 'Uttar Pradesh';
+  $('budget').value = '';
   $('minCount').value = '120';
   $('startBw').value = '10';
   document.querySelectorAll('#roundToggle .round-card').forEach(c=>c.classList.add('on'));
