@@ -601,7 +601,7 @@
         </table>
       </div>
       <div class="footer-note">
-        <b>How the predictor works:</b> shows every eligible row — every NIT / IIIT / GFTI / UPTAC / GGSIPU / JAC seat that matches your category, gender, and home state. Sort the table or use filters to narrow down. <b>Quotas</b> (HS / OS / AI / GO / JK / LA) are auto-gated against your home state. Sub-quotas — <b>UPTAC</b> (AF / TF / FF), <b>GGSIPU</b> (Defence / Jain / Kashmiri / Sikh), <b>JAC</b> (Defence / Single Girl / Kashmiri Migrant) — appear as small purple tags. <span class="deva">शुभकामनाएँ</span> · Sources: <a href="https://josaa.admissions.nic.in" target="_blank">JoSAA</a> · <a href="https://admissions.nic.in/csabspl/" target="_blank">CSAB</a> · <a href="https://admissions.nic.in/UPTAC/" target="_blank">UPTAC</a> · <a href="https://admissions.nic.in/UPTAC/" target="_blank">GGSIPU</a> · <a href="https://jacdelhi.admissions.nic.in" target="_blank">JAC Delhi</a>.
+        <b>How the predictor works:</b> filters every NIT / IIIT / GFTI / UPTAC / GGSIPU / JAC seat to those whose closing rank falls within ±10% of your rank. JoSAA rows use your Category Rank if entered, otherwise CRL; every other counselling always uses CRL. <b>Quotas</b> (HS / OS / AI / GO / JK / LA) are auto-gated against your home state. Sub-quotas — <b>UPTAC</b> (AF / TF / FF), <b>GGSIPU</b> (Defence / Jain / Kashmiri / Sikh), <b>JAC</b> (Defence / Single Girl / Kashmiri Migrant) — appear as small purple tags. <span class="deva">शुभकामनाएँ</span> · Sources: <a href="https://josaa.admissions.nic.in" target="_blank">JoSAA</a> · <a href="https://admissions.nic.in/csabspl/" target="_blank">CSAB</a> · <a href="https://admissions.nic.in/UPTAC/" target="_blank">UPTAC</a> · <a href="https://admissions.nic.in/UPTAC/" target="_blank">GGSIPU</a> · <a href="https://jacdelhi.admissions.nic.in" target="_blank">JAC Delhi</a>.
       </div>
     </div>
   </div>
@@ -724,6 +724,25 @@ function computeEligible(seatType, gender, homeState){
   });
 }
 
+// Fixed ±10% bandwidth around the row's relevant rank. Same shape as the
+// previous default, but no UI knob for bandwidth and no min-results fallback.
+const BW_PCT = 10;
+
+function rankWindow(useRank){
+  return [
+    Math.max(1, Math.floor(useRank * (1 - BW_PCT/100))),
+    Math.ceil(useRank * (1 + BW_PCT/100)),
+  ];
+}
+
+function filterByRank(eligible, crl, categoryRank){
+  return eligible.filter(r => {
+    const useRank = rowRank(r, crl, categoryRank);
+    const [lo, hi] = rankWindow(useRank);
+    return r.close >= lo && r.close <= hi;
+  });
+}
+
 function runPredict(){
   const crl = parseInt($('crl').value || '0', 10);
   if (!crl || crl < 1) { alert('Please enter your JEE Main CRL — it is required.'); $('crl').focus(); return; }
@@ -735,9 +754,8 @@ function runPredict(){
 
   if (activeRounds().size === 0) { alert('Pick at least one counselling.'); return; }
 
-  // Show every eligible row — no bandwidth narrowing.
   const eligible = computeEligible(seat, gender, home);
-  currentResults = eligible;
+  currentResults = filterByRank(eligible, crl, categoryRank);
 
   $('emptyHero').classList.add('hidden');
   $('resultsSection').classList.remove('hidden');
@@ -748,14 +766,21 @@ function runPredict(){
 }
 
 function renderStats(crl, categoryRank, seat, gender, home, eligibleCount){
+  const [crlLo, crlHi] = rankWindow(crl);
+  let rangeStr = `CRL ${fmt(crlLo)}–${fmt(crlHi)}`;
+  if (categoryRank) {
+    const [cLo, cHi] = rankWindow(categoryRank);
+    rangeStr += ` · Cat ${fmt(cLo)}–${fmt(cHi)}`;
+  }
   const rankCardSub = categoryRank
     ? `<span class="j">CRL ${fmt(crl)}</span> · Cat <b>${fmt(categoryRank)}</b> (JoSAA only)`
     : `<span class="j">CRL ${fmt(crl)}</span>`;
   const counts = currentResults.reduce((a,r)=>{ a[r.round]=(a[r.round]||0)+1; return a; }, {});
   $('statsStrip').innerHTML = `
     <div class="stat-card"><div class="stat-label">Your Rank</div><div class="stat-value">${fmt(crl)}</div><div class="stat-sub">${rankCardSub}<br>${seat} · ${gender==='F'?'Female':'Male'} · ${home}</div></div>
-    <div class="stat-card violet"><div class="stat-label">Eligible Options</div><div class="stat-value">${fmt(eligibleCount)}</div><div class="stat-sub">all colleges matching quota &amp; gender</div></div>
-    <div class="stat-card jade"><div class="stat-label">Per Counselling</div><div class="stat-value">${fmt(currentResults.length)}</div><div class="stat-sub"><span class="j">JoSAA ${counts['JoSAA']||0}</span> · <span class="c">CSAB ${counts['CSAB']||0}</span> · <span class="u">UPTAC ${counts['UPTAC']||0}</span> · <span class="g">GGSIPU ${counts['GGSIPU']||0}</span> · <span class="a">JAC ${counts['JAC']||0}</span></div></div>
+    <div class="stat-card violet"><div class="stat-label">Eligible Pool</div><div class="stat-value">${fmt(eligibleCount)}</div><div class="stat-sub">rows after quota &amp; gender gates</div></div>
+    <div class="stat-card gold"><div class="stat-label">Rank Window</div><div class="stat-value">±${BW_PCT}%</div><div class="stat-sub">${rangeStr}</div></div>
+    <div class="stat-card jade"><div class="stat-label">Total Options</div><div class="stat-value">${fmt(currentResults.length)}</div><div class="stat-sub"><span class="j">JoSAA ${counts['JoSAA']||0}</span> · <span class="c">CSAB ${counts['CSAB']||0}</span> · <span class="u">UPTAC ${counts['UPTAC']||0}</span> · <span class="g">GGSIPU ${counts['GGSIPU']||0}</span> · <span class="a">JAC ${counts['JAC']||0}</span></div></div>
   `;
 }
 
