@@ -661,15 +661,6 @@ HTML = r"""<!DOCTYPE html>
           <option value="" selected>No Budget Restrictions</option>
         </select>
       </div>
-      <div><label>Min options</label><input id="minCount" type="number" value="120" min="10"></div>
-      <div><label>Initial bandwidth</label>
-        <select id="startBw">
-          <option value="10">±10% (default)</option>
-          <option value="5">±5%</option>
-          <option value="15">±15%</option>
-          <option value="20">±20%</option>
-        </select>
-      </div>
     </div>
 
     <div style="margin-top:18px;">
@@ -906,27 +897,41 @@ function computeEligible(seatType, gender, homeState){
   });
 }
 
-function findInBandwidth(eligible, crl, categoryRank, startBw, minCount){
-  let bw = startBw, hits = [], tried = [];
-  while (bw <= 500){
+// Hardcoded asymmetric rank window: 5% below the rank (slight reach) up to
+// 10% above (more safety). On expansion both bounds scale proportionally —
+// scale=2 → [-10%, +20%], scale=3 → [-15%, +30%], etc.
+const BW_LOWER_PCT = 5;
+const BW_UPPER_PCT = 10;
+const MIN_COUNT = 100;
+const MAX_SCALE = 50;    // -250% / +500% as the absolute ceiling
+
+function rankWindow(useRank, scale){
+  return [
+    Math.max(1, Math.floor(useRank * (1 - (BW_LOWER_PCT * scale) / 100))),
+    Math.ceil(useRank * (1 + (BW_UPPER_PCT * scale) / 100)),
+  ];
+}
+
+function findInBandwidth(eligible, crl, categoryRank){
+  let scale = 1, hits = [], tried = [];
+  while (scale <= MAX_SCALE){
     hits = eligible.filter(r => {
       const useRank = rowRank(r, crl, categoryRank);
-      const lo = Math.max(1, Math.floor(useRank * (1 - bw/100)));
-      const hi = Math.ceil(useRank * (1 + bw/100));
+      const [lo, hi] = rankWindow(useRank, scale);
       return r.close >= lo && r.close <= hi;
     });
-    tried.push({ bw, count: hits.length });
-    if (hits.length >= minCount) break;
-    bw += 10;
+    tried.push({ scale, lower: BW_LOWER_PCT * scale, upper: BW_UPPER_PCT * scale, count: hits.length });
+    if (hits.length >= MIN_COUNT) break;
+    scale += 1;
   }
-  if (hits.length < minCount){
+  if (hits.length < MIN_COUNT){
     const extra = eligible
       .filter(r => !hits.includes(r))
       .map(r => ({...r, _d: Math.abs(r.close - rowRank(r, crl, categoryRank))}))
       .sort((a,b)=>a._d-b._d)
-      .slice(0, minCount - hits.length);
+      .slice(0, MIN_COUNT - hits.length);
     hits = hits.concat(extra);
-    tried.push({ bw:'fallback-nearest', count: hits.length });
+    tried.push({ scale: 'fallback-nearest', count: hits.length });
   }
   return { hits, tried };
 }
@@ -939,13 +944,11 @@ function runPredict(){
   const seat = $('seatType').value;
   const gender = $('gender').value;
   const home = $('homeState').value;
-  const minCount = parseInt($('minCount').value || '120', 10);
-  const startBw = parseInt($('startBw').value || '10', 10);
 
   if (activeRounds().size === 0) { alert('Pick at least one counselling.'); return; }
 
   const eligible = computeEligible(seat, gender, home);
-  const { hits, tried } = findInBandwidth(eligible, crl, categoryRank, startBw, minCount);
+  const { hits, tried } = findInBandwidth(eligible, crl, categoryRank);
 
   currentResults = hits;
   $('emptyHero').classList.add('hidden');
@@ -957,14 +960,20 @@ function runPredict(){
 }
 
 function renderStats(crl, categoryRank, seat, gender, home, eligibleCount, tried){
-  const final = tried[tried.length-1];
-  const bwTxt = (typeof final.bw === 'number') ? `±${final.bw}%` : 'expanded';
-  // Compute the bandwidth window for the CRL (always used) and for the category rank (if any)
-  const bwPct = (typeof final.bw === 'number') ? final.bw : 500;
-  const lo = (k) => Math.max(1, Math.floor(k * (1 - bwPct/100)));
-  const hi = (k) => Math.ceil(k * (1 + bwPct/100));
-  let rangeStr = `CRL ${fmt(lo(crl))}–${fmt(hi(crl))}`;
-  if (categoryRank) rangeStr += ` · Cat ${fmt(lo(categoryRank))}–${fmt(hi(categoryRank))}`;
+  const final = tried[tried.length - 1];
+  const isExpanded = (final.scale === 'fallback-nearest');
+  const bwTxt = isExpanded
+    ? 'expanded'
+    : `−${final.lower}% / +${final.upper}%`;
+  // Build absolute window for display using the final scale
+  const scale = isExpanded ? MAX_SCALE : final.scale;
+  const win = (k) => rankWindow(k, scale);
+  const [crlLo, crlHi] = win(crl);
+  let rangeStr = `CRL ${fmt(crlLo)}–${fmt(crlHi)}`;
+  if (categoryRank) {
+    const [cLo, cHi] = win(categoryRank);
+    rangeStr += ` · Cat ${fmt(cLo)}–${fmt(cHi)}`;
+  }
 
   const rankCardSub = categoryRank
     ? `<span class="j">CRL ${fmt(crl)}</span> · Cat <b>${fmt(categoryRank)}</b> (JoSAA only)`
@@ -973,7 +982,7 @@ function renderStats(crl, categoryRank, seat, gender, home, eligibleCount, tried
   $('statsStrip').innerHTML = `
     <div class="stat-card"><div class="stat-label">Your Rank</div><div class="stat-value">${fmt(crl)}</div><div class="stat-sub">${rankCardSub}<br>${seat} · ${gender==='F'?'Female':'Male'} · ${home}</div></div>
     <div class="stat-card violet"><div class="stat-label">Eligible Pool</div><div class="stat-value">${fmt(eligibleCount)}</div><div class="stat-sub">rows after quota &amp; gender gates</div></div>
-    <div class="stat-card gold"><div class="stat-label">Bandwidth Used</div><div class="stat-value">${bwTxt}</div><div class="stat-sub">${rangeStr}</div></div>
+    <div class="stat-card gold"><div class="stat-label">Rank Window</div><div class="stat-value">${bwTxt}</div><div class="stat-sub">${rangeStr}</div></div>
     <div class="stat-card jade"><div class="stat-label">Total Options</div><div class="stat-value">${fmt(currentResults.length)}</div><div class="stat-sub"><span class="j">JoSAA ${counts['JoSAA']||0}</span> · <span class="c">CSAB ${counts['CSAB']||0}</span> · <span class="u">UPTAC ${counts['UPTAC']||0}</span> · <span class="g">GGSIPU ${counts['GGSIPU']||0}</span> · <span class="a">JAC ${counts['JAC']||0}</span></div></div>
   `;
 }
@@ -1128,8 +1137,6 @@ function resetAll(){
   $('gender').value = 'M';
   $('homeState').value = 'Uttar Pradesh';
   $('budget').value = '';
-  $('minCount').value = '120';
-  $('startBw').value = '10';
   document.querySelectorAll('#roundToggle .round-card').forEach(c=>c.classList.add('on'));
   currentResults = [];
   $('resultsSection').classList.add('hidden');
