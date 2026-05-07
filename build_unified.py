@@ -434,33 +434,6 @@ HTML = r"""<!DOCTYPE html>
   .round-card .desc { font-size: 11px; color: var(--ink-faint); }
   .round-card .count { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--ink-dim); margin-top: 6px; }
 
-  /* === Stats strip === */
-  .stats-strip {
-    display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 14px; margin-bottom: 16px;
-  }
-  .stat-card {
-    background: linear-gradient(135deg, rgba(255,255,255,0.04), rgba(255,255,255,0.015));
-    border: 1px solid var(--line); border-radius: 16px;
-    padding: 18px 20px; backdrop-filter: blur(14px);
-    position: relative; overflow: hidden;
-  }
-  .stat-card::before {
-    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
-    background: var(--accent-bar, linear-gradient(90deg, var(--rose), var(--gold)));
-  }
-  .stat-card.violet { --accent-bar: linear-gradient(90deg, var(--violet), var(--plum)); }
-  .stat-card.jade { --accent-bar: linear-gradient(90deg, var(--jade), var(--josaa)); }
-  .stat-card.gold { --accent-bar: linear-gradient(90deg, var(--gold), var(--rose)); }
-  .stat-label { font-size: 10px; text-transform: uppercase; letter-spacing: 0.16em; color: var(--ink-faint); margin-bottom: 6px; font-weight: 700; }
-  .stat-value { font-family: 'JetBrains Mono', monospace; font-size: 26px; font-weight: 700; color: var(--ink); letter-spacing: -0.02em; line-height: 1.1; }
-  .stat-sub { font-size: 12px; color: var(--ink-dim); margin-top: 6px; line-height: 1.4; }
-  .stat-sub .j { color: var(--josaa); font-weight: 600; }
-  .stat-sub .c { color: var(--csab); font-weight: 600; }
-  .stat-sub .u { color: var(--uptac); font-weight: 600; }
-  .stat-sub .g { color: var(--ggsipu); font-weight: 600; }
-  .stat-sub .a { color: var(--jac); font-weight: 600; }
-
   /* === Filter bar === */
   .filter-bar { display: flex; gap: 16px; flex-wrap: wrap; align-items: flex-end; }
   .filter-group { display: flex; flex-direction: column; gap: 4px; min-width: 150px; }
@@ -701,8 +674,6 @@ HTML = r"""<!DOCTYPE html>
   </div>
 
   <div id="resultsSection" class="hidden" style="margin-top:18px;">
-    <div class="stats-strip" id="statsStrip"></div>
-
     <div class="panel">
       <div class="section-title">Filters</div>
       <div class="filter-bar">
@@ -953,38 +924,9 @@ function runPredict(){
   currentResults = hits;
   $('emptyHero').classList.add('hidden');
   $('resultsSection').classList.remove('hidden');
-  renderStats(crl, categoryRank, seat, gender, home, eligible.length, tried);
   buildFilters();
   renderTable();
   $('resultsSection').scrollIntoView({behavior:'smooth', block:'start'});
-}
-
-function renderStats(crl, categoryRank, seat, gender, home, eligibleCount, tried){
-  const final = tried[tried.length - 1];
-  const isExpanded = (final.scale === 'fallback-nearest');
-  const bwTxt = isExpanded
-    ? 'expanded'
-    : `−${final.lower}% / +${final.upper}%`;
-  // Build absolute window for display using the final scale
-  const scale = isExpanded ? MAX_SCALE : final.scale;
-  const win = (k) => rankWindow(k, scale);
-  const [crlLo, crlHi] = win(crl);
-  let rangeStr = `CRL ${fmt(crlLo)}–${fmt(crlHi)}`;
-  if (categoryRank) {
-    const [cLo, cHi] = win(categoryRank);
-    rangeStr += ` · Cat ${fmt(cLo)}–${fmt(cHi)}`;
-  }
-
-  const rankCardSub = categoryRank
-    ? `<span class="j">CRL ${fmt(crl)}</span> · Cat <b>${fmt(categoryRank)}</b> (JoSAA only)`
-    : `<span class="j">CRL ${fmt(crl)}</span>`;
-  const counts = currentResults.reduce((a,r)=>{ a[r.round]=(a[r.round]||0)+1; return a; }, {});
-  $('statsStrip').innerHTML = `
-    <div class="stat-card"><div class="stat-label">Your Rank</div><div class="stat-value">${fmt(crl)}</div><div class="stat-sub">${rankCardSub}<br>${seat} · ${gender==='F'?'Female':'Male'} · ${home}</div></div>
-    <div class="stat-card violet"><div class="stat-label">Eligible Pool</div><div class="stat-value">${fmt(eligibleCount)}</div><div class="stat-sub">rows after quota &amp; gender gates</div></div>
-    <div class="stat-card gold"><div class="stat-label">Rank Window</div><div class="stat-value">${bwTxt}</div><div class="stat-sub">${rangeStr}</div></div>
-    <div class="stat-card jade"><div class="stat-label">Total Options</div><div class="stat-value">${fmt(currentResults.length)}</div><div class="stat-sub"><span class="j">JoSAA ${counts['JoSAA']||0}</span> · <span class="c">CSAB ${counts['CSAB']||0}</span> · <span class="u">UPTAC ${counts['UPTAC']||0}</span> · <span class="g">GGSIPU ${counts['GGSIPU']||0}</span> · <span class="a">JAC ${counts['JAC']||0}</span></div></div>
-  `;
 }
 
 function buildFilters(){
