@@ -636,6 +636,7 @@ HTML = r"""<!DOCTYPE html>
     <div class="section-title">Your Profile</div>
     <div class="form-grid">
       <div><label>Name (optional)</label><input id="name" placeholder="e.g. Ankit Sharma"></div>
+      <div><label>Phone Number (optional)</label><input id="phone" type="tel" placeholder="e.g. 9876543210" pattern="[0-9 +\-]*"></div>
       <div><label>JEE Main CRL <span style="color:var(--rose-2)">·</span> required</label><input id="crl" type="number" placeholder="e.g. 50000" min="1"></div>
       <div><label>Category Rank <span style="color:var(--ink-faint)">· optional · JoSAA only</span></label><input id="rank" type="number" placeholder="e.g. 12000" min="1"></div>
       <div><label>Category</label>
@@ -659,15 +660,6 @@ HTML = r"""<!DOCTYPE html>
           <option value="16-20">16-20 Lakhs</option>
           <option value="20-25">20-25 Lakhs</option>
           <option value="" selected>No Budget Restrictions</option>
-        </select>
-      </div>
-      <div><label>Min options</label><input id="minCount" type="number" value="120" min="10"></div>
-      <div><label>Initial bandwidth</label>
-        <select id="startBw">
-          <option value="10">±10% (default)</option>
-          <option value="5">±5%</option>
-          <option value="15">±15%</option>
-          <option value="20">±20%</option>
         </select>
       </div>
     </div>
@@ -783,7 +775,7 @@ HTML = r"""<!DOCTYPE html>
         </table>
       </div>
       <div class="footer-note">
-        <b>How the bandwidth search works:</b> starts at your chosen ± window around the rank, then expands by 10% steps until it finds at least the minimum number of options. <b>Quotas</b> (HS / OS / AI / GO / JK / LA) are auto-gated against your home state. Sub-quotas — <b>UPTAC</b> (AF / TF / FF), <b>GGSIPU</b> (Defence / Jain / Kashmiri / Sikh), <b>JAC</b> (Defence / Single Girl / Kashmiri Migrant) — appear as small purple tags. <span class="deva">शुभकामनाएँ</span> · Sources: <a href="https://josaa.admissions.nic.in" target="_blank">JoSAA</a> · <a href="https://admissions.nic.in/csabspl/" target="_blank">CSAB</a> · <a href="https://admissions.nic.in/UPTAC/" target="_blank">UPTAC</a> · <a href="https://admissions.nic.in/UPTAC/" target="_blank">GGSIPU</a> · <a href="https://jacdelhi.admissions.nic.in" target="_blank">JAC Delhi</a>.
+        <b>How the predictor works:</b> shows every eligible row — every NIT / IIIT / GFTI / UPTAC / GGSIPU / JAC seat that matches your category, gender, and home state. Sort the table or use filters to narrow down. <b>Quotas</b> (HS / OS / AI / GO / JK / LA) are auto-gated against your home state. Sub-quotas — <b>UPTAC</b> (AF / TF / FF), <b>GGSIPU</b> (Defence / Jain / Kashmiri / Sikh), <b>JAC</b> (Defence / Single Girl / Kashmiri Migrant) — appear as small purple tags. <span class="deva">शुभकामनाएँ</span> · Sources: <a href="https://josaa.admissions.nic.in" target="_blank">JoSAA</a> · <a href="https://admissions.nic.in/csabspl/" target="_blank">CSAB</a> · <a href="https://admissions.nic.in/UPTAC/" target="_blank">UPTAC</a> · <a href="https://admissions.nic.in/UPTAC/" target="_blank">GGSIPU</a> · <a href="https://jacdelhi.admissions.nic.in" target="_blank">JAC Delhi</a>.
       </div>
     </div>
   </div>
@@ -906,31 +898,6 @@ function computeEligible(seatType, gender, homeState){
   });
 }
 
-function findInBandwidth(eligible, crl, categoryRank, startBw, minCount){
-  let bw = startBw, hits = [], tried = [];
-  while (bw <= 500){
-    hits = eligible.filter(r => {
-      const useRank = rowRank(r, crl, categoryRank);
-      const lo = Math.max(1, Math.floor(useRank * (1 - bw/100)));
-      const hi = Math.ceil(useRank * (1 + bw/100));
-      return r.close >= lo && r.close <= hi;
-    });
-    tried.push({ bw, count: hits.length });
-    if (hits.length >= minCount) break;
-    bw += 10;
-  }
-  if (hits.length < minCount){
-    const extra = eligible
-      .filter(r => !hits.includes(r))
-      .map(r => ({...r, _d: Math.abs(r.close - rowRank(r, crl, categoryRank))}))
-      .sort((a,b)=>a._d-b._d)
-      .slice(0, minCount - hits.length);
-    hits = hits.concat(extra);
-    tried.push({ bw:'fallback-nearest', count: hits.length });
-  }
-  return { hits, tried };
-}
-
 function runPredict(){
   const crl = parseInt($('crl').value || '0', 10);
   if (!crl || crl < 1) { alert('Please enter your JEE Main CRL — it is required.'); $('crl').focus(); return; }
@@ -939,42 +906,30 @@ function runPredict(){
   const seat = $('seatType').value;
   const gender = $('gender').value;
   const home = $('homeState').value;
-  const minCount = parseInt($('minCount').value || '120', 10);
-  const startBw = parseInt($('startBw').value || '10', 10);
 
   if (activeRounds().size === 0) { alert('Pick at least one counselling.'); return; }
 
+  // Show every eligible row — no bandwidth narrowing.
   const eligible = computeEligible(seat, gender, home);
-  const { hits, tried } = findInBandwidth(eligible, crl, categoryRank, startBw, minCount);
+  currentResults = eligible;
 
-  currentResults = hits;
   $('emptyHero').classList.add('hidden');
   $('resultsSection').classList.remove('hidden');
-  renderStats(crl, categoryRank, seat, gender, home, eligible.length, tried);
+  renderStats(crl, categoryRank, seat, gender, home, eligible.length);
   buildFilters();
   renderTable();
   $('resultsSection').scrollIntoView({behavior:'smooth', block:'start'});
 }
 
-function renderStats(crl, categoryRank, seat, gender, home, eligibleCount, tried){
-  const final = tried[tried.length-1];
-  const bwTxt = (typeof final.bw === 'number') ? `±${final.bw}%` : 'expanded';
-  // Compute the bandwidth window for the CRL (always used) and for the category rank (if any)
-  const bwPct = (typeof final.bw === 'number') ? final.bw : 500;
-  const lo = (k) => Math.max(1, Math.floor(k * (1 - bwPct/100)));
-  const hi = (k) => Math.ceil(k * (1 + bwPct/100));
-  let rangeStr = `CRL ${fmt(lo(crl))}–${fmt(hi(crl))}`;
-  if (categoryRank) rangeStr += ` · Cat ${fmt(lo(categoryRank))}–${fmt(hi(categoryRank))}`;
-
+function renderStats(crl, categoryRank, seat, gender, home, eligibleCount){
   const rankCardSub = categoryRank
     ? `<span class="j">CRL ${fmt(crl)}</span> · Cat <b>${fmt(categoryRank)}</b> (JoSAA only)`
     : `<span class="j">CRL ${fmt(crl)}</span>`;
   const counts = currentResults.reduce((a,r)=>{ a[r.round]=(a[r.round]||0)+1; return a; }, {});
   $('statsStrip').innerHTML = `
     <div class="stat-card"><div class="stat-label">Your Rank</div><div class="stat-value">${fmt(crl)}</div><div class="stat-sub">${rankCardSub}<br>${seat} · ${gender==='F'?'Female':'Male'} · ${home}</div></div>
-    <div class="stat-card violet"><div class="stat-label">Eligible Pool</div><div class="stat-value">${fmt(eligibleCount)}</div><div class="stat-sub">rows after quota &amp; gender gates</div></div>
-    <div class="stat-card gold"><div class="stat-label">Bandwidth Used</div><div class="stat-value">${bwTxt}</div><div class="stat-sub">${rangeStr}</div></div>
-    <div class="stat-card jade"><div class="stat-label">Total Options</div><div class="stat-value">${fmt(currentResults.length)}</div><div class="stat-sub"><span class="j">JoSAA ${counts['JoSAA']||0}</span> · <span class="c">CSAB ${counts['CSAB']||0}</span> · <span class="u">UPTAC ${counts['UPTAC']||0}</span> · <span class="g">GGSIPU ${counts['GGSIPU']||0}</span> · <span class="a">JAC ${counts['JAC']||0}</span></div></div>
+    <div class="stat-card violet"><div class="stat-label">Eligible Options</div><div class="stat-value">${fmt(eligibleCount)}</div><div class="stat-sub">all colleges matching quota &amp; gender</div></div>
+    <div class="stat-card jade"><div class="stat-label">Per Counselling</div><div class="stat-value">${fmt(currentResults.length)}</div><div class="stat-sub"><span class="j">JoSAA ${counts['JoSAA']||0}</span> · <span class="c">CSAB ${counts['CSAB']||0}</span> · <span class="u">UPTAC ${counts['UPTAC']||0}</span> · <span class="g">GGSIPU ${counts['GGSIPU']||0}</span> · <span class="a">JAC ${counts['JAC']||0}</span></div></div>
   `;
 }
 
@@ -1055,6 +1010,7 @@ function csvEsc(s){ s=String(s); return /[",\n]/.test(s) ? '"'+s.replace(/"/g,'"
 function exportPayload(){
   const rows = sortRows(filteredRows());
   const name = $('name').value.trim();
+  const phone = $('phone').value.trim();
   const crl = $('crl').value;
   const rank = $('rank').value;
   const seat = $('seatType').value;
@@ -1063,6 +1019,7 @@ function exportPayload(){
   const meta = [
     ['Generated by','PRAYUSH Unified Predictor'],
     ['Student', name],
+    ['Phone', phone || '—'],
     ['JEE Main CRL', crl],
     ['Category Rank (JoSAA only)', rank || '—'],
     ['Category', seat], ['Gender', gen], ['Home State', hs],
@@ -1123,13 +1080,11 @@ function downloadPDF(){
 }
 
 function resetAll(){
-  ['name','crl','rank','search'].forEach(id=>$(id).value='');
+  ['name','phone','crl','rank','search'].forEach(id=>$(id).value='');
   $('seatType').value = 'OPEN';
   $('gender').value = 'M';
   $('homeState').value = 'Uttar Pradesh';
   $('budget').value = '';
-  $('minCount').value = '120';
-  $('startBw').value = '10';
   document.querySelectorAll('#roundToggle .round-card').forEach(c=>c.classList.add('on'));
   currentResults = [];
   $('resultsSection').classList.add('hidden');
