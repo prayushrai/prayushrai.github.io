@@ -652,13 +652,13 @@ HTML = r"""<!DOCTYPE html>
       <div><label>Home State</label><select id="homeState"></select></div>
       <div><label>Approximate Budget</label>
         <select id="budget">
-          <option value="">Any</option>
-          <option value="5">under 5 lakhs</option>
-          <option value="10">under 10 lakhs</option>
-          <option value="15">under 15 lakhs</option>
-          <option value="20">under 20 lakhs</option>
-          <option value="25">under 25 lakhs</option>
-          <option value="30">under 30 lakhs</option>
+          <option value="4-6">4-6 Lakhs</option>
+          <option value="6-8">6-8 Lakhs</option>
+          <option value="8-12">8-12 Lakhs</option>
+          <option value="12-16">12-16 Lakhs</option>
+          <option value="16-20">16-20 Lakhs</option>
+          <option value="20-25">20-25 Lakhs</option>
+          <option value="" selected>No Budget Restrictions</option>
         </select>
       </div>
       <div><label>Min options</label><input id="minCount" type="number" value="120" min="10"></div>
