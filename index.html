@@ -19,10 +19,10 @@
     --ink-2: #111827;
     --ink-dim: #4b5563;
     --ink-faint: #9ca3af;
-    --accent: #2563eb;
-    --accent-hover: #1d4ed8;
-    --accent-soft: #eff6ff;
-    --accent-soft-2: #dbeafe;
+    --accent: #c2410c;          /* dark orange (orange-700) */
+    --accent-hover: #9a3412;     /* deeper rust (orange-800) */
+    --accent-soft: #fff7ed;      /* very light tint (orange-50) */
+    --accent-soft-2: #fed7aa;    /* light tint (orange-200) */
     --success: #059669;
     --success-soft: #d1fae5;
     --warn-soft: #fef3c7;
@@ -148,7 +148,7 @@
   input:focus, select:focus {
     outline: none;
     border-color: var(--accent);
-    box-shadow: 0 0 0 3px rgba(37,99,235,0.12);
+    box-shadow: 0 0 0 3px rgba(194,65,12,0.18);    /* dark-orange focus ring */
   }
   select {
     background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%236b7280' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'><polyline points='6 9 12 15 18 9'/></svg>");
@@ -1035,7 +1035,7 @@ function downloadXLSX(){
   const { meta, header, body, name, fileTag } = exportPayload();
   let html = '<html><head><meta charset="utf-8"></head><body><table border="1">';
   meta.forEach(m => html += '<tr>' + m.map(x=>`<td>${String(x||'')}</td>`).join('') + '</tr>');
-  html += '<tr>' + header.map(h=>`<th style="background:#2563eb;color:#fff">${h}</th>`).join('') + '</tr>';
+  html += '<tr>' + header.map(h=>`<th style="background:#c2410c;color:#fff">${h}</th>`).join('') + '</tr>';
   body.forEach(r => html += '<tr>' + r.map((x,i)=>`<td${i>=9?' style="text-align:right"':''}>${x}</td>`).join('') + '</tr>');
   html += '</table></body></html>';
   dl(new Blob(['﻿'+html], {type:'application/vnd.ms-excel'}),
@@ -1052,7 +1052,7 @@ function downloadPDF(){
     .meta{font-size:12px;margin-bottom:14px;line-height:1.5}
     table{border-collapse:collapse;width:100%;font-size:11px}
     th,td{border:1px solid #888;padding:4px 6px}
-    th{background:#2563eb;color:#fff;text-align:left}</style></head>
+    th{background:#c2410c;color:#fff;text-align:left}</style></head>
     <body><h1>PRAYUSH · Unified Counselling Preference List</h1>
     <div class="meta">${metaHtml}</div>
     <table><thead><tr>${header.map(h=>`<th>${h}</th>`).join('')}</tr></thead><tbody>${rows}</tbody></table>
