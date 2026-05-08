@@ -71,6 +71,17 @@ CSAB_QUOTA_MAP = {
     "DASA-Non CIWG": "DASA-Non CIWG",
 }
 
+# === MSG91 OTP Widget config ===
+# Both values are intended to be exposed in client-side JS — MSG91's widget
+# threat model assumes the token is visible to anyone who opens DevTools.
+# Security comes from configuration on the MSG91 dashboard:
+#   • Widget has reCAPTCHA validation enabled (rate-limits bots)
+#   • Widget restricts allowed countries to India only
+#   • Token has throttle limit (10 hits / 60 sec, blocks for 60 sec)
+#   • Demo number registered for free testing without burning real SMS
+MSG91_WIDGET_ID = "366568707934343431383237"
+MSG91_TOKEN_AUTH = "515031T0KNeFSm69fe0f76P1"
+
 def load_jc(csv_path: Path, round_label: str) -> pd.DataFrame:
     df = pd.read_csv(csv_path)
     df = df[["Institute Type", "Institute", "Academic Program Name",
@@ -429,6 +440,26 @@ HTML = r"""<!DOCTYPE html>
     flex-shrink: 0;
   }
   .phone-row input { flex: 1; min-width: 0; }
+  .btn-verify {
+    height: 42px; padding: 0 14px;
+    font-size: 13px; font-weight: 600; font-family: inherit;
+    background: #fff; color: var(--accent);
+    border: 1px solid var(--line); border-radius: 8px;
+    cursor: pointer; white-space: nowrap; flex-shrink: 0;
+    transition: border-color 0.15s, background 0.15s, color 0.15s;
+  }
+  .btn-verify:hover:not(:disabled) { border-color: var(--accent); background: var(--accent-soft); }
+  .btn-verify:disabled { opacity: 0.55; cursor: not-allowed; }
+  .btn-verify.verified {
+    background: var(--success-soft); color: #047857; border-color: #6ee7b7;
+    cursor: default;
+  }
+  .verify-status {
+    font-size: 12px; line-height: 1.5; margin-top: 6px; min-height: 1px;
+    color: var(--ink-dim);
+  }
+  .verify-status.success { color: var(--success); font-weight: 600; }
+  .verify-status.error   { color: var(--danger); }
 
   .or-divider {
     display: flex; align-items: center; gap: 12px;
@@ -760,7 +791,9 @@ HTML = r"""<!DOCTYPE html>
           <div class="phone-row">
             <span class="cc-prefix">+91</span>
             <input id="phone" type="tel" placeholder="10-digit number" inputmode="numeric" required maxlength="10" autocomplete="tel-national">
+            <button type="button" id="verifyPhoneBtn" class="btn-verify">Verify</button>
           </div>
+          <div id="phoneVerifyStatus" class="verify-status"></div>
         </div>
 
         <div class="field">
@@ -941,6 +974,8 @@ const COLS = __COLS__;
 const RAW = __DATA__;
 const INST_STATE = __INST_STATE__;
 const STATES = __STATES__;
+const MSG91_WIDGET_ID = "__MSG91_WIDGET_ID__";
+const MSG91_TOKEN_AUTH = "__MSG91_TOKEN_AUTH__";
 const ROWS = RAW.map(r => { const o = {}; COLS.forEach((c,i)=>o[c]=r[i]); return o; });
 
 const $ = id => document.getElementById(id);
@@ -1015,7 +1050,103 @@ function animateCount(el, target, dur=900){
   // Allow Enter in either rank field to predict
   $('crl').addEventListener('keydown', e => { if (e.key === 'Enter') runPredict(); });
   $('rank').addEventListener('keydown', e => { if (e.key === 'Enter') runPredict(); });
+
+  // Phone verification (MSG91 OTP widget)
+  $('verifyPhoneBtn').addEventListener('click', startPhoneVerification);
+  $('phone').addEventListener('input', () => {
+    // If user changes the number after verifying, force re-verify
+    if (phoneVerified) resetPhoneVerification();
+  });
 })();
+
+// === MSG91 OTP Widget integration ===
+let phoneVerified = false;
+let phoneVerifyToken = null;
+let msg91SdkLoading = null;    // Promise<void> | null
+
+function setVerifyStatus(text, type){
+  const el = $('phoneVerifyStatus');
+  el.className = 'verify-status' + (type ? ' ' + type : '');
+  el.textContent = text || '';
+}
+
+function loadMsg91Sdk(){
+  if (typeof window.initSendOTP === 'function') return Promise.resolve();
+  if (msg91SdkLoading) return msg91SdkLoading;
+  msg91SdkLoading = new Promise((resolve, reject) => {
+    const urls = [
+      'https://verify.msg91.com/otp-provider.js',
+      'https://verify.phone91.com/otp-provider.js',
+    ];
+    let i = 0;
+    function tryNext(){
+      if (i >= urls.length) { reject(new Error('Failed to load OTP SDK')); return; }
+      const s = document.createElement('script');
+      s.src = urls[i++];
+      s.async = true;
+      s.onload = () => {
+        if (typeof window.initSendOTP === 'function') resolve();
+        else tryNext();
+      };
+      s.onerror = tryNext;
+      document.head.appendChild(s);
+    }
+    tryNext();
+  });
+  return msg91SdkLoading;
+}
+
+async function startPhoneVerification(){
+  if (phoneVerified) return;
+  const digits = $('phone').value.replace(/\D/g, '');
+  if (digits.length !== 10) {
+    setVerifyStatus('Enter a valid 10-digit phone number first.', 'error');
+    $('phone').focus();
+    return;
+  }
+  $('verifyPhoneBtn').disabled = true;
+  setVerifyStatus('Loading verifier…', '');
+  try {
+    await loadMsg91Sdk();
+  } catch (e){
+    setVerifyStatus('Could not load OTP service. Check your internet and retry.', 'error');
+    $('verifyPhoneBtn').disabled = false;
+    return;
+  }
+  setVerifyStatus('Sending OTP to +91 ' + digits + '…', '');
+  window.initSendOTP({
+    widgetId: MSG91_WIDGET_ID,
+    tokenAuth: MSG91_TOKEN_AUTH,
+    identifier: '91' + digits,
+    exposeMethods: false,
+    success: (data) => {
+      phoneVerified = true;
+      phoneVerifyToken = (data && (data.message || data.token)) || JSON.stringify(data || {});
+      $('phone').readOnly = true;
+      $('verifyPhoneBtn').textContent = '✓ Verified';
+      $('verifyPhoneBtn').classList.add('verified');
+      $('verifyPhoneBtn').disabled = true;
+      setVerifyStatus('Phone verified.', 'success');
+    },
+    failure: (err) => {
+      console.error('[MSG91] verify failed:', err);
+      const code = (err && (err.code || err.type)) || '';
+      const msg = (err && (err.message || err.error)) || code || 'unknown error';
+      setVerifyStatus('Verification failed: ' + msg, 'error');
+      $('verifyPhoneBtn').disabled = false;
+    },
+  });
+}
+
+function resetPhoneVerification(){
+  phoneVerified = false;
+  phoneVerifyToken = null;
+  $('phone').readOnly = false;
+  $('verifyPhoneBtn').textContent = 'Verify';
+  $('verifyPhoneBtn').classList.remove('verified');
+  $('verifyPhoneBtn').disabled = false;
+  setVerifyStatus('', '');
+}
 
 let currentResults = [];
 let totalQualifying = 0;
@@ -1085,6 +1216,7 @@ function runPredict(){
   const email = $('email').value.trim();
   if (!name) { alert('Please enter your name — it is required.'); $('name').focus(); return; }
   if (!/^\d{10}$/.test(phone.replace(/\D/g, ''))) { alert('Please enter a valid 10-digit phone number.'); $('phone').focus(); return; }
+  if (!phoneVerified) { alert('Please verify your phone number — click the "Verify" button next to it.'); $('verifyPhoneBtn').focus(); return; }
   if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { alert('Please enter a valid email — it is required.'); $('email').focus(); return; }
   const crl = parseInt($('crl').value || '0', 10);
   if (!crl || crl < 1) { alert('Please enter your JEE Main CRL — it is required.'); $('crl').focus(); return; }
@@ -1269,6 +1401,7 @@ function resetAll(){
   $('homeState').value = 'Uttar Pradesh';
   $('budget').value = '';
   document.querySelectorAll('#roundToggle .round-card').forEach(c=>c.classList.add('on'));
+  resetPhoneVerification();
   currentResults = [];
   $('resultsSection').classList.add('hidden');
   window.scrollTo({top: 0, behavior: 'smooth'});
@@ -1282,7 +1415,9 @@ html = (HTML
         .replace("__COLS__", json.dumps(cols))
         .replace("__DATA__", json.dumps(data_arr, separators=(",", ":")))
         .replace("__INST_STATE__", json.dumps(INST_STATE))
-        .replace("__STATES__", json.dumps(STATES)))
+        .replace("__STATES__", json.dumps(STATES))
+        .replace("__MSG91_WIDGET_ID__", MSG91_WIDGET_ID)
+        .replace("__MSG91_TOKEN_AUTH__", MSG91_TOKEN_AUTH))
 
 OUT.write_text(html, encoding="utf-8")
 size_kb = OUT.stat().st_size / 1024
