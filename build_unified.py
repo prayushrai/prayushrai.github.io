@@ -71,6 +71,27 @@ CSAB_QUOTA_MAP = {
     "DASA-Non CIWG": "DASA-Non CIWG",
 }
 
+# === Firebase config for phone OTP verification ===
+# Setup steps (one-time, takes ~5 min):
+#   1. Go to https://console.firebase.google.com and create a project (free).
+#   2. Add a Web app (the </> icon). Copy the config values shown.
+#   3. Paste them below, replacing every YOUR_* placeholder.
+#   4. In the console: Authentication -> Sign-in method -> enable "Phone".
+#   5. Authentication -> Settings -> Authorized domains:
+#        - localhost is auto-added (works for local testing)
+#        - Add your deploy domain (e.g. sethihardik45.github.io)
+# While the values below contain "YOUR_*" placeholders, the page detects this
+# and skips OTP gating so the predictor still works for development/testing.
+FIREBASE_CONFIG = {
+    "apiKey": "AIzaSyCrhGYMvphkBUteF-PCV23aGwlYXE2Q3Jk",
+    "authDomain": "predictor-3014.firebaseapp.com",
+    "projectId": "predictor-3014",
+    "storageBucket": "predictor-3014.firebasestorage.app",
+    "messagingSenderId": "301240341003",
+    "appId": "1:301240341003:web:9e0bade04c29494558ad0e",
+    "measurementId": "G-NKMGNCKJDW",
+}
+
 
 def load_jc(csv_path: Path, round_label: str) -> pd.DataFrame:
     df = pd.read_csv(csv_path)
@@ -180,502 +201,721 @@ HTML = r"""<!DOCTYPE html>
 <title>PRAYUSH · Unified JEE Counselling Predictor — JoSAA + CSAB + UPTAC + GGSIPU + JAC Delhi</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,700;9..144,900&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<script defer src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script defer src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
 <style>
   :root {
-    --bg-0: #08061a;
-    --bg-1: #110a2e;
-    --bg-2: #1a0f3e;
-    --ink: #f6f0ff;
-    --ink-dim: #b8a9d9;
-    --ink-faint: #7a6c9c;
-    --line: rgba(255,255,255,0.09);
-    --line-strong: rgba(255,255,255,0.18);
-    --rose: #ff4d8b;
-    --rose-2: #ff8fb1;
-    --gold: #ffb547;
-    --gold-2: #ffd470;
-    --jade: #2dd4bf;
-    --violet: #a855f7;
-    --indigo: #818cf8;
-    --plum: #c084fc;
-    --josaa: #22d3ee;
-    --csab: #ff4d8b;
-    --uptac: #ffb547;
-    --ggsipu: #a3e635;
-    --jac: #818cf8;
+    --bg: #ffffff;
+    --surface: #ffffff;
+    --surface-2: #f9fafb;
+    --surface-3: #f3f4f6;
+    --line: #e5e7eb;
+    --line-strong: #d1d5db;
+    --ink: #0a0a0a;
+    --ink-2: #111827;
+    --ink-dim: #4b5563;
+    --ink-faint: #9ca3af;
+    --accent: #2563eb;
+    --accent-hover: #1d4ed8;
+    --accent-soft: #eff6ff;
+    --accent-soft-2: #dbeafe;
+    --success: #059669;
+    --success-soft: #d1fae5;
+    --warn-soft: #fef3c7;
+    --warn-ink: #78350f;
+    --danger: #dc2626;
+
+    --josaa: #0891b2;
+    --csab:  #db2777;
+    --uptac: #d97706;
+    --ggsipu:#65a30d;
+    --jac:   #4f46e5;
+
+    --shadow-sm: 0 1px 2px rgba(15,23,42,0.04);
+    --shadow:    0 1px 3px rgba(15,23,42,0.06), 0 1px 2px rgba(15,23,42,0.04);
+    --shadow-md: 0 4px 6px -1px rgba(15,23,42,0.06), 0 2px 4px -2px rgba(15,23,42,0.04);
+    --shadow-lg: 0 10px 25px -3px rgba(15,23,42,0.08), 0 4px 6px -2px rgba(15,23,42,0.04);
+
+    --radius: 10px;
+    --radius-lg: 14px;
   }
   * { box-sizing: border-box; }
-  html, body { height: 100%; }
+  html, body { height: 100%; margin: 0; }
   body {
-    margin: 0;
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-    background: var(--bg-0);
-    color: var(--ink);
-    overflow-x: hidden;
-    min-height: 100vh;
-    position: relative;
+    background: var(--bg);
+    color: var(--ink-2);
     -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    font-size: 15px;
+    line-height: 1.5;
+    overflow-x: hidden;
   }
 
-  /* === Mesh-gradient background === */
-  .mesh {
-    position: fixed; inset: 0; z-index: -3;
-    background:
-      radial-gradient(at 8% 12%, #ff4d8b22 0%, transparent 45%),
-      radial-gradient(at 92% 18%, #ffb54722 0%, transparent 45%),
-      radial-gradient(at 18% 88%, #a855f733 0%, transparent 50%),
-      radial-gradient(at 78% 78%, #2dd4bf22 0%, transparent 45%),
-      radial-gradient(at 38% 50%, #a3e63522 0%, transparent 50%),
-      radial-gradient(at 65% 35%, #818cf822 0%, transparent 50%),
-      radial-gradient(at 50% 50%, #6366f122 0%, transparent 60%),
-      linear-gradient(180deg, #0a0625 0%, #08061a 60%, #050414 100%);
-  }
-  .blob {
-    position: fixed; z-index: -2;
-    border-radius: 50%; filter: blur(90px); opacity: 0.55; pointer-events: none;
-    will-change: transform;
-  }
-  .blob.b1 { top: -8vw; left: -10vw; width: 50vw; height: 50vw; background: radial-gradient(circle, var(--rose) 0%, transparent 70%); animation: drift1 22s ease-in-out infinite; }
-  .blob.b2 { top: 10vw; right: -12vw; width: 45vw; height: 45vw; background: radial-gradient(circle, var(--gold) 0%, transparent 70%); animation: drift2 28s ease-in-out infinite; }
-  .blob.b3 { bottom: -10vw; left: 25vw; width: 55vw; height: 55vw; background: radial-gradient(circle, var(--violet) 0%, transparent 70%); animation: drift3 32s ease-in-out infinite; }
-  .blob.b4 { bottom: 5vw; right: 15vw; width: 30vw; height: 30vw; background: radial-gradient(circle, var(--jade) 0%, transparent 70%); animation: drift1 26s ease-in-out infinite reverse; opacity: 0.4; }
-  .blob.b5 { top: 35vw; left: 38vw; width: 28vw; height: 28vw; background: radial-gradient(circle, var(--ggsipu) 0%, transparent 70%); animation: drift2 24s ease-in-out infinite reverse; opacity: 0.3; }
-  .blob.b6 { top: 18vw; right: 28vw; width: 26vw; height: 26vw; background: radial-gradient(circle, var(--jac) 0%, transparent 70%); animation: drift3 30s ease-in-out infinite; opacity: 0.32; }
-  @keyframes drift1 { 0%,100% { transform: translate(0,0) scale(1); } 50% { transform: translate(6vw,4vw) scale(1.18); } }
-  @keyframes drift2 { 0%,100% { transform: translate(0,0) scale(1); } 50% { transform: translate(-5vw,8vw) scale(1.12); } }
-  @keyframes drift3 { 0%,100% { transform: translate(0,0) scale(1); } 50% { transform: translate(4vw,-6vw) scale(0.9); } }
-
-  /* film-grain noise overlay */
-  .grain {
-    position: fixed; inset: 0; z-index: -1; pointer-events: none; opacity: 0.4;
-    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 0.06 0'/></filter><rect width='200' height='200' filter='url(%23n)'/></svg>");
-    mix-blend-mode: overlay;
+  /* Subtle grid background */
+  .bg-grid {
+    position: fixed; inset: 0; z-index: -1; pointer-events: none;
+    background-image:
+      linear-gradient(rgba(15,23,42,0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(15,23,42,0.04) 1px, transparent 1px);
+    background-size: 44px 44px;
+    -webkit-mask-image: radial-gradient(ellipse 70% 55% at 50% 30%, #000 35%, transparent 85%);
+            mask-image: radial-gradient(ellipse 70% 55% at 50% 30%, #000 35%, transparent 85%);
   }
 
-  .shell { max-width: 1440px; margin: 0 auto; padding: 28px 32px 80px; }
+  /* === Top brand bar === */
+  .topbar {
+    border-bottom: 1px solid var(--line);
+    background: #fff;
+    position: relative; z-index: 5;
+  }
+  .topbar-inner {
+    max-width: 1240px; margin: 0 auto;
+    padding: 14px 32px;
+    display: flex; align-items: center; gap: 18px;
+  }
+  .brand-mark {
+    display: flex; align-items: center; gap: 10px;
+    text-decoration: none;
+  }
+  .brand-mark .logo {
+    width: 34px; height: 34px; flex-shrink: 0;
+    border-radius: 8px;
+    background: var(--accent);
+    display: flex; align-items: center; justify-content: center;
+    color: #fff; font-weight: 800; font-size: 16px;
+    letter-spacing: 0;
+  }
+  .brand-mark .wordmark {
+    display: flex; flex-direction: column; line-height: 1.1;
+  }
+  .brand-mark .wm-top { font-size: 15px; font-weight: 700; color: var(--ink-2); letter-spacing: -0.005em; }
+  .brand-mark .wm-sub { font-size: 11px; font-weight: 500; color: var(--ink-dim); }
+  .topbar-spacer { flex: 1; }
+  .topbar-link {
+    font-size: 13px; font-weight: 500; color: var(--ink-dim);
+    text-decoration: none;
+  }
+  .topbar-link:hover { color: var(--ink-2); }
 
-  /* === Header === */
-  header.brand {
-    display: flex; align-items: center; gap: 16px; margin-bottom: 36px;
+  /* === Announcement banner === */
+  .announce {
+    background: var(--surface-2);
+    border-bottom: 1px solid var(--line);
+    padding: 12px 32px;
   }
-  .mark {
-    width: 52px; height: 52px; position: relative; flex-shrink: 0;
+  .announce-inner {
+    max-width: 1240px; margin: 0 auto;
+    display: flex; align-items: center; justify-content: center; gap: 14px;
+    font-size: 14px; color: var(--ink-2);
+    flex-wrap: wrap;
   }
-  .mark svg { width: 100%; height: 100%; filter: drop-shadow(0 4px 24px rgba(255,77,139,0.5)); animation: mark-spin 16s linear infinite; }
-  @keyframes mark-spin { to { transform: rotate(360deg); } }
-  .mark-name {
-    font-family: 'Fraunces', Georgia, serif; font-weight: 900;
-    font-size: 22px; letter-spacing: 0.01em;
-    background: linear-gradient(135deg, #fff 0%, var(--rose-2) 50%, var(--gold-2) 100%);
-    -webkit-background-clip: text; background-clip: text; color: transparent;
+  .avatar-row { display: inline-flex; flex-shrink: 0; }
+  .avatar-row .av {
+    width: 28px; height: 28px; border-radius: 50%;
+    border: 2px solid #fff;
+    margin-left: -8px;
+    background: linear-gradient(135deg, #fbbf24, #f59e0b);
+    box-shadow: var(--shadow-sm);
   }
-  .mark-sub { font-size: 11px; color: var(--ink-faint); letter-spacing: 0.18em; text-transform: uppercase; margin-top: 2px; }
-  .top-meta { margin-left: auto; display: flex; gap: 18px; align-items: center; flex-wrap: wrap; }
-  .top-pill {
-    display: inline-flex; align-items: center; gap: 8px;
-    padding: 7px 14px; border-radius: 999px;
-    background: rgba(255,255,255,0.05); border: 1px solid var(--line);
-    font-size: 11px; font-weight: 600; color: var(--ink-dim);
-    backdrop-filter: blur(10px);
-  }
-  .top-pill .dot { width: 6px; height: 6px; border-radius: 50%; box-shadow: 0 0 8px currentColor; }
-  .top-pill.j { color: var(--josaa); } .top-pill.j .dot { background: var(--josaa); }
-  .top-pill.c { color: var(--csab); } .top-pill.c .dot { background: var(--csab); }
-  .top-pill.u { color: var(--uptac); } .top-pill.u .dot { background: var(--uptac); }
-  .top-pill.g { color: var(--ggsipu); } .top-pill.g .dot { background: var(--ggsipu); }
-  .top-pill.a { color: var(--jac); } .top-pill.a .dot { background: var(--jac); }
+  .avatar-row .av:first-child { margin-left: 0; background: linear-gradient(135deg, #60a5fa, #2563eb); }
+  .avatar-row .av:nth-child(2) { background: linear-gradient(135deg, #fb7185, #e11d48); }
+  .avatar-row .av:nth-child(3) { background: linear-gradient(135deg, #34d399, #059669); }
+  .announce-num { color: var(--accent); font-weight: 700; }
 
-  /* === Hero === */
-  .hero { margin-bottom: 36px; max-width: 940px; }
+  /* === Shell / hero === */
+  .shell { max-width: 1240px; margin: 0 auto; padding: 60px 32px 80px; }
+
+  .hero {
+    display: grid;
+    grid-template-columns: minmax(0, 1.15fr) minmax(380px, 1fr);
+    gap: 60px;
+    align-items: start;
+  }
+
+  .badge {
+    display: inline-flex; align-items: center; gap: 7px;
+    padding: 6px 12px; border-radius: 999px;
+    background: var(--success-soft); color: #047857;
+    font-size: 13px; font-weight: 500;
+    margin-bottom: 24px;
+  }
+  .badge svg { width: 14px; height: 14px; }
+
   .hero h1 {
-    font-family: 'Fraunces', Georgia, serif;
-    font-weight: 900; font-size: clamp(40px, 6vw, 78px);
-    line-height: 0.95; letter-spacing: -0.035em;
-    margin: 0 0 18px;
-    background: linear-gradient(120deg, #fff 0%, var(--rose-2) 30%, var(--gold-2) 55%, var(--jade) 80%, #fff 100%);
-    background-size: 200% 100%;
-    -webkit-background-clip: text; background-clip: text; color: transparent;
-    animation: shimmer 8s ease-in-out infinite;
+    font-size: clamp(38px, 4.4vw, 56px);
+    line-height: 1.05;
+    letter-spacing: -0.025em;
+    font-weight: 700;
+    margin: 0 0 20px;
+    color: var(--ink);
   }
-  @keyframes shimmer { 0%,100% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } }
-  .hero h1 .ital { font-style: italic; font-weight: 500; }
+  .hero h1 .blue { color: var(--accent); display: block; }
   .hero p {
-    font-size: clamp(15px, 1.6vw, 18px); line-height: 1.55; color: var(--ink-dim);
-    max-width: 700px; margin: 0;
+    font-size: 17px; line-height: 1.55;
+    color: var(--ink-dim);
+    max-width: 540px; margin: 0 0 28px;
   }
-  .hero p b { color: #fff; font-weight: 600; }
+  .hero p b { color: var(--ink-2); font-weight: 600; }
 
-  .stat-mini-row { display: flex; gap: 20px; margin-top: 22px; flex-wrap: wrap; }
-  .stat-mini {
-    display: flex; flex-direction: column; gap: 2px; padding-right: 22px; border-right: 1px solid var(--line);
+  .collab {
+    display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
+    margin-bottom: 32px;
+    padding: 16px 0;
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
   }
-  .stat-mini:last-child { border-right: none; }
-  .stat-mini .v {
-    font-family: 'JetBrains Mono', monospace; font-weight: 700;
-    font-size: 26px; letter-spacing: -0.02em;
+  .collab .label { font-size: 13px; color: var(--ink-dim); margin-right: 4px; }
+  .src-pill {
+    display: inline-flex; align-items: center; gap: 7px;
+    padding: 6px 12px; border-radius: 999px;
+    background: #fff; border: 1px solid var(--line);
+    font-size: 12px; font-weight: 600; color: var(--ink-2);
+    box-shadow: var(--shadow-sm);
   }
-  .stat-mini .v.j { color: var(--josaa); }
-  .stat-mini .v.c { color: var(--csab); }
-  .stat-mini .v.u { color: var(--uptac); }
-  .stat-mini .v.g { color: var(--ggsipu); }
-  .stat-mini .v.a { color: var(--jac); }
-  .stat-mini .v.t { background: linear-gradient(135deg, var(--rose-2), var(--gold-2)); -webkit-background-clip: text; background-clip: text; color: transparent; }
-  .stat-mini .l { font-size: 10px; text-transform: uppercase; letter-spacing: 0.18em; color: var(--ink-faint); }
+  .src-pill .dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
+  .src-pill.j .dot { background: var(--josaa); }
+  .src-pill.c .dot { background: var(--csab); }
+  .src-pill.u .dot { background: var(--uptac); }
+  .src-pill.g .dot { background: var(--ggsipu); }
+  .src-pill.a .dot { background: var(--jac); }
 
-  /* === Glass cards === */
+  .features {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px;
+  }
+  .feature {
+    display: flex; align-items: center; gap: 12px;
+    padding: 14px 16px;
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-sm);
+  }
+  .feature-icon {
+    width: 36px; height: 36px; border-radius: 50%;
+    background: var(--accent-soft); color: var(--accent);
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+  .feature-icon svg { width: 18px; height: 18px; }
+  .feature .v { font-weight: 700; font-size: 15px; line-height: 1.2; color: var(--ink-2); }
+  .feature .l { font-size: 12px; color: var(--ink-dim); margin-top: 2px; }
+
+  /* === Form card === */
+  .form-card {
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    padding: 28px;
+    box-shadow: var(--shadow-md);
+  }
+  .field { margin-bottom: 16px; }
+  .field-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .field-grid .field { margin-bottom: 16px; }
+  .field label {
+    display: block;
+    font-size: 13px; font-weight: 500; color: var(--ink-2);
+    margin-bottom: 6px;
+  }
+  .field label .req { color: var(--danger); }
+  .field label .opt { color: var(--ink-faint); font-weight: 400; font-size: 12px; }
+
+  input, select {
+    width: 100%; padding: 11px 13px;
+    background: #fff; color: var(--ink-2);
+    border: 1px solid var(--line); border-radius: 8px;
+    font-size: 14px; font-family: inherit; font-weight: 500;
+    transition: border-color 0.15s, box-shadow 0.15s;
+    -webkit-appearance: none; appearance: none;
+  }
+  input::placeholder { color: var(--ink-faint); font-weight: 400; }
+  input:focus, select:focus {
+    outline: none;
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px rgba(37,99,235,0.12);
+  }
+  select {
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%236b7280' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'><polyline points='6 9 12 15 18 9'/></svg>");
+    background-repeat: no-repeat;
+    background-position: right 12px center;
+    padding-right: 36px;
+  }
+
+  /* === Phone + OTP === */
+  .phone-row { display: flex; gap: 8px; }
+  .phone-row .cc-prefix {
+    display: inline-flex; align-items: center;
+    padding: 0 12px; height: 42px;
+    background: var(--surface-2); border: 1px solid var(--line);
+    border-radius: 8px;
+    color: var(--ink-2); font-size: 14px; font-weight: 600;
+    flex-shrink: 0;
+  }
+  .phone-row input { flex: 1; min-width: 0; }
+  .btn-otp {
+    height: 42px; padding: 0 14px;
+    font-size: 13px; font-weight: 600; font-family: inherit;
+    background: #fff; color: var(--accent);
+    border: 1px solid var(--line); border-radius: 8px;
+    cursor: pointer; white-space: nowrap; flex-shrink: 0;
+    transition: border-color 0.15s, background 0.15s, color 0.15s;
+  }
+  .btn-otp:hover:not(:disabled) { border-color: var(--accent); background: var(--accent-soft); }
+  .btn-otp:disabled { opacity: 0.55; cursor: not-allowed; }
+  .btn-link {
+    height: 42px; padding: 0 8px;
+    background: none; border: none; color: var(--accent);
+    font-size: 13px; font-weight: 500; cursor: pointer; font-family: inherit;
+  }
+  .btn-link:hover { text-decoration: underline; background: none; border: none; }
+  .otp-row { display: flex; gap: 8px; margin-top: 10px; }
+  .otp-row input { flex: 1; min-width: 0; }
+  .otp-status {
+    font-size: 12px; line-height: 1.5; margin-top: 8px; min-height: 1px;
+    color: var(--ink-dim);
+  }
+  .otp-status.success { color: var(--success); font-weight: 600; }
+  .otp-status.error { color: var(--danger); }
+  .otp-status.info { color: var(--ink-dim); }
+  #recaptcha-container { margin-top: 4px; }
+
+  .or-divider {
+    display: flex; align-items: center; gap: 12px;
+    margin: 6px 0 12px;
+    color: var(--ink-faint); font-size: 12px; font-weight: 500;
+    letter-spacing: 0.04em;
+  }
+  .or-divider::before, .or-divider::after {
+    content: ''; flex: 1; height: 1px; background: var(--line);
+  }
+
+  .tip {
+    display: flex; align-items: center; gap: 8px;
+    padding: 10px 12px; border-radius: 8px;
+    background: var(--warn-soft); color: var(--warn-ink);
+    font-size: 13px; font-weight: 500;
+    margin-bottom: 16px;
+    border: 1px solid #fde68a;
+  }
+  .tip svg { width: 14px; height: 14px; flex-shrink: 0; }
+
+  .radio-group {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 10px;
+  }
+  .radio-option {
+    display: flex; align-items: center; gap: 10px;
+    padding: 11px 14px;
+    background: #fff;
+    border: 1px solid var(--line); border-radius: 8px;
+    cursor: pointer; user-select: none;
+    font-size: 14px; font-weight: 500;
+    transition: border-color 0.15s, background 0.15s;
+  }
+  .radio-option:hover { border-color: var(--line-strong); }
+  .radio-option.selected { border-color: var(--accent); background: var(--accent-soft); }
+  .radio-option .dot {
+    width: 16px; height: 16px; border-radius: 50%;
+    border: 1.5px solid var(--ink-faint);
+    position: relative; flex-shrink: 0;
+    transition: border-color 0.15s;
+  }
+  .radio-option.selected .dot { border-color: var(--accent); }
+  .radio-option.selected .dot::after {
+    content: ''; position: absolute; inset: 3px;
+    border-radius: 50%; background: var(--accent);
+  }
+
+  /* Counsellings to include — compact pills inside the form */
+  .counsel-row { display: flex; gap: 6px; flex-wrap: wrap; }
+  .round-card {
+    padding: 7px 12px; border-radius: 8px;
+    background: #fff; border: 1px solid var(--line);
+    font-size: 12px; font-weight: 600; color: var(--ink-dim);
+    cursor: pointer; user-select: none;
+    display: inline-flex; align-items: center; gap: 6px;
+    transition: border-color 0.15s, background 0.15s, color 0.15s;
+  }
+  .round-card:hover { border-color: var(--line-strong); color: var(--ink-2); }
+  .round-card .head { display: inline; }
+  .round-card .name { display: inline; }
+  .round-card .name .check, .round-card .desc, .round-card .count { display: none; }
+  .round-card.on { border-color: var(--accent); background: var(--accent-soft); color: var(--accent); }
+
+  /* CTA button */
+  button.cta {
+    width: 100%; padding: 14px;
+    background: #0a0a0a; color: #fff;
+    border: none; border-radius: 8px;
+    font-size: 15px; font-weight: 600; font-family: inherit;
+    cursor: pointer;
+    transition: background 0.15s, transform 0.1s;
+    margin-top: 4px;
+  }
+  button.cta:hover { background: #1f2937; }
+  button.cta:active { transform: translateY(1px); }
+
+  .trust-row {
+    margin-top: 14px;
+    display: flex; align-items: center; justify-content: center;
+    gap: 7px;
+    font-size: 13px; font-weight: 500; color: var(--success);
+  }
+  .trust-row svg { width: 14px; height: 14px; }
+
+  /* === Generic buttons (filter reset, exports) === */
+  button {
+    padding: 9px 16px; font-size: 13px; font-weight: 600;
+    border: 1px solid var(--line); border-radius: 8px;
+    cursor: pointer; font-family: inherit;
+    background: #fff; color: var(--ink-2);
+    transition: background 0.15s, border-color 0.15s;
+  }
+  button:hover { background: var(--surface-2); border-color: var(--line-strong); }
+  button.ghost { background: transparent; border-color: transparent; color: var(--ink-dim); }
+  button.ghost:hover { color: var(--ink-2); background: var(--surface-2); }
+
+  /* === Results panel === */
   .panel {
-    background: linear-gradient(135deg, rgba(255,255,255,0.04), rgba(255,255,255,0.015));
-    border: 1px solid var(--line); border-radius: 22px;
-    backdrop-filter: blur(20px) saturate(180%);
-    -webkit-backdrop-filter: blur(20px) saturate(180%);
-    padding: 22px 24px;
-    box-shadow: 0 10px 40px rgba(5,4,20,0.5), inset 0 1px 0 rgba(255,255,255,0.07);
-    position: relative;
-  }
-  .panel::before {
-    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px;
-    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.18), transparent);
-    pointer-events: none;
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: var(--radius-lg);
+    padding: 22px;
+    box-shadow: var(--shadow-sm);
   }
   .panel + .panel { margin-top: 16px; }
 
   .section-title {
-    font-size: 10px; font-weight: 700; letter-spacing: 0.22em;
-    text-transform: uppercase; color: var(--ink-faint); margin: 0 0 14px;
+    font-size: 14px; font-weight: 600; color: var(--ink-2);
+    margin: 0 0 14px;
     display: flex; align-items: center; gap: 10px;
   }
-  .section-title::before {
-    content: ''; width: 18px; height: 1px;
-    background: linear-gradient(90deg, var(--rose), transparent);
+
+  .filter-bar { display: flex; gap: 14px; flex-wrap: wrap; align-items: flex-end; }
+  .filter-group { display: flex; flex-direction: column; gap: 6px; min-width: 150px; }
+  .filter-group label {
+    font-size: 12px; font-weight: 500; color: var(--ink-dim);
+    margin: 0;
   }
 
-  /* === Form === */
-  .form-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 14px; }
-  label { display: block; font-size: 10px; font-weight: 700; color: var(--ink-faint); margin-bottom: 6px; letter-spacing: 0.12em; text-transform: uppercase; }
-  input, select {
-    width: 100%; padding: 12px 14px;
-    background: rgba(255,255,255,0.035);
-    border: 1px solid var(--line);
-    border-radius: 12px;
-    color: var(--ink); font-size: 14px; font-family: inherit; font-weight: 500;
-    transition: all 0.18s;
-  }
-  input::placeholder { color: var(--ink-faint); }
-  input:focus, select:focus {
-    outline: none;
-    border-color: var(--rose);
-    background: rgba(255,77,139,0.06);
-    box-shadow: 0 0 0 3px rgba(255,77,139,0.15);
-  }
-  select option { background: var(--bg-1); color: var(--ink); }
-
-  /* === Buttons === */
-  button {
-    padding: 11px 20px; font-size: 13px; font-weight: 600; letter-spacing: 0.01em;
-    border: none; border-radius: 12px; cursor: pointer; font-family: inherit;
-    background: rgba(255,255,255,0.06); color: var(--ink);
-    border: 1px solid var(--line);
-    transition: all 0.18s;
-  }
-  button:hover { background: rgba(255,255,255,0.1); border-color: var(--line-strong); }
-  button.ghost { background: transparent; color: var(--ink-dim); }
-  button.ghost:hover { color: var(--ink); }
-
-  button.cta {
-    position: relative; overflow: hidden;
-    padding: 14px 30px; font-size: 14px; font-weight: 700;
-    background: linear-gradient(135deg, var(--rose) 0%, var(--gold) 100%);
-    color: #1a0817; border: none;
-    box-shadow: 0 8px 30px rgba(255,77,139,0.35), 0 4px 12px rgba(255,181,71,0.25);
-    letter-spacing: 0.02em;
-  }
-  button.cta::before {
-    content: ''; position: absolute; top: 0; left: -100%; width: 60%; height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.5), transparent);
-    transform: skewX(-25deg);
-    transition: left 0.7s;
-  }
-  button.cta:hover { transform: translateY(-2px); box-shadow: 0 14px 40px rgba(255,77,139,0.5), 0 6px 16px rgba(255,181,71,0.35); border: none; }
-  button.cta:hover::before { left: 200%; }
-
-  .actions { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
-
-  /* === Counselling round chips === */
-  .round-row { display: flex; gap: 12px; flex-wrap: wrap; }
-  .round-card {
-    flex: 1; min-width: 200px;
-    padding: 14px 16px; border-radius: 14px;
-    background: rgba(255,255,255,0.03); border: 1.5px solid var(--line);
-    cursor: pointer; user-select: none; transition: all 0.18s;
-    position: relative; overflow: hidden;
-  }
-  .round-card::after {
-    content: ''; position: absolute; inset: 0;
-    background: var(--card-glow, transparent); opacity: 0;
-    transition: opacity 0.2s; pointer-events: none;
-  }
-  .round-card.on::after { opacity: 0.16; }
-  .round-card.on { border-width: 1.5px; box-shadow: 0 0 0 1px var(--card-color, var(--rose)), 0 8px 24px var(--card-glow-shadow, rgba(255,77,139,0.25)); }
-  .round-card[data-round="JoSAA"] { --card-color: var(--josaa); --card-glow: var(--josaa); --card-glow-shadow: rgba(34,211,238,0.3); }
-  .round-card[data-round="CSAB"]  { --card-color: var(--csab);  --card-glow: var(--csab);  --card-glow-shadow: rgba(255,77,139,0.3); }
-  .round-card[data-round="UPTAC"] { --card-color: var(--uptac); --card-glow: var(--uptac); --card-glow-shadow: rgba(255,181,71,0.3); }
-  .round-card[data-round="GGSIPU"] { --card-color: var(--ggsipu); --card-glow: var(--ggsipu); --card-glow-shadow: rgba(163,230,53,0.3); }
-  .round-card[data-round="JAC"] { --card-color: var(--jac); --card-glow: var(--jac); --card-glow-shadow: rgba(129,140,248,0.32); }
-  .round-card .head { display: flex; align-items: center; gap: 10px; margin-bottom: 6px; }
-  .round-card .name { font-weight: 700; font-size: 14px; letter-spacing: -0.01em; }
-  .round-card.on[data-round="JoSAA"] .name { color: var(--josaa); }
-  .round-card.on[data-round="CSAB"] .name { color: var(--csab); }
-  .round-card.on[data-round="UPTAC"] .name { color: var(--uptac); }
-  .round-card.on[data-round="GGSIPU"] .name { color: var(--ggsipu); }
-  .round-card.on[data-round="JAC"] .name { color: var(--jac); }
-  .round-card .name .check { font-size: 10px; opacity: 0; margin-left: auto; transition: opacity 0.15s; }
-  .round-card.on .check { opacity: 1; }
-  .round-card .desc { font-size: 11px; color: var(--ink-faint); }
-  .round-card .count { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--ink-dim); margin-top: 6px; }
-
-  /* === Filter bar === */
-  .filter-bar { display: flex; gap: 16px; flex-wrap: wrap; align-items: flex-end; }
-  .filter-group { display: flex; flex-direction: column; gap: 4px; min-width: 150px; }
-
-  .chip-row { display: flex; gap: 8px; flex-wrap: wrap; }
+  .chip-row { display: flex; gap: 6px; flex-wrap: wrap; }
   .chip {
-    padding: 7px 14px; border-radius: 999px; font-size: 12px; font-weight: 600;
-    background: rgba(255,255,255,0.04); border: 1.5px solid transparent;
-    cursor: pointer; user-select: none; transition: all 0.15s;
-    color: var(--ink-dim); letter-spacing: 0.01em;
+    padding: 6px 12px; border-radius: 999px; font-size: 12px; font-weight: 600;
+    background: #fff; border: 1px solid var(--line);
+    cursor: pointer; user-select: none;
+    color: var(--ink-dim);
+    transition: border-color 0.15s, background 0.15s, color 0.15s;
   }
-  .chip:hover { background: rgba(255,255,255,0.09); color: var(--ink); }
-  .chip.on {
-    background: linear-gradient(135deg, rgba(255,77,139,0.18), rgba(255,181,71,0.14));
-    border-color: var(--rose); color: #fff;
-    box-shadow: 0 0 16px rgba(255,77,139,0.3);
-  }
-  .chip[data-src="JoSAA"].on { background: linear-gradient(135deg, rgba(34,211,238,0.2), rgba(34,211,238,0.08)); border-color: var(--josaa); color: var(--josaa); box-shadow: 0 0 16px rgba(34,211,238,0.3); }
-  .chip[data-src="CSAB"].on  { background: linear-gradient(135deg, rgba(255,77,139,0.2), rgba(255,77,139,0.08)); border-color: var(--csab);  color: var(--csab);  box-shadow: 0 0 16px rgba(255,77,139,0.3); }
-  .chip[data-src="UPTAC"].on { background: linear-gradient(135deg, rgba(255,181,71,0.2), rgba(255,181,71,0.08)); border-color: var(--uptac); color: var(--uptac); box-shadow: 0 0 16px rgba(255,181,71,0.3); }
-  .chip[data-src="GGSIPU"].on { background: linear-gradient(135deg, rgba(163,230,53,0.2), rgba(163,230,53,0.08)); border-color: var(--ggsipu); color: var(--ggsipu); box-shadow: 0 0 16px rgba(163,230,53,0.3); }
-  .chip[data-src="JAC"].on { background: linear-gradient(135deg, rgba(129,140,248,0.22), rgba(129,140,248,0.08)); border-color: var(--jac); color: var(--jac); box-shadow: 0 0 16px rgba(129,140,248,0.3); }
+  .chip:hover { border-color: var(--line-strong); color: var(--ink-2); }
+  .chip.on { background: var(--accent-soft); border-color: var(--accent); color: var(--accent); }
+  .chip[data-src="JoSAA"].on  { background: #ecfeff; border-color: var(--josaa);  color: #0e7490; }
+  .chip[data-src="CSAB"].on   { background: #fdf2f8; border-color: var(--csab);   color: #be185d; }
+  .chip[data-src="UPTAC"].on  { background: #fffbeb; border-color: var(--uptac);  color: #b45309; }
+  .chip[data-src="GGSIPU"].on { background: #f7fee7; border-color: var(--ggsipu); color: #4d7c0f; }
+  .chip[data-src="JAC"].on    { background: #eef2ff; border-color: var(--jac);    color: #4338ca; }
 
   /* === Table === */
   .table-wrap {
     max-height: 65vh; overflow: auto;
-    border-radius: 16px; border: 1px solid var(--line);
-    background: linear-gradient(180deg, rgba(0,0,0,0.25), rgba(0,0,0,0.15));
+    border-radius: 12px; border: 1px solid var(--line);
+    background: #fff;
   }
   table { width: 100%; border-collapse: collapse; font-size: 13px; }
   thead th {
     position: sticky; top: 0; z-index: 2;
-    background: rgba(17,10,46,0.96); backdrop-filter: blur(10px);
-    text-align: left; padding: 13px 14px;
-    font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.14em;
-    color: var(--ink-faint); border-bottom: 1px solid var(--line);
+    background: var(--surface-2);
+    text-align: left; padding: 11px 14px;
+    font-size: 12px; font-weight: 600; color: var(--ink-dim);
+    border-bottom: 1px solid var(--line);
     cursor: pointer; user-select: none; white-space: nowrap;
   }
-  thead th:hover { color: var(--gold); }
-  thead th.sortable::after { content: ' ⇅'; opacity: 0.3; font-size: 10px; }
-  thead th.sort-asc::after { content: ' ↑'; opacity: 1; color: var(--gold); }
-  thead th.sort-desc::after { content: ' ↓'; opacity: 1; color: var(--gold); }
-  tbody td { padding: 11px 14px; border-bottom: 1px solid rgba(255,255,255,0.04); }
-  tbody tr { transition: background 0.12s; }
-  tbody tr:hover td { background: linear-gradient(90deg, rgba(255,77,139,0.06), rgba(255,181,71,0.04)); }
-  td.numcell { text-align: right; font-family: 'JetBrains Mono', monospace; font-weight: 700; color: var(--ink); }
+  thead th:hover { color: var(--ink-2); }
+  thead th.sortable::after { content: ' ⇅'; opacity: 0.4; font-size: 10px; }
+  thead th.sort-asc::after { content: ' ↑'; opacity: 1; color: var(--accent); }
+  thead th.sort-desc::after { content: ' ↓'; opacity: 1; color: var(--accent); }
+  tbody td {
+    padding: 11px 14px; border-bottom: 1px solid var(--surface-3);
+    color: var(--ink-2);
+  }
+  tbody tr:last-child td { border-bottom: none; }
+  tbody tr:hover td { background: var(--surface-2); }
+  td.numcell { text-align: right; font-family: 'JetBrains Mono', monospace; font-weight: 600; color: var(--ink); }
 
   .pill {
-    display: inline-block; padding: 3px 10px; border-radius: 999px;
-    font-size: 10px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase;
-    line-height: 1.4;
+    display: inline-block; padding: 3px 9px; border-radius: 999px;
+    font-size: 11px; font-weight: 600; line-height: 1.4;
   }
-  .pill-NIT   { background: rgba(45,212,191,0.18); color: var(--jade); }
-  .pill-IIIT  { background: rgba(168,85,247,0.22); color: var(--plum); }
-  .pill-GFTI  { background: rgba(255,181,71,0.18); color: var(--gold); }
-  .pill-UPTAC { background: linear-gradient(135deg, rgba(255,181,71,0.25), rgba(255,77,139,0.15)); color: var(--gold); }
-  .pill-GGSIPU { background: linear-gradient(135deg, rgba(163,230,53,0.25), rgba(34,211,238,0.10)); color: var(--ggsipu); }
-  .pill-JAC { background: linear-gradient(135deg, rgba(129,140,248,0.28), rgba(168,85,247,0.12)); color: var(--jac); }
-  .pill-JoSAA { background: rgba(34,211,238,0.16); color: var(--josaa); border: 1px solid rgba(34,211,238,0.4); }
-  .pill-CSAB  { background: rgba(255,77,139,0.16); color: var(--csab);  border: 1px solid rgba(255,77,139,0.4); }
-  .pill-UPTAC-r { background: rgba(255,181,71,0.16); color: var(--uptac); border: 1px solid rgba(255,181,71,0.4); }
-  .pill-GGSIPU-r { background: rgba(163,230,53,0.16); color: var(--ggsipu); border: 1px solid rgba(163,230,53,0.4); }
-  .pill-JAC-r { background: rgba(129,140,248,0.18); color: var(--jac); border: 1px solid rgba(129,140,248,0.4); }
-  .pill-quota { background: rgba(255,255,255,0.07); color: var(--ink-dim); }
-  .pill-note { background: rgba(168,85,247,0.18); color: var(--plum); margin-left: 4px; }
+  .pill-NIT    { background: #ecfdf5; color: #047857; }
+  .pill-IIIT   { background: #f5f3ff; color: #6d28d9; }
+  .pill-GFTI   { background: #fffbeb; color: #b45309; }
+  .pill-UPTAC  { background: #fef3c7; color: #92400e; }
+  .pill-GGSIPU { background: #ecfccb; color: #4d7c0f; }
+  .pill-JAC    { background: #eef2ff; color: #4338ca; }
+  .pill-JoSAA    { background: #ecfeff; color: #0e7490; border: 1px solid #a5f3fc; }
+  .pill-CSAB     { background: #fdf2f8; color: #be185d; border: 1px solid #fbcfe8; }
+  .pill-UPTAC-r  { background: #fffbeb; color: #b45309; border: 1px solid #fde68a; }
+  .pill-GGSIPU-r { background: #f7fee7; color: #4d7c0f; border: 1px solid #d9f99d; }
+  .pill-JAC-r    { background: #eef2ff; color: #4338ca; border: 1px solid #c7d2fe; }
+  .pill-quota    { background: var(--surface-3); color: var(--ink-dim); }
+  .pill-note     { background: #f5f3ff; color: #6d28d9; margin-left: 4px; }
 
-  /* === Toolbar === */
-  .toolbar { display: flex; gap: 12px; align-items: center; flex-wrap: wrap; margin-bottom: 14px; }
+  /* === Toolbar above table === */
+  .toolbar { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; margin-bottom: 14px; }
   .toolbar .grow { flex: 1; }
+  .toolbar strong { font-size: 14px; font-weight: 600; color: var(--ink-2); }
   .vis-pill {
-    display: inline-flex; align-items: center; gap: 8px;
-    padding: 7px 14px; border-radius: 999px;
-    background: linear-gradient(135deg, rgba(255,77,139,0.18), rgba(255,181,71,0.14));
-    color: var(--rose-2); border: 1px solid rgba(255,77,139,0.3);
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 5px 11px; border-radius: 999px;
+    background: var(--accent-soft); color: var(--accent);
+    border: 1px solid var(--accent-soft-2);
     font-family: 'JetBrains Mono', monospace; font-size: 12px; font-weight: 700;
   }
 
   .footer-note {
-    font-size: 11px; color: var(--ink-faint); margin-top: 18px; line-height: 1.7;
+    font-size: 12px; color: var(--ink-dim); margin-top: 18px; line-height: 1.7;
     border-top: 1px solid var(--line); padding-top: 14px;
   }
-  .footer-note b { color: var(--ink-dim); }
-  .footer-note a { color: var(--gold); text-decoration: none; }
-  .footer-note a:hover { color: var(--gold-2); }
-  .footer-note .deva { font-family: 'Fraunces', serif; font-style: italic; color: var(--rose-2); }
+  .footer-note b { color: var(--ink-2); font-weight: 600; }
+  .footer-note a { color: var(--accent); text-decoration: none; }
+  .footer-note a:hover { text-decoration: underline; }
 
-  /* === Empty hero (initial state) === */
+  /* === Empty hero === */
   .empty-hero {
-    background: linear-gradient(135deg, rgba(255,255,255,0.03), rgba(255,77,139,0.04));
-    border: 1px dashed var(--line); border-radius: 22px;
-    padding: 60px 30px; text-align: center;
+    background: var(--surface-2);
+    border: 1px dashed var(--line-strong);
+    border-radius: var(--radius-lg);
+    padding: 56px 30px; text-align: center;
   }
   .empty-hero .icon {
-    font-size: 56px; margin-bottom: 18px; line-height: 1;
-    background: linear-gradient(135deg, var(--rose), var(--gold), var(--violet));
-    -webkit-background-clip: text; background-clip: text; color: transparent;
-    animation: pulse 3s ease-in-out infinite;
+    width: 56px; height: 56px; border-radius: 50%;
+    background: var(--accent-soft); color: var(--accent);
+    display: flex; align-items: center; justify-content: center;
+    margin: 0 auto 16px;
   }
-  @keyframes pulse { 0%,100% { transform: scale(1); } 50% { transform: scale(1.1); } }
-  .empty-hero h2 { font-family: 'Fraunces', serif; font-weight: 700; font-size: 28px; margin: 0 0 10px; letter-spacing: -0.02em; }
-  .empty-hero p { color: var(--ink-dim); font-size: 14px; max-width: 600px; margin: 0 auto; line-height: 1.6; }
-  .empty-hero p b { color: #fff; font-weight: 600; }
+  .empty-hero .icon svg { width: 28px; height: 28px; }
+  .empty-hero h2 { font-weight: 700; font-size: 22px; margin: 0 0 8px; letter-spacing: -0.015em; color: var(--ink); }
+  .empty-hero p { color: var(--ink-dim); font-size: 14px; max-width: 520px; margin: 0 auto; line-height: 1.6; }
 
   .hidden { display: none !important; }
 
+  /* Scrollbars (light) */
   ::-webkit-scrollbar { width: 10px; height: 10px; }
   ::-webkit-scrollbar-track { background: transparent; }
-  ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 10px; }
-  ::-webkit-scrollbar-thumb:hover { background: rgba(255,77,139,0.3); }
+  ::-webkit-scrollbar-thumb { background: var(--surface-3); border-radius: 10px; border: 2px solid #fff; }
+  ::-webkit-scrollbar-thumb:hover { background: var(--line-strong); }
 
-  @media (max-width: 720px) {
-    .shell { padding: 18px 16px 60px; }
-    .hero h1 { font-size: 38px; }
-    .top-meta { width: 100%; justify-content: flex-start; margin-left: 0; margin-top: 4px; }
-    header.brand { flex-wrap: wrap; }
+  @media (max-width: 980px) {
+    .hero { grid-template-columns: 1fr; gap: 40px; }
+    .features { grid-template-columns: 1fr; }
+    .shell { padding: 40px 24px 60px; }
+  }
+  @media (max-width: 640px) {
+    .topbar-inner { padding: 12px 16px; }
+    .announce { padding: 10px 16px; }
+    .announce-inner { font-size: 13px; }
+    .shell { padding: 32px 16px 56px; }
+    .hero h1 { font-size: 36px; }
+    .hero p { font-size: 15px; }
+    .form-card { padding: 22px; }
+    .filter-bar { gap: 12px; }
   }
 </style>
 </head>
 <body>
-<div class="mesh"></div>
-<div class="blob b1"></div>
-<div class="blob b2"></div>
-<div class="blob b3"></div>
-<div class="blob b4"></div>
-<div class="blob b5"></div>
-<div class="blob b6"></div>
-<div class="grain"></div>
+<div class="bg-grid"></div>
 
-<div class="shell">
+<header class="topbar">
+  <div class="topbar-inner">
+    <a class="brand-mark" href="#">
+      <div class="logo">P</div>
+      <div class="wordmark">
+        <span class="wm-top">PRAYUSH</span>
+        <span class="wm-sub">JEE Counselling Predictor</span>
+      </div>
+    </a>
+    <div class="topbar-spacer"></div>
+    <a class="topbar-link" href="https://josaa.admissions.nic.in" target="_blank" rel="noopener">Sources</a>
+  </div>
+</header>
 
-  <header class="brand">
-    <div class="mark">
-      <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <defs>
-          <linearGradient id="g1" x1="0" y1="0" x2="64" y2="64">
-            <stop offset="0%" stop-color="#ff4d8b"/>
-            <stop offset="50%" stop-color="#ffb547"/>
-            <stop offset="100%" stop-color="#a855f7"/>
-          </linearGradient>
-        </defs>
-        <circle cx="32" cy="32" r="28" stroke="url(#g1)" stroke-width="2.5" fill="none"/>
-        <path d="M 32 6 L 38 26 L 58 32 L 38 38 L 32 58 L 26 38 L 6 32 L 26 26 Z" fill="url(#g1)" opacity="0.95"/>
-        <circle cx="32" cy="32" r="4" fill="#08061a"/>
-      </svg>
-    </div>
-    <div>
-      <div class="mark-name">PRAYUSH</div>
-      <div class="mark-sub">JEE Counselling Atlas · 2025</div>
-    </div>
-    <div class="top-meta">
-      <div class="top-pill j"><span class="dot"></span>JoSAA · R6</div>
-      <div class="top-pill c"><span class="dot"></span>CSAB · Special</div>
-      <div class="top-pill u"><span class="dot"></span>UPTAC · Final</div>
-      <div class="top-pill g"><span class="dot"></span>GGSIPU · R3</div>
-      <div class="top-pill a"><span class="dot"></span>JAC Delhi · R5</div>
-    </div>
-  </header>
+<div class="announce">
+  <div class="announce-inner">
+    <span class="avatar-row"><span class="av"></span><span class="av"></span><span class="av"></span></span>
+    <span><span class="announce-num" id="announceCount">0</span> cutoffs unified across 5 official 2025 counsellings</span>
+  </div>
+</div>
 
+<main class="shell">
   <section class="hero">
-    <h1>Every seat,<br><span class="ital">one search.</span></h1>
-    <p>From <b>NIT Trichy</b> to <b>DTU Bawana</b> — PRAYUSH unifies <b>JoSAA R6</b>, <b>CSAB Special R3</b>, <b>UPTAC final</b>, <b>GGSIPU R3</b>, and <b>JAC Delhi R5</b> (DTU · NSUT · IGDTUW) cutoffs into a single ranked predictor. Type your JEE Main rank. Walk away with a defensible choice list.</p>
-    <div class="stat-mini-row">
-      <div class="stat-mini"><div class="v t" id="totalCount">0</div><div class="l">Total Cutoffs</div></div>
-      <div class="stat-mini"><div class="v j" id="josaaCountTop">0</div><div class="l">JoSAA</div></div>
-      <div class="stat-mini"><div class="v c" id="csabCountTop">0</div><div class="l">CSAB</div></div>
-      <div class="stat-mini"><div class="v u" id="uptacCountTop">0</div><div class="l">UPTAC</div></div>
-      <div class="stat-mini"><div class="v g" id="ggsipuCountTop">0</div><div class="l">GGSIPU</div></div>
-      <div class="stat-mini"><div class="v a" id="jacCountTop">0</div><div class="l">JAC Delhi</div></div>
+    <div class="hero-left">
+      <div class="badge">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 12l2 2 4-4"/><circle cx="12" cy="12" r="10"/></svg>
+        100% Free · No Sign-up · Runs Offline
+      </div>
+      <h1>
+        <span class="blue">JEE Main &amp; Counselling</span>
+        College Predictor 2025
+      </h1>
+      <p>Get accurate college predictions across every major JEE counselling — built from official 2025 cutoff data spanning <b>NITs, IIITs, GFTIs, UPTAC, GGSIPU,</b> and <b>JAC Delhi</b>. One rank. One ranked choice list.</p>
+
+      <div class="collab">
+        <span class="label">Built from data:</span>
+        <span class="src-pill j"><span class="dot"></span>JoSAA · R6</span>
+        <span class="src-pill c"><span class="dot"></span>CSAB · Special</span>
+        <span class="src-pill u"><span class="dot"></span>UPTAC · Final</span>
+        <span class="src-pill g"><span class="dot"></span>GGSIPU · R3</span>
+        <span class="src-pill a"><span class="dot"></span>JAC Delhi · R5</span>
+      </div>
+
+      <div class="features">
+        <div class="feature">
+          <div class="feature-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+          </div>
+          <div>
+            <div class="v"><span id="totalCount">0</span></div>
+            <div class="l">Cutoff Records</div>
+          </div>
+        </div>
+        <div class="feature">
+          <div class="feature-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>
+          </div>
+          <div>
+            <div class="v">5 Counsellings</div>
+            <div class="l">Unified Search</div>
+          </div>
+        </div>
+        <div class="feature">
+          <div class="feature-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
+          </div>
+          <div>
+            <div class="v">Private &amp; Offline</div>
+            <div class="l">No Tracking</div>
+          </div>
+        </div>
+      </div>
     </div>
+
+    <aside class="hero-right">
+      <form class="form-card" onsubmit="event.preventDefault(); runPredict();">
+        <div class="field">
+          <label>Your Name <span class="req">*</span></label>
+          <input id="name" placeholder="e.g. Ankit Sharma" required>
+        </div>
+
+        <div class="field">
+          <label>Phone <span class="req">*</span></label>
+          <div class="phone-row">
+            <span class="cc-prefix">+91</span>
+            <input id="phone" type="tel" placeholder="10-digit number" inputmode="numeric" required maxlength="10" autocomplete="tel-national">
+            <button type="button" id="sendOtpBtn" class="btn-otp">Send OTP</button>
+          </div>
+          <div id="otpRow" class="otp-row hidden">
+            <input id="otp" type="text" placeholder="Enter 6-digit OTP" inputmode="numeric" maxlength="6" autocomplete="one-time-code">
+            <button type="button" id="verifyOtpBtn" class="btn-otp">Verify</button>
+            <button type="button" id="resendOtpBtn" class="btn-link">Resend</button>
+          </div>
+          <div id="otpStatus" class="otp-status"></div>
+          <div id="recaptcha-container"></div>
+        </div>
+
+        <div class="field">
+          <label>Email <span class="req">*</span></label>
+          <input id="email" type="email" placeholder="e.g. you@example.com" required>
+        </div>
+
+        <div class="field">
+          <label>JEE Main 2025 Rank <span class="req">*</span></label>
+          <input id="crl" type="number" placeholder="Your CRL (e.g. 50000)" min="1">
+        </div>
+
+        <div class="or-divider">OR</div>
+
+        <div class="field">
+          <label>Category Rank <span class="opt">(JoSAA only)</span></label>
+          <input id="rank" type="number" placeholder="e.g. 12000" min="1">
+        </div>
+
+        <div class="tip">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+          <span>Enter category rank for sharper JoSAA predictions.</span>
+        </div>
+
+        <div class="field">
+          <label>Category <span class="req">*</span></label>
+          <select id="seatType">
+            <option>OPEN</option><option>EWS</option><option>OBC-NCL</option>
+            <option>SC</option><option>ST</option>
+            <option>OPEN (PwD)</option><option>EWS (PwD)</option>
+            <option>OBC-NCL (PwD)</option><option>SC (PwD)</option><option>ST (PwD)</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <label>Seat Pool <span class="req">*</span></label>
+          <div class="radio-group" id="genderGroup">
+            <div class="radio-option selected" data-value="M">
+              <span class="dot"></span><span>Gender Neutral</span>
+            </div>
+            <div class="radio-option" data-value="F">
+              <span class="dot"></span><span>Female</span>
+            </div>
+          </div>
+          <input type="hidden" id="gender" value="M">
+        </div>
+
+        <div class="field">
+          <label>Home State <span class="req">*</span></label>
+          <select id="homeState"></select>
+        </div>
+
+        <div class="field">
+          <label>Budget for Full Course <span class="req">*</span></label>
+          <select id="budget">
+            <option value="">No budget constraints</option>
+            <option value="Under 5 Lakhs">Under 5 Lakhs</option>
+            <option value="5-7 Lakhs">5-7 Lakhs</option>
+            <option value="7-10 Lakhs">7-10 Lakhs</option>
+            <option value="10-14 Lakhs">10-14 Lakhs</option>
+            <option value="14-18 Lakhs">14-18 Lakhs</option>
+            <option value="18-22 Lakhs">18-22 Lakhs</option>
+            <option value="22-26 Lakhs">22-26 Lakhs</option>
+          </select>
+        </div>
+
+        <div class="field" style="margin-bottom:20px;">
+          <label>Counsellings to include</label>
+          <div class="counsel-row" id="roundToggle">
+            <div class="round-card on" data-round="JoSAA"><div class="head"><div class="name">JoSAA<span class="check"></span></div></div><div class="desc"></div><div class="count" id="cJoSAA"></div></div>
+            <div class="round-card on" data-round="CSAB"><div class="head"><div class="name">CSAB<span class="check"></span></div></div><div class="desc"></div><div class="count" id="cCSAB"></div></div>
+            <div class="round-card on" data-round="UPTAC"><div class="head"><div class="name">UPTAC<span class="check"></span></div></div><div class="desc"></div><div class="count" id="cUPTAC"></div></div>
+            <div class="round-card on" data-round="GGSIPU"><div class="head"><div class="name">GGSIPU<span class="check"></span></div></div><div class="desc"></div><div class="count" id="cGGSIPU"></div></div>
+            <div class="round-card on" data-round="JAC"><div class="head"><div class="name">JAC Delhi<span class="check"></span></div></div><div class="desc"></div><div class="count" id="cJAC"></div></div>
+          </div>
+        </div>
+
+        <button type="submit" class="cta">Predict My Colleges</button>
+
+        <div class="trust-row">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 12l2 2 4-4"/><circle cx="12" cy="12" r="10"/></svg>
+          No Hidden Charges, 100% Free
+        </div>
+      </form>
+    </aside>
   </section>
 
-  <div class="panel">
-    <div class="section-title">Your Profile</div>
-    <div class="form-grid">
-      <div><label>Name (optional)</label><input id="name" placeholder="e.g. Ankit Sharma"></div>
-      <div><label>JEE Main CRL <span style="color:var(--rose-2)">·</span> required</label><input id="crl" type="number" placeholder="e.g. 50000" min="1"></div>
-      <div><label>Category Rank <span style="color:var(--ink-faint)">· optional · JoSAA only</span></label><input id="rank" type="number" placeholder="e.g. 12000" min="1"></div>
-      <div><label>Category</label>
-        <select id="seatType">
-          <option>OPEN</option><option>EWS</option><option>OBC-NCL</option>
-          <option>SC</option><option>ST</option>
-          <option>OPEN (PwD)</option><option>EWS (PwD)</option>
-          <option>OBC-NCL (PwD)</option><option>SC (PwD)</option><option>ST (PwD)</option>
-        </select>
-      </div>
-      <div><label>Gender</label>
-        <select id="gender"><option value="M">Male</option><option value="F">Female</option></select>
-      </div>
-      <div><label>Home State</label><select id="homeState"></select></div>
-      <div><label>Approximate Budget</label>
-        <select id="budget">
-          <option value="4-6">4-6 Lakhs</option>
-          <option value="6-8">6-8 Lakhs</option>
-          <option value="8-12">8-12 Lakhs</option>
-          <option value="12-16">12-16 Lakhs</option>
-          <option value="16-20">16-20 Lakhs</option>
-          <option value="20-25">20-25 Lakhs</option>
-          <option value="" selected>No Budget Restrictions</option>
-        </select>
-      </div>
-    </div>
+  <!-- Hidden counters that JS animates (no longer rendered visibly) -->
+  <span style="display:none;" aria-hidden="true">
+    <span id="josaaCountTop">0</span><span id="csabCountTop">0</span>
+    <span id="uptacCountTop">0</span><span id="ggsipuCountTop">0</span>
+    <span id="jacCountTop">0</span>
+  </span>
 
-    <div style="margin-top:18px;">
-      <label>Counsellings to include</label>
-      <div class="round-row" id="roundToggle">
-        <div class="round-card on" data-round="JoSAA">
-          <div class="head"><div class="name">JoSAA <span class="check">✓</span></div></div>
-          <div class="desc">Round 6 · NITs · IIITs · GFTIs · the main central counselling.</div>
-          <div class="count" id="cJoSAA">0 cutoffs</div>
-        </div>
-        <div class="round-card on" data-round="CSAB">
-          <div class="head"><div class="name">CSAB Special <span class="check">✓</span></div></div>
-          <div class="desc">Special round 3 · vacant seats after JoSAA · second chance.</div>
-          <div class="count" id="cCSAB">0 cutoffs</div>
-        </div>
-        <div class="round-card on" data-round="UPTAC">
-          <div class="head"><div class="name">UPTAC <span class="check">✓</span></div></div>
-          <div class="desc">Final round · UP state &amp; private engineering colleges (AKTU).</div>
-          <div class="count" id="cUPTAC">0 cutoffs</div>
-        </div>
-        <div class="round-card on" data-round="GGSIPU">
-          <div class="head"><div class="name">GGSIPU <span class="check">✓</span></div></div>
-          <div class="desc">Round 3 (final) · IPU-affiliated B.Tech colleges in Delhi.</div>
-          <div class="count" id="cGGSIPU">0 cutoffs</div>
-        </div>
-        <div class="round-card on" data-round="JAC">
-          <div class="head"><div class="name">JAC Delhi <span class="check">✓</span></div></div>
-          <div class="desc">Round 5 · DTU · NSUT · IGDTUW · joint Delhi B.Tech counselling.</div>
-          <div class="count" id="cJAC">0 cutoffs</div>
-        </div>
-      </div>
-    </div>
-
-    <div class="actions" style="margin-top:22px;">
-      <button class="cta" onclick="runPredict()">⚡ Predict My Colleges</button>
-      <button class="ghost" onclick="resetAll()">Reset</button>
-    </div>
-  </div>
-
-  <div id="resultsSection" class="hidden" style="margin-top:18px;">
+  <div id="resultsSection" class="hidden" style="margin-top:32px;">
     <div class="panel">
-      <div class="section-title">Filters</div>
+      <div class="section-title">Refine Results</div>
       <div class="filter-bar">
         <div class="filter-group">
           <label>Institute Type</label>
@@ -689,7 +929,7 @@ HTML = r"""<!DOCTYPE html>
           </div>
         </div>
         <div class="filter-group">
-          <label>Source Round</label>
+          <label>Source</label>
           <div class="chip-row" id="srcChips">
             <div class="chip on" data-src="JoSAA">JoSAA</div>
             <div class="chip on" data-src="CSAB">CSAB</div>
@@ -700,11 +940,11 @@ HTML = r"""<!DOCTYPE html>
         </div>
         <div class="filter-group">
           <label>Quota</label>
-          <select id="quotaFilter" multiple size="1" style="min-width:170px"></select>
+          <select id="quotaFilter" multiple size="1" style="min-width:160px"></select>
         </div>
         <div class="filter-group">
           <label>Institute</label>
-          <select id="instFilter" multiple size="1" style="min-width:240px"></select>
+          <select id="instFilter" multiple size="1" style="min-width:220px"></select>
         </div>
         <div class="filter-group">
           <label>Program contains</label>
@@ -718,12 +958,13 @@ HTML = r"""<!DOCTYPE html>
 
     <div class="panel">
       <div class="toolbar">
-        <strong style="font-size:14px; font-family:'Fraunces',serif; font-weight:700;">Your preference list</strong>
+        <strong>Your preference list</strong>
         <span class="vis-pill" id="visCount">0 options</span>
         <div class="grow"></div>
-        <button onclick="downloadCSV()">⬇ CSV</button>
-        <button onclick="downloadXLSX()">⬇ Excel</button>
-        <button class="ghost" onclick="downloadPDF()">🖨 Print / PDF</button>
+        <button onclick="downloadCSV()">Download CSV</button>
+        <button onclick="downloadXLSX()">Download Excel</button>
+        <button class="ghost" onclick="downloadPDF()">Print / PDF</button>
+        <button class="ghost" onclick="resetAll()">New search</button>
       </div>
       <div class="table-wrap">
         <table id="resultTable">
@@ -745,24 +986,20 @@ HTML = r"""<!DOCTYPE html>
         </table>
       </div>
       <div class="footer-note">
-        <b>How the bandwidth search works:</b> starts at your chosen ± window around the rank, then expands by 10% steps until it finds at least the minimum number of options. <b>Quotas</b> (HS / OS / AI / GO / JK / LA) are auto-gated against your home state. Sub-quotas — <b>UPTAC</b> (AF / TF / FF), <b>GGSIPU</b> (Defence / Jain / Kashmiri / Sikh), <b>JAC</b> (Defence / Single Girl / Kashmiri Migrant) — appear as small purple tags. <span class="deva">शुभकामनाएँ</span> · Sources: <a href="https://josaa.admissions.nic.in" target="_blank">JoSAA</a> · <a href="https://admissions.nic.in/csabspl/" target="_blank">CSAB</a> · <a href="https://admissions.nic.in/UPTAC/" target="_blank">UPTAC</a> · <a href="https://admissions.nic.in/UPTAC/" target="_blank">GGSIPU</a> · <a href="https://jacdelhi.admissions.nic.in" target="_blank">JAC Delhi</a>.
+        <b>How the match works:</b> shows every seat where your rank qualifies — closing rank ≥ your rank − 5% (small reach allowed). When more than 500 seats qualify, only the 500 sharpest cutoffs are shown — narrow further with the filters above. <b>Quotas</b> (HS / OS / AI / GO / JK / LA) are auto-gated against your home state. Sub-quotas — <b>UPTAC</b> (AF / TF / FF), <b>GGSIPU</b> (Defence / Jain / Kashmiri / Sikh), <b>JAC</b> (Defence / Single Girl / Kashmiri Migrant) — appear as small purple tags. Sources: <a href="https://josaa.admissions.nic.in" target="_blank">JoSAA</a> · <a href="https://admissions.nic.in/csabspl/" target="_blank">CSAB</a> · <a href="https://admissions.nic.in/UPTAC/" target="_blank">UPTAC</a> · <a href="https://admissions.nic.in/UPTAC/" target="_blank">GGSIPU</a> · <a href="https://jacdelhi.admissions.nic.in" target="_blank">JAC Delhi</a>.
       </div>
     </div>
   </div>
 
-  <div id="emptyHero" class="empty-hero" style="margin-top:22px;">
-    <div class="icon">✦</div>
-    <h2>Ready when you are</h2>
-    <p>Enter your JEE Main rank and PRAYUSH will surface every NIT, IIIT, GFTI, UPTAC, GGSIPU, and JAC Delhi seat where your rank stands a real chance — across <b style="color:var(--josaa)">JoSAA</b>, <b style="color:var(--csab)">CSAB</b>, <b style="color:var(--uptac)">UPTAC</b>, <b style="color:var(--ggsipu)">GGSIPU</b>, and <b style="color:var(--jac)">JAC Delhi</b> in one ranked list.</p>
-  </div>
-
-</div>
+  <div id="emptyHero" class="hidden"></div>
+</main>
 
 <script>
 const COLS = __COLS__;
 const RAW = __DATA__;
 const INST_STATE = __INST_STATE__;
 const STATES = __STATES__;
+const FIREBASE_CONFIG = __FIREBASE_CONFIG__;
 const ROWS = RAW.map(r => { const o = {}; COLS.forEach((c,i)=>o[c]=r[i]); return o; });
 
 const $ = id => document.getElementById(id);
@@ -795,6 +1032,7 @@ function animateCount(el, target, dur=900){
   // Animated hero counters
   setTimeout(() => {
     animateCount($('totalCount'), ROWS.length);
+    animateCount($('announceCount'), ROWS.length);
     animateCount($('josaaCountTop'), counts['JoSAA']||0);
     animateCount($('csabCountTop'), counts['CSAB']||0);
     animateCount($('uptacCountTop'), counts['UPTAC']||0);
@@ -805,6 +1043,11 @@ function animateCount(el, target, dur=900){
   $('roundToggle').addEventListener('click', e => {
     const c = e.target.closest('.round-card'); if (!c) return;
     c.classList.toggle('on');
+  });
+
+  // Seat-pool radio behavior — keep #gender hidden input in sync.
+  document.querySelectorAll('#genderGroup .radio-option').forEach(o => {
+    o.addEventListener('click', () => setGender(o.dataset.value));
   });
 
   document.querySelectorAll('#resultTable th.sortable').forEach(th=>{
@@ -831,13 +1074,134 @@ function animateCount(el, target, dur=900){
   // Allow Enter in either rank field to predict
   $('crl').addEventListener('keydown', e => { if (e.key === 'Enter') runPredict(); });
   $('rank').addEventListener('keydown', e => { if (e.key === 'Enter') runPredict(); });
+
+  // OTP wiring
+  $('sendOtpBtn').addEventListener('click', sendOtp);
+  $('verifyOtpBtn').addEventListener('click', verifyOtp);
+  $('resendOtpBtn').addEventListener('click', () => { resetOtpState(); sendOtp(); });
+  $('phone').addEventListener('input', () => {
+    // If user changes phone after verifying, force re-verify
+    if (phoneVerified) resetOtpState();
+  });
+  $('otp').addEventListener('keydown', e => { if (e.key === 'Enter') verifyOtp(); });
+  // Init Firebase once page (and SDK scripts) are fully loaded
+  if (document.readyState === 'complete') initFirebase();
+  else window.addEventListener('load', initFirebase);
 })();
 
+// === Firebase phone OTP verification ===
+let phoneVerified = false;
+let confirmationResult = null;
+let recaptchaVerifier = null;
+let firebaseReady = false;
+
+function isFirebaseConfigured(){
+  return FIREBASE_CONFIG && typeof FIREBASE_CONFIG.apiKey === 'string'
+      && FIREBASE_CONFIG.apiKey.length > 0
+      && !FIREBASE_CONFIG.apiKey.startsWith('YOUR_');
+}
+
+function setOtpStatus(text, type){
+  const el = $('otpStatus');
+  el.className = 'otp-status' + (type ? ' ' + type : '');
+  el.textContent = text || '';
+}
+
+async function initFirebase(){
+  if (!isFirebaseConfigured()){
+    // Soft-skip mode: predictor still works without OTP for development.
+    phoneVerified = true;
+    setOtpStatus('OTP verification not configured yet — admin must set Firebase config in build_unified.py. Predict works without OTP for now.', 'info');
+    $('sendOtpBtn').disabled = true;
+    return;
+  }
+  if (typeof firebase === 'undefined'){
+    setOtpStatus('Firebase SDK failed to load. Check your network and reload.', 'error');
+    return;
+  }
+  try {
+    firebase.initializeApp(FIREBASE_CONFIG);
+    recaptchaVerifier = new firebase.auth.RecaptchaVerifier('recaptcha-container', { size: 'invisible' });
+    await recaptchaVerifier.render();
+    firebaseReady = true;
+  } catch (e){
+    console.error('[firebase init]', e);
+    setOtpStatus('Firebase init failed: ' + (e.message || e.code), 'error');
+  }
+}
+
+async function sendOtp(){
+  const digits = $('phone').value.replace(/\D/g, '');
+  if (digits.length !== 10){ setOtpStatus('Enter a valid 10-digit phone number.', 'error'); return; }
+  if (!firebaseReady){
+    setOtpStatus('OTP service not ready — see admin notice above.', 'error');
+    return;
+  }
+  $('sendOtpBtn').disabled = true;
+  setOtpStatus('Sending OTP…', 'info');
+  try {
+    confirmationResult = await firebase.auth().signInWithPhoneNumber('+91' + digits, recaptchaVerifier);
+    setOtpStatus('OTP sent to +91 ' + digits + '. Check your messages.', 'info');
+    $('otpRow').classList.remove('hidden');
+    $('otp').focus();
+  } catch (e){
+    console.error('[sendOtp]', e);
+    setOtpStatus('Could not send OTP: ' + (e.message || e.code || 'unknown error'), 'error');
+    $('sendOtpBtn').disabled = false;
+    // reCAPTCHA may need a reset on failure
+    try { if (recaptchaVerifier && recaptchaVerifier.clear) recaptchaVerifier.clear(); } catch(_){}
+    try {
+      recaptchaVerifier = new firebase.auth.RecaptchaVerifier('recaptcha-container', { size: 'invisible' });
+      recaptchaVerifier.render();
+    } catch(_){}
+  }
+}
+
+async function verifyOtp(){
+  const code = $('otp').value.trim();
+  if (code.length !== 6){ setOtpStatus('Enter the 6-digit OTP.', 'error'); return; }
+  if (!confirmationResult){ setOtpStatus('Send OTP first.', 'error'); return; }
+  $('verifyOtpBtn').disabled = true;
+  setOtpStatus('Verifying…', 'info');
+  try {
+    await confirmationResult.confirm(code);
+    phoneVerified = true;
+    $('phone').readOnly = true;
+    $('sendOtpBtn').classList.add('hidden');
+    $('otpRow').classList.add('hidden');
+    setOtpStatus('✓ Phone verified', 'success');
+  } catch (e){
+    console.error('[verifyOtp]', e);
+    setOtpStatus('Wrong OTP. Try again.', 'error');
+    $('verifyOtpBtn').disabled = false;
+  }
+}
+
+function resetOtpState(){
+  phoneVerified = isFirebaseConfigured() ? false : true;  // soft-skip stays bypassed
+  confirmationResult = null;
+  $('phone').readOnly = false;
+  $('sendOtpBtn').classList.remove('hidden');
+  $('sendOtpBtn').disabled = !isFirebaseConfigured();
+  $('verifyOtpBtn').disabled = false;
+  $('otpRow').classList.add('hidden');
+  $('otp').value = '';
+  if (isFirebaseConfigured()) setOtpStatus('', '');
+}
+
 let currentResults = [];
+let totalQualifying = 0;
 let currentSort = { key: 'close', dir: 1 };
 
 function activeRounds(){
   return new Set([...document.querySelectorAll('#roundToggle .round-card.on')].map(c=>c.dataset.round));
+}
+
+function setGender(v){
+  $('gender').value = v;
+  document.querySelectorAll('#genderGroup .radio-option').forEach(o => {
+    o.classList.toggle('selected', o.dataset.value === v);
+  });
 }
 
 // Per-row rank: JoSAA uses category rank if entered; everything else
@@ -868,46 +1232,37 @@ function computeEligible(seatType, gender, homeState){
   });
 }
 
-// Hardcoded asymmetric rank window: 5% below the rank (slight reach) up to
-// 10% above (more safety). On expansion both bounds scale proportionally —
-// scale=2 → [-10%, +20%], scale=3 → [-15%, +30%], etc.
-const BW_LOWER_PCT = 5;
-const BW_UPPER_PCT = 10;
-const MIN_COUNT = 100;
-const MAX_SCALE = 50;    // -250% / +500% as the absolute ceiling
-
-function rankWindow(useRank, scale){
-  return [
-    Math.max(1, Math.floor(useRank * (1 - (BW_LOWER_PCT * scale) / 100))),
-    Math.ceil(useRank * (1 + (BW_UPPER_PCT * scale) / 100)),
-  ];
-}
+// Show every seat where the rank actually qualifies (close rank within a 5%
+// reach below the user's rank, no upper cap). When the qualifying set exceeds
+// MAX_RESULTS, keep the sharpest cutoffs — the user's most aspirational picks.
+const REACH_PCT = 5;
+const MAX_RESULTS = 500;
 
 function findInBandwidth(eligible, crl, categoryRank){
-  let scale = 1, hits = [], tried = [];
-  while (scale <= MAX_SCALE){
-    hits = eligible.filter(r => {
-      const useRank = rowRank(r, crl, categoryRank);
-      const [lo, hi] = rankWindow(useRank, scale);
-      return r.close >= lo && r.close <= hi;
-    });
-    tried.push({ scale, lower: BW_LOWER_PCT * scale, upper: BW_UPPER_PCT * scale, count: hits.length });
-    if (hits.length >= MIN_COUNT) break;
-    scale += 1;
+  let hits = eligible.filter(r => {
+    const useRank = rowRank(r, crl, categoryRank);
+    const lo = Math.max(1, Math.floor(useRank * (1 - REACH_PCT / 100)));
+    return r.close >= lo;
+  });
+  const totalQualifying = hits.length;
+  if (hits.length > MAX_RESULTS){
+    hits = [...hits].sort((a,b)=>a.close-b.close).slice(0, MAX_RESULTS);
   }
-  if (hits.length < MIN_COUNT){
-    const extra = eligible
-      .filter(r => !hits.includes(r))
-      .map(r => ({...r, _d: Math.abs(r.close - rowRank(r, crl, categoryRank))}))
-      .sort((a,b)=>a._d-b._d)
-      .slice(0, MIN_COUNT - hits.length);
-    hits = hits.concat(extra);
-    tried.push({ scale: 'fallback-nearest', count: hits.length });
-  }
-  return { hits, tried };
+  return { hits, tried: [{ scope: 'capped', total: totalQualifying, shown: hits.length }] };
 }
 
 function runPredict(){
+  const name = $('name').value.trim();
+  const phone = $('phone').value.trim();
+  const email = $('email').value.trim();
+  if (!name) { alert('Please enter your name — it is required.'); $('name').focus(); return; }
+  if (!phone) { alert('Please enter your phone number — it is required.'); $('phone').focus(); return; }
+  if (isFirebaseConfigured() && !phoneVerified){
+    alert('Please verify your phone with the OTP first.');
+    $('sendOtpBtn').focus();
+    return;
+  }
+  if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { alert('Please enter a valid email — it is required.'); $('email').focus(); return; }
   const crl = parseInt($('crl').value || '0', 10);
   if (!crl || crl < 1) { alert('Please enter your JEE Main CRL — it is required.'); $('crl').focus(); return; }
   const categoryRankRaw = parseInt($('rank').value || '0', 10);
@@ -922,6 +1277,7 @@ function runPredict(){
   const { hits, tried } = findInBandwidth(eligible, crl, categoryRank);
 
   currentResults = hits;
+  totalQualifying = tried[0] && tried[0].total ? tried[0].total : hits.length;
   $('emptyHero').classList.add('hidden');
   $('resultsSection').classList.remove('hidden');
   buildFilters();
@@ -978,7 +1334,11 @@ function renderTable(){
   if (!currentResults.length) return;
   const rows = sortRows(filteredRows());
   const tb = $('resultBody');
-  $('visCount').textContent = `${rows.length.toLocaleString('en-IN')} options`;
+  const shown = rows.length.toLocaleString('en-IN');
+  const capped = totalQualifying > currentResults.length;
+  $('visCount').textContent = capped
+    ? `${shown} shown · ${totalQualifying.toLocaleString('en-IN')} qualify`
+    : `${shown} options`;
   const frag = document.createDocumentFragment();
   rows.forEach((r,i)=>{
     const tr = document.createElement('tr');
@@ -1006,17 +1366,23 @@ function csvEsc(s){ s=String(s); return /[",\n]/.test(s) ? '"'+s.replace(/"/g,'"
 function exportPayload(){
   const rows = sortRows(filteredRows());
   const name = $('name').value.trim();
+  const phone = $('phone').value.trim();
+  const email = $('email').value.trim();
   const crl = $('crl').value;
   const rank = $('rank').value;
   const seat = $('seatType').value;
   const gen = $('gender').value==='F'?'Female':'Male';
   const hs = $('homeState').value;
+  const budget = $('budget').value || 'No budget constraints';
   const meta = [
     ['Generated by','PRAYUSH Unified Predictor'],
     ['Student', name],
+    ['Phone', phone || '—'],
+    ['Email', email || '—'],
     ['JEE Main CRL', crl],
     ['Category Rank (JoSAA only)', rank || '—'],
     ['Category', seat], ['Gender', gen], ['Home State', hs],
+    ['Budget for Full Course', budget],
     ['Generated at', new Date().toLocaleString('en-IN')],
     ['Sources', 'JoSAA 2025 R6 + CSAB Special 2025 R3 + UPTAC 2025 final + GGSIPU 2025 R3 + JAC Delhi 2025 R5'],
     [],
@@ -1048,7 +1414,7 @@ function downloadXLSX(){
   const { meta, header, body, name, fileTag } = exportPayload();
   let html = '<html><head><meta charset="utf-8"></head><body><table border="1">';
   meta.forEach(m => html += '<tr>' + m.map(x=>`<td>${String(x||'')}</td>`).join('') + '</tr>');
-  html += '<tr>' + header.map(h=>`<th style="background:#ff4d8b;color:#fff">${h}</th>`).join('') + '</tr>';
+  html += '<tr>' + header.map(h=>`<th style="background:#2563eb;color:#fff">${h}</th>`).join('') + '</tr>';
   body.forEach(r => html += '<tr>' + r.map((x,i)=>`<td${i>=9?' style="text-align:right"':''}>${x}</td>`).join('') + '</tr>');
   html += '</table></body></html>';
   dl(new Blob(['﻿'+html], {type:'application/vnd.ms-excel'}),
@@ -1065,7 +1431,7 @@ function downloadPDF(){
     .meta{font-size:12px;margin-bottom:14px;line-height:1.5}
     table{border-collapse:collapse;width:100%;font-size:11px}
     th,td{border:1px solid #888;padding:4px 6px}
-    th{background:#ff4d8b;color:#fff;text-align:left}</style></head>
+    th{background:#2563eb;color:#fff;text-align:left}</style></head>
     <body><h1>PRAYUSH · Unified Counselling Preference List</h1>
     <div class="meta">${metaHtml}</div>
     <table><thead><tr>${header.map(h=>`<th>${h}</th>`).join('')}</tr></thead><tbody>${rows}</tbody></table>
@@ -1074,15 +1440,16 @@ function downloadPDF(){
 }
 
 function resetAll(){
-  ['name','crl','rank','search'].forEach(id=>$(id).value='');
+  ['name','phone','email','crl','rank','search'].forEach(id=>$(id).value='');
   $('seatType').value = 'OPEN';
-  $('gender').value = 'M';
+  setGender('M');
   $('homeState').value = 'Uttar Pradesh';
   $('budget').value = '';
   document.querySelectorAll('#roundToggle .round-card').forEach(c=>c.classList.add('on'));
+  resetOtpState();
   currentResults = [];
   $('resultsSection').classList.add('hidden');
-  $('emptyHero').classList.remove('hidden');
+  window.scrollTo({top: 0, behavior: 'smooth'});
 }
 </script>
 </body>
@@ -1093,7 +1460,8 @@ html = (HTML
         .replace("__COLS__", json.dumps(cols))
         .replace("__DATA__", json.dumps(data_arr, separators=(",", ":")))
         .replace("__INST_STATE__", json.dumps(INST_STATE))
-        .replace("__STATES__", json.dumps(STATES)))
+        .replace("__STATES__", json.dumps(STATES))
+        .replace("__FIREBASE_CONFIG__", json.dumps(FIREBASE_CONFIG)))
 
 OUT.write_text(html, encoding="utf-8")
 size_kb = OUT.stat().st_size / 1024

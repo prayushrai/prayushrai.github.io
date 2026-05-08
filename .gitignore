@@ -7,6 +7,9 @@ shim.sh
 shim-lib/
 shim-perm/
 
+# Local dev tooling (Claude Code preview server config)
+.claude/
+
 # UPTAC source artifacts that are regenerable / too large
 UPTAC/uploads/
 UPTAC/uptac_2025_all.csv
