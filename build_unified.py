@@ -294,12 +294,71 @@ HTML = r"""<!DOCTYPE html>
     color: var(--ink);
   }
   .hero-headline .blue { color: var(--accent); display: block; }
-  .hero p {
-    font-size: 17px; line-height: 1.55;
+
+  .hero-subtitle {
+    font-size: 16px; font-weight: 500; font-style: italic;
     color: var(--ink-dim);
-    max-width: 540px; margin: 0 0 28px;
+    margin: -10px 0 22px;
+    letter-spacing: 0.005em;
+    max-width: 580px;
   }
-  .hero p b { color: var(--ink-2); font-weight: 600; }
+  .hero-subtitle strong {
+    color: var(--ink); font-weight: 700; font-style: normal;
+  }
+
+  .hero-lead {
+    font-size: 16.5px; line-height: 1.6;
+    color: var(--ink-dim);
+    max-width: 580px; margin: 0 0 24px;
+  }
+  .hero-lead b { color: var(--ink-2); font-weight: 600; }
+
+  .hero-cta-line {
+    display: flex; align-items: center;
+    font-size: 15px; font-weight: 600;
+    color: var(--ink-2);
+    margin: 8px 0 16px;
+    padding: 6px 0 6px 14px;
+    border-left: 3px solid var(--accent);
+    background: linear-gradient(90deg, var(--accent-soft) 0%, transparent 65%);
+    border-radius: 0 8px 8px 0;
+  }
+
+  .hero-features {
+    list-style: none; padding: 0; margin: 0 0 22px;
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 10px 28px;
+    max-width: 580px;
+  }
+  .hero-features li {
+    display: flex; align-items: center; gap: 10px;
+    font-size: 14.5px; font-weight: 500;
+    color: var(--ink-2);
+    line-height: 1.4;
+  }
+  .hero-features li svg {
+    width: 16px; height: 16px; flex-shrink: 0;
+    color: var(--accent);
+    padding: 2px;
+    background: var(--accent-soft);
+    border-radius: 50%;
+    box-sizing: content-box;
+  }
+
+  .hero-tagline {
+    font-size: 14px; line-height: 1.6;
+    color: var(--ink-dim);
+    font-style: italic;
+    margin: 0;
+    max-width: 580px;
+    padding-top: 14px;
+    border-top: 1px dashed var(--line);
+  }
+  .hero-tagline em { color: var(--accent); font-style: normal; font-weight: 600; }
+
+  @media (max-width: 720px) {
+    .hero-features { grid-template-columns: 1fr; }
+  }
 
   /* === Form card === */
   .form-card {
@@ -622,11 +681,35 @@ HTML = r"""<!DOCTYPE html>
   <section class="hero">
     <div class="hero-left">
       <h2 class="hero-headline">
-        <span class="blue">JEE Main &amp; Counselling</span>
-        College Predictor 2025
+        <span class="blue">JEE College Predictor</span>
+        2025
       </h2>
-      <p>Get accurate college predictions across every major JEE counselling — built from official 2025 cutoff data spanning <b>NITs, IIITs, GFTIs, UPTAC, GGSIPU,</b> and <b>JAC Delhi</b>. One rank. One ranked choice list.</p>
+      <p class="hero-subtitle">Built by <strong>Prayush Bhaiya</strong> for Smarter Counselling Decisions</p>
 
+      <p class="hero-lead">Get accurate college predictions using official cutoff trends and real counselling data from 2025. Explore your best options across <b>NITs, IIITs, GFTIs, UPTAC, JAC Delhi, GGSIPU,</b> and other major counselling platforms — all in one place.</p>
+
+      <div class="hero-cta-line">Just enter your JEE rank to instantly see:</div>
+
+      <ul class="hero-features">
+        <li>
+          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 8 7 12 13 4"/></svg>
+          Best-fit colleges &amp; branches
+        </li>
+        <li>
+          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 8 7 12 13 4"/></svg>
+          Dream, safe, and realistic options
+        </li>
+        <li>
+          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 8 7 12 13 4"/></svg>
+          Counselling-wise predictions
+        </li>
+        <li>
+          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 8 7 12 13 4"/></svg>
+          Ranked college lists based on past cutoffs
+        </li>
+      </ul>
+
+      <p class="hero-tagline">Designed to make counselling <em>simpler</em>, <em>faster</em>, and <em>less confusing</em> for every JEE aspirant.</p>
     </div>
 
     <aside class="hero-right">
