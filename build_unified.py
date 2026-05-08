@@ -71,28 +71,6 @@ CSAB_QUOTA_MAP = {
     "DASA-Non CIWG": "DASA-Non CIWG",
 }
 
-# === Firebase config for phone OTP verification ===
-# Setup steps (one-time, takes ~5 min):
-#   1. Go to https://console.firebase.google.com and create a project (free).
-#   2. Add a Web app (the </> icon). Copy the config values shown.
-#   3. Paste them below, replacing every YOUR_* placeholder.
-#   4. In the console: Authentication -> Sign-in method -> enable "Phone".
-#   5. Authentication -> Settings -> Authorized domains:
-#        - localhost is auto-added (works for local testing)
-#        - Add your deploy domain (e.g. sethihardik45.github.io)
-# While the values below contain "YOUR_*" placeholders, the page detects this
-# and skips OTP gating so the predictor still works for development/testing.
-FIREBASE_CONFIG = {
-    "apiKey": "AIzaSyCrhGYMvphkBUteF-PCV23aGwlYXE2Q3Jk",
-    "authDomain": "predictor-3014.firebaseapp.com",
-    "projectId": "predictor-3014",
-    "storageBucket": "predictor-3014.firebasestorage.app",
-    "messagingSenderId": "301240341003",
-    "appId": "1:301240341003:web:9e0bade04c29494558ad0e",
-    "measurementId": "G-NKMGNCKJDW",
-}
-
-
 def load_jc(csv_path: Path, round_label: str) -> pd.DataFrame:
     df = pd.read_csv(csv_path)
     df = df[["Institute Type", "Institute", "Academic Program Name",
@@ -202,8 +180,6 @@ HTML = r"""<!DOCTYPE html>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
-<script defer src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
-<script defer src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
 <style>
   :root {
     --bg: #ffffff;
@@ -453,32 +429,6 @@ HTML = r"""<!DOCTYPE html>
     flex-shrink: 0;
   }
   .phone-row input { flex: 1; min-width: 0; }
-  .btn-otp {
-    height: 42px; padding: 0 14px;
-    font-size: 13px; font-weight: 600; font-family: inherit;
-    background: #fff; color: var(--accent);
-    border: 1px solid var(--line); border-radius: 8px;
-    cursor: pointer; white-space: nowrap; flex-shrink: 0;
-    transition: border-color 0.15s, background 0.15s, color 0.15s;
-  }
-  .btn-otp:hover:not(:disabled) { border-color: var(--accent); background: var(--accent-soft); }
-  .btn-otp:disabled { opacity: 0.55; cursor: not-allowed; }
-  .btn-link {
-    height: 42px; padding: 0 8px;
-    background: none; border: none; color: var(--accent);
-    font-size: 13px; font-weight: 500; cursor: pointer; font-family: inherit;
-  }
-  .btn-link:hover { text-decoration: underline; background: none; border: none; }
-  .otp-row { display: flex; gap: 8px; margin-top: 10px; }
-  .otp-row input { flex: 1; min-width: 0; }
-  .otp-status {
-    font-size: 12px; line-height: 1.5; margin-top: 8px; min-height: 1px;
-    color: var(--ink-dim);
-  }
-  .otp-status.success { color: var(--success); font-weight: 600; }
-  .otp-status.error { color: var(--danger); }
-  .otp-status.info { color: var(--ink-dim); }
-  #recaptcha-container { margin-top: 4px; }
 
   .or-divider {
     display: flex; align-items: center; gap: 12px;
@@ -810,15 +760,7 @@ HTML = r"""<!DOCTYPE html>
           <div class="phone-row">
             <span class="cc-prefix">+91</span>
             <input id="phone" type="tel" placeholder="10-digit number" inputmode="numeric" required maxlength="10" autocomplete="tel-national">
-            <button type="button" id="sendOtpBtn" class="btn-otp">Send OTP</button>
           </div>
-          <div id="otpRow" class="otp-row hidden">
-            <input id="otp" type="text" placeholder="Enter 6-digit OTP" inputmode="numeric" maxlength="6" autocomplete="one-time-code">
-            <button type="button" id="verifyOtpBtn" class="btn-otp">Verify</button>
-            <button type="button" id="resendOtpBtn" class="btn-link">Resend</button>
-          </div>
-          <div id="otpStatus" class="otp-status"></div>
-          <div id="recaptcha-container"></div>
         </div>
 
         <div class="field">
@@ -999,7 +941,6 @@ const COLS = __COLS__;
 const RAW = __DATA__;
 const INST_STATE = __INST_STATE__;
 const STATES = __STATES__;
-const FIREBASE_CONFIG = __FIREBASE_CONFIG__;
 const ROWS = RAW.map(r => { const o = {}; COLS.forEach((c,i)=>o[c]=r[i]); return o; });
 
 const $ = id => document.getElementById(id);
@@ -1074,120 +1015,7 @@ function animateCount(el, target, dur=900){
   // Allow Enter in either rank field to predict
   $('crl').addEventListener('keydown', e => { if (e.key === 'Enter') runPredict(); });
   $('rank').addEventListener('keydown', e => { if (e.key === 'Enter') runPredict(); });
-
-  // OTP wiring
-  $('sendOtpBtn').addEventListener('click', sendOtp);
-  $('verifyOtpBtn').addEventListener('click', verifyOtp);
-  $('resendOtpBtn').addEventListener('click', () => { resetOtpState(); sendOtp(); });
-  $('phone').addEventListener('input', () => {
-    // If user changes phone after verifying, force re-verify
-    if (phoneVerified) resetOtpState();
-  });
-  $('otp').addEventListener('keydown', e => { if (e.key === 'Enter') verifyOtp(); });
-  // Init Firebase once page (and SDK scripts) are fully loaded
-  if (document.readyState === 'complete') initFirebase();
-  else window.addEventListener('load', initFirebase);
 })();
-
-// === Firebase phone OTP verification ===
-let phoneVerified = false;
-let confirmationResult = null;
-let recaptchaVerifier = null;
-let firebaseReady = false;
-
-function isFirebaseConfigured(){
-  return FIREBASE_CONFIG && typeof FIREBASE_CONFIG.apiKey === 'string'
-      && FIREBASE_CONFIG.apiKey.length > 0
-      && !FIREBASE_CONFIG.apiKey.startsWith('YOUR_');
-}
-
-function setOtpStatus(text, type){
-  const el = $('otpStatus');
-  el.className = 'otp-status' + (type ? ' ' + type : '');
-  el.textContent = text || '';
-}
-
-async function initFirebase(){
-  if (!isFirebaseConfigured()){
-    // Soft-skip mode: predictor still works without OTP for development.
-    phoneVerified = true;
-    setOtpStatus('OTP verification not configured yet — admin must set Firebase config in build_unified.py. Predict works without OTP for now.', 'info');
-    $('sendOtpBtn').disabled = true;
-    return;
-  }
-  if (typeof firebase === 'undefined'){
-    setOtpStatus('Firebase SDK failed to load. Check your network and reload.', 'error');
-    return;
-  }
-  try {
-    firebase.initializeApp(FIREBASE_CONFIG);
-    recaptchaVerifier = new firebase.auth.RecaptchaVerifier('recaptcha-container', { size: 'invisible' });
-    await recaptchaVerifier.render();
-    firebaseReady = true;
-  } catch (e){
-    console.error('[firebase init]', e);
-    setOtpStatus('Firebase init failed: ' + (e.message || e.code), 'error');
-  }
-}
-
-async function sendOtp(){
-  const digits = $('phone').value.replace(/\D/g, '');
-  if (digits.length !== 10){ setOtpStatus('Enter a valid 10-digit phone number.', 'error'); return; }
-  if (!firebaseReady){
-    setOtpStatus('OTP service not ready — see admin notice above.', 'error');
-    return;
-  }
-  $('sendOtpBtn').disabled = true;
-  setOtpStatus('Sending OTP…', 'info');
-  try {
-    confirmationResult = await firebase.auth().signInWithPhoneNumber('+91' + digits, recaptchaVerifier);
-    setOtpStatus('OTP sent to +91 ' + digits + '. Check your messages.', 'info');
-    $('otpRow').classList.remove('hidden');
-    $('otp').focus();
-  } catch (e){
-    console.error('[sendOtp]', e);
-    setOtpStatus('Could not send OTP: ' + (e.message || e.code || 'unknown error'), 'error');
-    $('sendOtpBtn').disabled = false;
-    // reCAPTCHA may need a reset on failure
-    try { if (recaptchaVerifier && recaptchaVerifier.clear) recaptchaVerifier.clear(); } catch(_){}
-    try {
-      recaptchaVerifier = new firebase.auth.RecaptchaVerifier('recaptcha-container', { size: 'invisible' });
-      recaptchaVerifier.render();
-    } catch(_){}
-  }
-}
-
-async function verifyOtp(){
-  const code = $('otp').value.trim();
-  if (code.length !== 6){ setOtpStatus('Enter the 6-digit OTP.', 'error'); return; }
-  if (!confirmationResult){ setOtpStatus('Send OTP first.', 'error'); return; }
-  $('verifyOtpBtn').disabled = true;
-  setOtpStatus('Verifying…', 'info');
-  try {
-    await confirmationResult.confirm(code);
-    phoneVerified = true;
-    $('phone').readOnly = true;
-    $('sendOtpBtn').classList.add('hidden');
-    $('otpRow').classList.add('hidden');
-    setOtpStatus('✓ Phone verified', 'success');
-  } catch (e){
-    console.error('[verifyOtp]', e);
-    setOtpStatus('Wrong OTP. Try again.', 'error');
-    $('verifyOtpBtn').disabled = false;
-  }
-}
-
-function resetOtpState(){
-  phoneVerified = isFirebaseConfigured() ? false : true;  // soft-skip stays bypassed
-  confirmationResult = null;
-  $('phone').readOnly = false;
-  $('sendOtpBtn').classList.remove('hidden');
-  $('sendOtpBtn').disabled = !isFirebaseConfigured();
-  $('verifyOtpBtn').disabled = false;
-  $('otpRow').classList.add('hidden');
-  $('otp').value = '';
-  if (isFirebaseConfigured()) setOtpStatus('', '');
-}
 
 let currentResults = [];
 let totalQualifying = 0;
@@ -1256,12 +1084,7 @@ function runPredict(){
   const phone = $('phone').value.trim();
   const email = $('email').value.trim();
   if (!name) { alert('Please enter your name — it is required.'); $('name').focus(); return; }
-  if (!phone) { alert('Please enter your phone number — it is required.'); $('phone').focus(); return; }
-  if (isFirebaseConfigured() && !phoneVerified){
-    alert('Please verify your phone with the OTP first.');
-    $('sendOtpBtn').focus();
-    return;
-  }
+  if (!/^\d{10}$/.test(phone.replace(/\D/g, ''))) { alert('Please enter a valid 10-digit phone number.'); $('phone').focus(); return; }
   if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { alert('Please enter a valid email — it is required.'); $('email').focus(); return; }
   const crl = parseInt($('crl').value || '0', 10);
   if (!crl || crl < 1) { alert('Please enter your JEE Main CRL — it is required.'); $('crl').focus(); return; }
@@ -1446,7 +1269,6 @@ function resetAll(){
   $('homeState').value = 'Uttar Pradesh';
   $('budget').value = '';
   document.querySelectorAll('#roundToggle .round-card').forEach(c=>c.classList.add('on'));
-  resetOtpState();
   currentResults = [];
   $('resultsSection').classList.add('hidden');
   window.scrollTo({top: 0, behavior: 'smooth'});
@@ -1460,8 +1282,7 @@ html = (HTML
         .replace("__COLS__", json.dumps(cols))
         .replace("__DATA__", json.dumps(data_arr, separators=(",", ":")))
         .replace("__INST_STATE__", json.dumps(INST_STATE))
-        .replace("__STATES__", json.dumps(STATES))
-        .replace("__FIREBASE_CONFIG__", json.dumps(FIREBASE_CONFIG)))
+        .replace("__STATES__", json.dumps(STATES)))
 
 OUT.write_text(html, encoding="utf-8")
 size_kb = OUT.stat().st_size / 1024
