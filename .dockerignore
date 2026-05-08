@@ -1,0 +1,25 @@
+# What NOT to ship to Railway. Keeps the image small and skips dev-only artefacts.
+
+# Python build pipeline (only used locally to regenerate index.html)
+*.py
+__pycache__/
+.venv/
+
+# Raw cutoff source data (already baked into index.html via build_unified.py)
+*.csv
+*.xlsx
+*.pdf
+JAC/
+UPTAC/
+
+# Older standalone predictors (replaced by the unified index.html)
+josaa_predictor.html
+csab_predictor.html
+
+# Misc
+.git/
+.gitignore
+.DS_Store
+.claude/
+*.log
+README.md
