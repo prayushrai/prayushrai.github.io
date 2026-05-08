@@ -346,49 +346,6 @@ HTML = r"""<!DOCTYPE html>
   }
   .hero p b { color: var(--ink-2); font-weight: 600; }
 
-  .collab {
-    display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
-    margin-bottom: 32px;
-    padding: 16px 0;
-    border-top: 1px solid var(--line);
-    border-bottom: 1px solid var(--line);
-  }
-  .collab .label { font-size: 13px; color: var(--ink-dim); margin-right: 4px; }
-  .src-pill {
-    display: inline-flex; align-items: center; gap: 7px;
-    padding: 6px 12px; border-radius: 999px;
-    background: #fff; border: 1px solid var(--line);
-    font-size: 12px; font-weight: 600; color: var(--ink-2);
-    box-shadow: var(--shadow-sm);
-  }
-  .src-pill .dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
-  .src-pill.j .dot { background: var(--josaa); }
-  .src-pill.c .dot { background: var(--csab); }
-  .src-pill.u .dot { background: var(--uptac); }
-  .src-pill.g .dot { background: var(--ggsipu); }
-  .src-pill.a .dot { background: var(--jac); }
-
-  .features {
-    display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px;
-  }
-  .feature {
-    display: flex; align-items: center; gap: 12px;
-    padding: 14px 16px;
-    background: #fff;
-    border: 1px solid var(--line);
-    border-radius: var(--radius);
-    box-shadow: var(--shadow-sm);
-  }
-  .feature-icon {
-    width: 36px; height: 36px; border-radius: 50%;
-    background: var(--accent-soft); color: var(--accent);
-    display: flex; align-items: center; justify-content: center;
-    flex-shrink: 0;
-  }
-  .feature-icon svg { width: 18px; height: 18px; }
-  .feature .v { font-weight: 700; font-size: 15px; line-height: 1.2; color: var(--ink-2); }
-  .feature .l { font-size: 12px; color: var(--ink-dim); margin-top: 2px; }
-
   /* === Form card === */
   .form-card {
     background: #fff;
@@ -687,7 +644,6 @@ HTML = r"""<!DOCTYPE html>
 
   @media (max-width: 980px) {
     .hero { grid-template-columns: 1fr; gap: 40px; }
-    .features { grid-template-columns: 1fr; }
     .shell { padding: 40px 24px 60px; }
   }
   @media (max-width: 640px) {
@@ -739,44 +695,6 @@ HTML = r"""<!DOCTYPE html>
       </h1>
       <p>Get accurate college predictions across every major JEE counselling — built from official 2025 cutoff data spanning <b>NITs, IIITs, GFTIs, UPTAC, GGSIPU,</b> and <b>JAC Delhi</b>. One rank. One ranked choice list.</p>
 
-      <div class="collab">
-        <span class="label">Built from data:</span>
-        <span class="src-pill j"><span class="dot"></span>JoSAA · R6</span>
-        <span class="src-pill c"><span class="dot"></span>CSAB · Special</span>
-        <span class="src-pill u"><span class="dot"></span>UPTAC · Final</span>
-        <span class="src-pill g"><span class="dot"></span>GGSIPU · R3</span>
-        <span class="src-pill a"><span class="dot"></span>JAC Delhi · R5</span>
-      </div>
-
-      <div class="features">
-        <div class="feature">
-          <div class="feature-icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
-          </div>
-          <div>
-            <div class="v"><span id="totalCount">0</span></div>
-            <div class="l">Cutoff Records</div>
-          </div>
-        </div>
-        <div class="feature">
-          <div class="feature-icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>
-          </div>
-          <div>
-            <div class="v">5 Counsellings</div>
-            <div class="l">Unified Search</div>
-          </div>
-        </div>
-        <div class="feature">
-          <div class="feature-icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
-          </div>
-          <div>
-            <div class="v">Private &amp; Offline</div>
-            <div class="l">No Tracking</div>
-          </div>
-        </div>
-      </div>
     </div>
 
     <aside class="hero-right">
@@ -983,6 +901,7 @@ const fmt = n => n==null ? '' : n.toLocaleString('en-IN');
 const sanitize = s => String(s||'').replace(/[^a-z0-9]+/gi,'_');
 
 function animateCount(el, target, dur=900){
+  if (!el) return;    // element may be absent on some pages — no-op gracefully
   const start = performance.now();
   const initial = +el.textContent.replace(/,/g,'') || 0;
   function frame(t){
