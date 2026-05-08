@@ -251,66 +251,6 @@ HTML = r"""<!DOCTYPE html>
             mask-image: radial-gradient(ellipse 70% 55% at 50% 30%, #000 35%, transparent 85%);
   }
 
-  /* === Top brand bar === */
-  .topbar {
-    border-bottom: 1px solid var(--line);
-    background: #fff;
-    position: relative; z-index: 5;
-  }
-  .topbar-inner {
-    max-width: 1240px; margin: 0 auto;
-    padding: 14px 32px;
-    display: flex; align-items: center; gap: 18px;
-  }
-  .brand-mark {
-    display: flex; align-items: center; gap: 10px;
-    text-decoration: none;
-  }
-  .brand-mark .logo {
-    width: 34px; height: 34px; flex-shrink: 0;
-    border-radius: 8px;
-    background: var(--accent);
-    display: flex; align-items: center; justify-content: center;
-    color: #fff; font-weight: 800; font-size: 16px;
-    letter-spacing: 0;
-  }
-  .brand-mark .wordmark {
-    display: flex; flex-direction: column; line-height: 1.1;
-  }
-  .brand-mark .wm-top { font-size: 15px; font-weight: 700; color: var(--ink-2); letter-spacing: -0.005em; }
-  .brand-mark .wm-sub { font-size: 11px; font-weight: 500; color: var(--ink-dim); }
-  .topbar-spacer { flex: 1; }
-  .topbar-link {
-    font-size: 13px; font-weight: 500; color: var(--ink-dim);
-    text-decoration: none;
-  }
-  .topbar-link:hover { color: var(--ink-2); }
-
-  /* === Announcement banner === */
-  .announce {
-    background: var(--surface-2);
-    border-bottom: 1px solid var(--line);
-    padding: 12px 32px;
-  }
-  .announce-inner {
-    max-width: 1240px; margin: 0 auto;
-    display: flex; align-items: center; justify-content: center; gap: 14px;
-    font-size: 14px; color: var(--ink-2);
-    flex-wrap: wrap;
-  }
-  .avatar-row { display: inline-flex; flex-shrink: 0; }
-  .avatar-row .av {
-    width: 28px; height: 28px; border-radius: 50%;
-    border: 2px solid #fff;
-    margin-left: -8px;
-    background: linear-gradient(135deg, #fbbf24, #f59e0b);
-    box-shadow: var(--shadow-sm);
-  }
-  .avatar-row .av:first-child { margin-left: 0; background: linear-gradient(135deg, #60a5fa, #2563eb); }
-  .avatar-row .av:nth-child(2) { background: linear-gradient(135deg, #fb7185, #e11d48); }
-  .avatar-row .av:nth-child(3) { background: linear-gradient(135deg, #34d399, #059669); }
-  .announce-num { color: var(--accent); font-weight: 700; }
-
   /* === Shell / hero === */
   .shell { max-width: 1240px; margin: 0 auto; padding: 60px 32px 80px; }
 
@@ -321,15 +261,6 @@ HTML = r"""<!DOCTYPE html>
     align-items: start;
   }
 
-  .badge {
-    display: inline-flex; align-items: center; gap: 7px;
-    padding: 6px 12px; border-radius: 999px;
-    background: var(--success-soft); color: #047857;
-    font-size: 13px; font-weight: 500;
-    margin-bottom: 24px;
-  }
-  .badge svg { width: 14px; height: 14px; }
-
   .hero h1 {
     font-size: clamp(38px, 4.4vw, 56px);
     line-height: 1.05;
@@ -338,7 +269,6 @@ HTML = r"""<!DOCTYPE html>
     margin: 0 0 20px;
     color: var(--ink);
   }
-  .hero h1 .blue { color: var(--accent); display: block; }
   .hero p {
     font-size: 17px; line-height: 1.55;
     color: var(--ink-dim);
@@ -647,9 +577,6 @@ HTML = r"""<!DOCTYPE html>
     .shell { padding: 40px 24px 60px; }
   }
   @media (max-width: 640px) {
-    .topbar-inner { padding: 12px 16px; }
-    .announce { padding: 10px 16px; }
-    .announce-inner { font-size: 13px; }
     .shell { padding: 32px 16px 56px; }
     .hero h1 { font-size: 36px; }
     .hero p { font-size: 15px; }
@@ -661,38 +588,10 @@ HTML = r"""<!DOCTYPE html>
 <body>
 <div class="bg-grid"></div>
 
-<header class="topbar">
-  <div class="topbar-inner">
-    <a class="brand-mark" href="#">
-      <div class="logo">P</div>
-      <div class="wordmark">
-        <span class="wm-top">PRAYUSH</span>
-        <span class="wm-sub">JEE Counselling Predictor</span>
-      </div>
-    </a>
-    <div class="topbar-spacer"></div>
-    <a class="topbar-link" href="https://josaa.admissions.nic.in" target="_blank" rel="noopener">Sources</a>
-  </div>
-</header>
-
-<div class="announce">
-  <div class="announce-inner">
-    <span class="avatar-row"><span class="av"></span><span class="av"></span><span class="av"></span></span>
-    <span><span class="announce-num" id="announceCount">0</span> cutoffs unified across 5 official 2025 counsellings</span>
-  </div>
-</div>
-
 <main class="shell">
   <section class="hero">
     <div class="hero-left">
-      <div class="badge">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 12l2 2 4-4"/><circle cx="12" cy="12" r="10"/></svg>
-        100% Free · No Sign-up · Runs Offline
-      </div>
-      <h1>
-        <span class="blue">JEE Main &amp; Counselling</span>
-        College Predictor 2025
-      </h1>
+      <h1>College Predictor by Prayush Bhaiya</h1>
       <p>Get accurate college predictions across every major JEE counselling — built from official 2025 cutoff data spanning <b>NITs, IIITs, GFTIs, UPTAC, GGSIPU,</b> and <b>JAC Delhi</b>. One rank. One ranked choice list.</p>
 
     </div>
@@ -927,7 +826,6 @@ function animateCount(el, target, dur=900){
   // Animated hero counters
   setTimeout(() => {
     animateCount($('totalCount'), ROWS.length);
-    animateCount($('announceCount'), ROWS.length);
     animateCount($('josaaCountTop'), counts['JoSAA']||0);
     animateCount($('csabCountTop'), counts['CSAB']||0);
     animateCount($('uptacCountTop'), counts['UPTAC']||0);
