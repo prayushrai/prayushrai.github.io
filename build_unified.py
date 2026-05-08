@@ -254,6 +254,30 @@ HTML = r"""<!DOCTYPE html>
   /* === Shell / hero === */
   .shell { max-width: 1240px; margin: 0 auto; padding: 60px 32px 80px; }
 
+  /* === Page banner (photo + name) === */
+  .page-banner {
+    display: flex; align-items: center; gap: 18px;
+    margin-bottom: 36px; padding-bottom: 26px;
+    border-bottom: 1px solid var(--line);
+  }
+  .page-banner-img {
+    width: 76px; height: 76px;
+    border-radius: 50%; object-fit: cover; flex-shrink: 0;
+    box-shadow: var(--shadow-sm);
+    background: #fff;
+  }
+  .page-banner-title {
+    font-size: clamp(26px, 3.4vw, 38px);
+    line-height: 1.1; letter-spacing: -0.02em;
+    font-weight: 700; margin: 0;
+    color: var(--ink);
+  }
+  @media (max-width: 640px) {
+    .page-banner { gap: 14px; margin-bottom: 26px; padding-bottom: 18px; }
+    .page-banner-img { width: 60px; height: 60px; }
+    .page-banner-title { font-size: 22px; }
+  }
+
   .hero {
     display: grid;
     grid-template-columns: minmax(0, 1.15fr) minmax(380px, 1fr);
@@ -589,9 +613,13 @@ HTML = r"""<!DOCTYPE html>
 <div class="bg-grid"></div>
 
 <main class="shell">
+  <header class="page-banner">
+    <img src="dp.jpg" alt="Prayush Bhaiya" class="page-banner-img">
+    <h1 class="page-banner-title">College Predictor by Prayush Bhaiya</h1>
+  </header>
+
   <section class="hero">
     <div class="hero-left">
-      <h1>College Predictor by Prayush Bhaiya</h1>
       <p>Get accurate college predictions across every major JEE counselling — built from official 2025 cutoff data spanning <b>NITs, IIITs, GFTIs, UPTAC, GGSIPU,</b> and <b>JAC Delhi</b>. One rank. One ranked choice list.</p>
 
     </div>
