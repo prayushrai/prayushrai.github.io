@@ -195,7 +195,9 @@
   .field label .req { color: var(--danger); }
   .field label .opt { color: var(--ink-faint); font-weight: 400; font-size: 12px; }
 
-  input, select {
+  /* Scope the textbox-style reset away from checkboxes/radios so the
+     browser keeps drawing the native tick / dot for those. */
+  input:not([type="checkbox"]):not([type="radio"]), select {
     width: 100%; padding: 11px 13px;
     background: #fff; color: var(--ink-2);
     border: 1px solid var(--line); border-radius: 8px;
@@ -204,7 +206,7 @@
     -webkit-appearance: none; appearance: none;
   }
   input::placeholder { color: var(--ink-faint); font-weight: 400; }
-  input:focus, select:focus {
+  input:not([type="checkbox"]):not([type="radio"]):focus, select:focus {
     outline: none;
     border-color: var(--accent);
     box-shadow: 0 0 0 3px rgba(194,65,12,0.18);    /* dark-orange focus ring */
