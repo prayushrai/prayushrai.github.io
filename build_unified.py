@@ -285,7 +285,7 @@ HTML = r"""<!DOCTYPE html>
     align-items: start;
   }
 
-  .hero h1 {
+  .hero-headline {
     font-size: clamp(38px, 4.4vw, 56px);
     line-height: 1.05;
     letter-spacing: -0.025em;
@@ -293,6 +293,7 @@ HTML = r"""<!DOCTYPE html>
     margin: 0 0 20px;
     color: var(--ink);
   }
+  .hero-headline .blue { color: var(--accent); display: block; }
   .hero p {
     font-size: 17px; line-height: 1.55;
     color: var(--ink-dim);
@@ -602,7 +603,7 @@ HTML = r"""<!DOCTYPE html>
   }
   @media (max-width: 640px) {
     .shell { padding: 32px 16px 56px; }
-    .hero h1 { font-size: 36px; }
+    .hero-headline { font-size: 36px; }
     .hero p { font-size: 15px; }
     .form-card { padding: 22px; }
     .filter-bar { gap: 12px; }
@@ -620,6 +621,10 @@ HTML = r"""<!DOCTYPE html>
 
   <section class="hero">
     <div class="hero-left">
+      <h2 class="hero-headline">
+        <span class="blue">JEE Main &amp; Counselling</span>
+        College Predictor 2025
+      </h2>
       <p>Get accurate college predictions across every major JEE counselling — built from official 2025 cutoff data spanning <b>NITs, IIITs, GFTIs, UPTAC, GGSIPU,</b> and <b>JAC Delhi</b>. One rank. One ranked choice list.</p>
 
     </div>
