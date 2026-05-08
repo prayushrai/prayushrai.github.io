@@ -82,6 +82,13 @@ CSAB_QUOTA_MAP = {
 MSG91_WIDGET_ID = "366568707934343431383237"
 MSG91_TOKEN_AUTH = "515031T0KNeFSm69fe0f76P1"
 
+# === Google Apps Script web-app endpoint for form submissions ===
+# Deployed from a Google Sheet (Extensions → Apps Script → Deploy → Web app,
+# "Execute as: Me", "Who has access: Anyone"). Each runPredict() click POSTs
+# the form payload here and the script appends a row to the sheet.
+# Public-by-design URL — anyone can write to it (rate-limited by Google).
+SHEETS_WEBHOOK_URL = "https://script.google.com/macros/s/AKfycbwETUKxY2f9LZ48lxEqrqUykd0SEb7TbFpNC_LrYytRhhv0nIEhEoKvOdZ-RBBkaky-nw/exec"
+
 def load_jc(csv_path: Path, round_label: str) -> pd.DataFrame:
     df = pd.read_csv(csv_path)
     df = df[["Institute Type", "Institute", "Academic Program Name",
@@ -941,6 +948,7 @@ const INST_STATE = __INST_STATE__;
 const STATES = __STATES__;
 const MSG91_WIDGET_ID = "__MSG91_WIDGET_ID__";
 const MSG91_TOKEN_AUTH = "__MSG91_TOKEN_AUTH__";
+const SHEETS_WEBHOOK_URL = "__SHEETS_WEBHOOK_URL__";
 const ROWS = RAW.map(r => { const o = {}; COLS.forEach((c,i)=>o[c]=r[i]); return o; });
 
 const $ = id => document.getElementById(id);
@@ -1113,6 +1121,26 @@ function resetPhoneVerification(){
   setVerifyStatus('', '');
 }
 
+// === Google Sheet logging ===
+// Fire-and-forget POST to the Apps Script web app. Uses text/plain content-type
+// so the request stays a "simple" CORS request (no preflight) — Apps Script
+// reads e.postData.contents as JSON regardless of the header.
+function logSubmissionToSheet(payload){
+  if (!SHEETS_WEBHOOK_URL || SHEETS_WEBHOOK_URL.indexOf('http') !== 0) return;
+  try {
+    fetch(SHEETS_WEBHOOK_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+      body: JSON.stringify(payload),
+      keepalive: true,
+    }).then(r => {
+      if (!r.ok) console.warn('[sheet] non-OK status:', r.status);
+    }).catch(err => console.warn('[sheet] log failed:', err));
+  } catch (err) {
+    console.warn('[sheet] log threw:', err);
+  }
+}
+
 let currentResults = [];
 let totalQualifying = 0;
 let currentSort = { key: 'close', dir: 1 };
@@ -1194,6 +1222,20 @@ function runPredict(){
   if (!budget) { alert('Please select a budget — it is required.'); $('budget').focus(); return; }
 
   if (activeRounds().size === 0) { alert('Pick at least one counselling.'); return; }
+
+  // Log this submission to the Google Sheet (fire-and-forget — never blocks the user).
+  logSubmissionToSheet({
+    name,
+    phone: '+91' + phone.replace(/\D/g, ''),
+    email,
+    rank: crl,
+    categoryRank: categoryRank || '',
+    category: seat,
+    seatPool: gender === 'F' ? 'Female' : 'Gender Neutral',
+    homeState: home,
+    budget,
+    management: $('mgmtQuota').checked ? 'Yes' : 'No',
+  });
 
   const eligible = computeEligible(seat, gender, home);
   const { hits, tried } = findInBandwidth(eligible, crl, categoryRank);
@@ -1387,7 +1429,8 @@ html = (HTML
         .replace("__INST_STATE__", json.dumps(INST_STATE))
         .replace("__STATES__", json.dumps(STATES))
         .replace("__MSG91_WIDGET_ID__", MSG91_WIDGET_ID)
-        .replace("__MSG91_TOKEN_AUTH__", MSG91_TOKEN_AUTH))
+        .replace("__MSG91_TOKEN_AUTH__", MSG91_TOKEN_AUTH)
+        .replace("__SHEETS_WEBHOOK_URL__", SHEETS_WEBHOOK_URL))
 
 OUT.write_text(html, encoding="utf-8")
 size_kb = OUT.stat().st_size / 1024

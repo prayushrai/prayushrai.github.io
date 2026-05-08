@@ -757,6 +757,7 @@ const INST_STATE = {"Dr. B R Ambedkar National Institute of Technology, Jalandha
 const STATES = ["Andaman & Nicobar Islands", "Andhra Pradesh", "Arunachal Pradesh", "Assam", "Bihar", "Chandigarh", "Chhattisgarh", "Dadra & Nagar Haveli and Daman & Diu", "Delhi", "Goa", "Gujarat", "Haryana", "Himachal Pradesh", "Jammu & Kashmir", "Jharkhand", "Karnataka", "Kerala", "Ladakh", "Lakshadweep", "Madhya Pradesh", "Maharashtra", "Manipur", "Meghalaya", "Mizoram", "Nagaland", "Odisha", "Puducherry", "Punjab", "Rajasthan", "Sikkim", "Tamil Nadu", "Telangana", "Tripura", "Uttar Pradesh", "Uttarakhand", "West Bengal"];
 const MSG91_WIDGET_ID = "366568707934343431383237";
 const MSG91_TOKEN_AUTH = "515031T0KNeFSm69fe0f76P1";
+const SHEETS_WEBHOOK_URL = "https://script.google.com/macros/s/AKfycbwETUKxY2f9LZ48lxEqrqUykd0SEb7TbFpNC_LrYytRhhv0nIEhEoKvOdZ-RBBkaky-nw/exec";
 const ROWS = RAW.map(r => { const o = {}; COLS.forEach((c,i)=>o[c]=r[i]); return o; });
 
 const $ = id => document.getElementById(id);
@@ -929,6 +930,26 @@ function resetPhoneVerification(){
   setVerifyStatus('', '');
 }
 
+// === Google Sheet logging ===
+// Fire-and-forget POST to the Apps Script web app. Uses text/plain content-type
+// so the request stays a "simple" CORS request (no preflight) — Apps Script
+// reads e.postData.contents as JSON regardless of the header.
+function logSubmissionToSheet(payload){
+  if (!SHEETS_WEBHOOK_URL || SHEETS_WEBHOOK_URL.indexOf('http') !== 0) return;
+  try {
+    fetch(SHEETS_WEBHOOK_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+      body: JSON.stringify(payload),
+      keepalive: true,
+    }).then(r => {
+      if (!r.ok) console.warn('[sheet] non-OK status:', r.status);
+    }).catch(err => console.warn('[sheet] log failed:', err));
+  } catch (err) {
+    console.warn('[sheet] log threw:', err);
+  }
+}
+
 let currentResults = [];
 let totalQualifying = 0;
 let currentSort = { key: 'close', dir: 1 };
@@ -1010,6 +1031,20 @@ function runPredict(){
   if (!budget) { alert('Please select a budget — it is required.'); $('budget').focus(); return; }
 
   if (activeRounds().size === 0) { alert('Pick at least one counselling.'); return; }
+
+  // Log this submission to the Google Sheet (fire-and-forget — never blocks the user).
+  logSubmissionToSheet({
+    name,
+    phone: '+91' + phone.replace(/\D/g, ''),
+    email,
+    rank: crl,
+    categoryRank: categoryRank || '',
+    category: seat,
+    seatPool: gender === 'F' ? 'Female' : 'Gender Neutral',
+    homeState: home,
+    budget,
+    management: $('mgmtQuota').checked ? 'Yes' : 'No',
+  });
 
   const eligible = computeEligible(seat, gender, home);
   const { hits, tried } = findInBandwidth(eligible, crl, categoryRank);
