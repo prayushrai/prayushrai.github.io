@@ -1051,6 +1051,40 @@ function loadMsg91Sdk(){
   return msg91SdkLoading;
 }
 
+function markPhoneVerified(token, statusMsg){
+  phoneVerified = true;
+  phoneVerifyToken = token;
+  $('phone').readOnly = true;
+  $('verifyPhoneBtn').textContent = '✓ Verified';
+  $('verifyPhoneBtn').classList.add('verified');
+  $('verifyPhoneBtn').disabled = true;
+  setVerifyStatus(statusMsg, 'success');
+}
+
+// Cache of phone-existence checks for this page session, so re-clicks of
+// Verify never refetch from Apps Script. Key: 10-digit phone, value: true|false.
+const sheetExistsCache = Object.create(null);
+
+// Returns true if the phone is already in the leads sheet (column B).
+// Returns false on miss OR on any network/script error — we always fall through
+// to real OTP rather than blocking the user on a flaky webhook.
+async function checkPhoneInSheet(digits){
+  if (digits in sheetExistsCache) return sheetExistsCache[digits];
+  if (!SHEETS_WEBHOOK_URL || SHEETS_WEBHOOK_URL.indexOf('http') !== 0) return false;
+  try {
+    const url = SHEETS_WEBHOOK_URL + '?action=check&phone=91' + digits;
+    const res = await fetch(url, { method: 'GET' });
+    if (!res.ok) return false;
+    const data = await res.json();
+    const exists = !!(data && data.exists);
+    sheetExistsCache[digits] = exists;
+    return exists;
+  } catch (err) {
+    console.warn('[sheet] check failed, falling back to OTP:', err);
+    return false;
+  }
+}
+
 async function startPhoneVerification(){
   if (phoneVerified) return;
   const digits = $('phone').value.replace(/\D/g, '');
@@ -1060,6 +1094,15 @@ async function startPhoneVerification(){
     return;
   }
   $('verifyPhoneBtn').disabled = true;
+
+  // Skip OTP entirely if this number is already in our leads sheet.
+  setVerifyStatus('Checking…', '');
+  const alreadyKnown = await checkPhoneInSheet(digits);
+  if (alreadyKnown) {
+    markPhoneVerified('sheet:known', 'Phone verified — welcome back.');
+    return;
+  }
+
   setVerifyStatus('Loading verifier…', '');
   try {
     await loadMsg91Sdk();
@@ -1075,13 +1118,8 @@ async function startPhoneVerification(){
     identifier: '91' + digits,
     exposeMethods: false,
     success: (data) => {
-      phoneVerified = true;
-      phoneVerifyToken = (data && (data.message || data.token)) || JSON.stringify(data || {});
-      $('phone').readOnly = true;
-      $('verifyPhoneBtn').textContent = '✓ Verified';
-      $('verifyPhoneBtn').classList.add('verified');
-      $('verifyPhoneBtn').disabled = true;
-      setVerifyStatus('Phone verified.', 'success');
+      const token = (data && (data.message || data.token)) || JSON.stringify(data || {});
+      markPhoneVerified(token, 'Phone verified.');
     },
     failure: (err) => {
       console.error('[MSG91] verify failed:', err);
