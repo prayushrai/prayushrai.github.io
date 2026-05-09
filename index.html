@@ -7,6 +7,15 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<script>
+  // Apply persisted theme BEFORE first paint to avoid the light-mode flash.
+  (function(){
+    try {
+      var t = localStorage.getItem('prayush-theme');
+      if (t === 'dark' || t === 'light') document.documentElement.setAttribute('data-theme', t);
+    } catch (_) {}
+  })();
+</script>
 <style>
   :root {
     --bg: #ffffff;
@@ -80,7 +89,7 @@
     width: 76px; height: 76px;
     border-radius: 50%; object-fit: cover; flex-shrink: 0;
     box-shadow: var(--shadow-sm);
-    background: #fff;
+    background: var(--surface);
   }
   .page-banner-title {
     font-size: clamp(26px, 3.4vw, 38px);
@@ -178,7 +187,7 @@
 
   /* === Form card === */
   .form-card {
-    background: #fff;
+    background: var(--surface);
     border: 1px solid var(--line);
     border-radius: 16px;
     padding: 28px;
@@ -199,7 +208,7 @@
      browser keeps drawing the native tick / dot for those. */
   input:not([type="checkbox"]):not([type="radio"]), select {
     width: 100%; padding: 11px 13px;
-    background: #fff; color: var(--ink-2);
+    background: var(--surface); color: var(--ink-2);
     border: 1px solid var(--line); border-radius: 8px;
     font-size: 14px; font-family: inherit; font-weight: 500;
     transition: border-color 0.15s, box-shadow 0.15s;
@@ -232,7 +241,7 @@
   .btn-verify {
     height: 42px; padding: 0 14px;
     font-size: 13px; font-weight: 600; font-family: inherit;
-    background: #fff; color: var(--accent);
+    background: var(--surface); color: var(--accent);
     border: 1px solid var(--line); border-radius: 8px;
     cursor: pointer; white-space: nowrap; flex-shrink: 0;
     transition: border-color 0.15s, background 0.15s, color 0.15s;
@@ -276,7 +285,7 @@
   .radio-option {
     display: flex; align-items: center; gap: 10px;
     padding: 11px 14px;
-    background: #fff;
+    background: var(--surface);
     border: 1px solid var(--line); border-radius: 8px;
     cursor: pointer; user-select: none;
     font-size: 14px; font-weight: 500;
@@ -300,7 +309,7 @@
   .field-checkbox {
     display: flex; align-items: center; gap: 12px;
     padding: 12px 14px;
-    background: #fff; border: 1px solid var(--line); border-radius: 8px;
+    background: var(--surface); border: 1px solid var(--line); border-radius: 8px;
     cursor: pointer; user-select: none;
     transition: border-color 0.15s, background 0.15s;
     margin: 0;
@@ -322,7 +331,7 @@
   .counsel-row { display: flex; gap: 6px; flex-wrap: wrap; }
   .round-card {
     padding: 7px 12px; border-radius: 8px;
-    background: #fff; border: 1px solid var(--line);
+    background: var(--surface); border: 1px solid var(--line);
     font-size: 12px; font-weight: 600; color: var(--ink-dim);
     cursor: pointer; user-select: none;
     display: inline-flex; align-items: center; gap: 6px;
@@ -360,7 +369,7 @@
     padding: 9px 16px; font-size: 13px; font-weight: 600;
     border: 1px solid var(--line); border-radius: 8px;
     cursor: pointer; font-family: inherit;
-    background: #fff; color: var(--ink-2);
+    background: var(--surface); color: var(--ink-2);
     transition: background 0.15s, border-color 0.15s;
   }
   button:hover { background: var(--surface-2); border-color: var(--line-strong); }
@@ -369,7 +378,7 @@
 
   /* === Results panel === */
   .panel {
-    background: #fff;
+    background: var(--surface);
     border: 1px solid var(--line);
     border-radius: var(--radius-lg);
     padding: 22px;
@@ -393,7 +402,7 @@
   .chip-row { display: flex; gap: 6px; flex-wrap: wrap; }
   .chip {
     padding: 6px 12px; border-radius: 999px; font-size: 12px; font-weight: 600;
-    background: #fff; border: 1px solid var(--line);
+    background: var(--surface); border: 1px solid var(--line);
     cursor: pointer; user-select: none;
     color: var(--ink-dim);
     transition: border-color 0.15s, background 0.15s, color 0.15s;
@@ -410,7 +419,7 @@
   .table-wrap {
     max-height: 65vh; overflow: auto;
     border-radius: 12px; border: 1px solid var(--line);
-    background: #fff;
+    background: var(--surface);
   }
   table { width: 100%; border-collapse: collapse; font-size: 13px; }
   thead th {
@@ -493,8 +502,163 @@
   /* Scrollbars (light) */
   ::-webkit-scrollbar { width: 10px; height: 10px; }
   ::-webkit-scrollbar-track { background: transparent; }
-  ::-webkit-scrollbar-thumb { background: var(--surface-3); border-radius: 10px; border: 2px solid #fff; }
+  ::-webkit-scrollbar-thumb { background: var(--surface-3); border-radius: 10px; border: 2px solid var(--surface); }
   ::-webkit-scrollbar-thumb:hover { background: var(--line-strong); }
+
+  /* === Theme toggle (top-right floating) === */
+  .theme-toggle {
+    position: fixed;
+    top: 16px; right: 16px;
+    z-index: 60;
+    width: 40px; height: 40px;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer; padding: 0;
+    box-shadow: var(--shadow-sm);
+    color: var(--ink-2);
+    transition: transform 0.18s, box-shadow 0.18s, background 0.15s, border-color 0.15s;
+  }
+  .theme-toggle:hover { transform: rotate(15deg); box-shadow: var(--shadow-md); border-color: var(--line-strong); background: var(--surface); }
+  .theme-toggle svg { width: 18px; height: 18px; }
+  .theme-toggle .icon-sun { display: none; }
+  [data-theme="dark"] .theme-toggle .icon-moon { display: none; }
+  [data-theme="dark"] .theme-toggle .icon-sun  { display: block; }
+
+  /* === Sticky bottom Razorpay button === */
+  .razorpay-sticky {
+    position: fixed;
+    bottom: 18px; left: 50%;
+    transform: translateX(-50%);
+    z-index: 90;
+    pointer-events: auto;
+  }
+  /* Don't let content hide behind the floating CTA */
+  body { padding-bottom: 90px; }
+
+  /* === Counselling pop-up modal (fires 40s after Predict) === */
+  .modal-overlay {
+    position: fixed; inset: 0;
+    background: rgba(20, 20, 20, 0.55);
+    display: flex; align-items: center; justify-content: center;
+    padding: 20px;
+    z-index: 200;
+    animation: prayush-fade-in 0.18s ease-out;
+  }
+  .modal-overlay.hidden { display: none; }
+  @keyframes prayush-fade-in { from { opacity: 0; } to { opacity: 1; } }
+  .modal-content {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    padding: 32px 30px 26px;
+    max-width: 460px; width: 100%;
+    position: relative;
+    box-shadow: 0 24px 60px rgba(0,0,0,0.35);
+    animation: prayush-pop-in 0.22s ease-out;
+  }
+  @keyframes prayush-pop-in { from { transform: scale(0.94); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+  .modal-close {
+    position: absolute;
+    top: 12px; right: 12px;
+    width: 32px; height: 32px;
+    background: none;
+    border: none;
+    color: var(--ink-faint);
+    font-size: 22px; line-height: 1;
+    cursor: pointer; padding: 0;
+    border-radius: 50%;
+  }
+  .modal-close:hover { color: var(--ink-2); background: var(--surface-2); border: none; }
+  .modal-title {
+    font-size: 22px; font-weight: 700;
+    color: var(--ink);
+    margin: 0 0 8px;
+    padding-right: 28px;
+    line-height: 1.3;
+  }
+  .modal-subtitle {
+    font-size: 13px; color: var(--ink-dim);
+    margin: 0 0 18px;
+  }
+  .modal-list {
+    list-style: none; padding: 0;
+    margin: 0 0 22px;
+    display: flex; flex-direction: column; gap: 10px;
+  }
+  .modal-list li {
+    display: flex; align-items: flex-start; gap: 10px;
+    font-size: 14.5px; font-weight: 500;
+    color: var(--ink-2); line-height: 1.45;
+  }
+  .modal-list li svg {
+    width: 20px; height: 20px; flex-shrink: 0; margin-top: 1px;
+    color: var(--accent);
+    padding: 3px;
+    background: var(--accent-soft);
+    border-radius: 50%;
+    box-sizing: content-box;
+  }
+
+  /* === Dark theme overrides === */
+  [data-theme="dark"] {
+    --bg: #0d0d10;
+    --surface: #18181b;
+    --surface-2: #232327;
+    --surface-3: #2a2a2f;
+    --line: #2a2a2f;
+    --line-strong: #3a3a40;
+    --ink: #fafafa;
+    --ink-2: #ededee;
+    --ink-dim: #a1a1aa;
+    --ink-faint: #71717a;
+    --accent: #fb923c;            /* lighter orange for better contrast on dark */
+    --accent-hover: #f97316;
+    --accent-soft: rgba(251, 146, 60, 0.14);
+    --accent-soft-2: rgba(251, 146, 60, 0.30);
+    --success: #34d399;
+    --success-soft: rgba(52, 211, 153, 0.14);
+    --warn-soft: rgba(251, 191, 36, 0.14);
+    --warn-ink: #fbbf24;
+    --danger: #f87171;
+  }
+  [data-theme="dark"] body { background: var(--bg); color: var(--ink-2); }
+  [data-theme="dark"] .bg-grid {
+    background-image:
+      linear-gradient(rgba(255,255,255,0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.04) 1px, transparent 1px);
+  }
+  [data-theme="dark"] .modal-overlay { background: rgba(0, 0, 0, 0.65); }
+  [data-theme="dark"] .modal-content { box-shadow: 0 24px 60px rgba(0,0,0,0.6); }
+  /* Pills / tags — recolour for dark backgrounds */
+  [data-theme="dark"] .pill-NIT    { background: rgba(52,211,153,0.18); color: #6ee7b7; }
+  [data-theme="dark"] .pill-IIIT   { background: rgba(168,85,247,0.20); color: #c4b5fd; }
+  [data-theme="dark"] .pill-GFTI   { background: rgba(245,158,11,0.18); color: #fcd34d; }
+  [data-theme="dark"] .pill-UPTAC  { background: rgba(217,119,6,0.20);  color: #fbbf24; }
+  [data-theme="dark"] .pill-GGSIPU { background: rgba(132,204,22,0.18); color: #bef264; }
+  [data-theme="dark"] .pill-JAC    { background: rgba(99,102,241,0.20); color: #a5b4fc; }
+  [data-theme="dark"] .pill-JoSAA  { background: rgba(8,145,178,0.20);  color: #67e8f9; border-color: rgba(8,145,178,0.55); }
+  [data-theme="dark"] .pill-CSAB   { background: rgba(219,39,119,0.20); color: #f9a8d4; border-color: rgba(219,39,119,0.55); }
+  [data-theme="dark"] .pill-UPTAC-r  { background: rgba(217,119,6,0.20); color: #fcd34d; border-color: rgba(217,119,6,0.55); }
+  [data-theme="dark"] .pill-GGSIPU-r { background: rgba(132,204,22,0.18); color: #bef264; border-color: rgba(132,204,22,0.55); }
+  [data-theme="dark"] .pill-JAC-r    { background: rgba(99,102,241,0.20); color: #a5b4fc; border-color: rgba(99,102,241,0.55); }
+  [data-theme="dark"] .chip[data-src="JoSAA"].on  { background: rgba(8,145,178,0.20); border-color: var(--josaa); color: #67e8f9; }
+  [data-theme="dark"] .chip[data-src="CSAB"].on   { background: rgba(219,39,119,0.20); border-color: var(--csab); color: #f9a8d4; }
+  [data-theme="dark"] .chip[data-src="UPTAC"].on  { background: rgba(217,119,6,0.20); border-color: var(--uptac); color: #fcd34d; }
+  [data-theme="dark"] .chip[data-src="GGSIPU"].on { background: rgba(132,204,22,0.18); border-color: var(--ggsipu); color: #bef264; }
+  [data-theme="dark"] .chip[data-src="JAC"].on    { background: rgba(99,102,241,0.20); border-color: var(--jac); color: #a5b4fc; }
+  [data-theme="dark"] .tip { background: rgba(251,191,36,0.10); color: var(--warn-ink); border-color: rgba(251,191,36,0.30); }
+  [data-theme="dark"] .badge { background: rgba(52,211,153,0.14); color: #6ee7b7; }
+  [data-theme="dark"] .pill-quota { background: var(--surface-2); color: var(--ink-dim); }
+  [data-theme="dark"] .pill-note  { background: rgba(168,85,247,0.20); color: #c4b5fd; }
+  [data-theme="dark"] thead th { background: var(--surface-2); }
+  [data-theme="dark"] .or-divider::before, [data-theme="dark"] .or-divider::after { background: var(--line); }
+  [data-theme="dark"] tbody tr:hover td { background: var(--surface-2); }
+  [data-theme="dark"] tbody td { border-bottom-color: var(--surface-3); }
+  [data-theme="dark"] .vis-pill { background: var(--accent-soft); color: var(--accent); border-color: var(--accent-soft-2); }
+  [data-theme="dark"] .field label .req { color: #fb7185; }
+  [data-theme="dark"] .empty-hero { background: var(--surface-2); border-color: var(--line-strong); }
 
   @media (max-width: 980px) {
     .hero { grid-template-columns: 1fr; gap: 40px; }
@@ -506,11 +670,27 @@
     .hero p { font-size: 15px; }
     .form-card { padding: 22px; }
     .filter-bar { gap: 12px; }
+    .theme-toggle { top: 12px; right: 12px; }
+    .razorpay-sticky { bottom: 12px; }
+    .modal-content { padding: 26px 22px 22px; }
+    .modal-title { font-size: 19px; }
   }
 </style>
 </head>
 <body>
 <div class="bg-grid"></div>
+
+<!-- Floating theme toggle (top-right) -->
+<button id="themeToggle" class="theme-toggle" type="button" aria-label="Toggle dark/light theme" onclick="toggleTheme()">
+  <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+  <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+    <circle cx="12" cy="12" r="4"/>
+    <line x1="12" y1="2" x2="12" y2="4"/><line x1="12" y1="20" x2="12" y2="22"/>
+    <line x1="4.93" y1="4.93" x2="6.34" y2="6.34"/><line x1="17.66" y1="17.66" x2="19.07" y2="19.07"/>
+    <line x1="2" y1="12" x2="4" y2="12"/><line x1="20" y1="12" x2="22" y2="12"/>
+    <line x1="4.93" y1="19.07" x2="6.34" y2="17.66"/><line x1="17.66" y1="6.34" x2="19.07" y2="4.93"/>
+  </svg>
+</button>
 
 <main class="shell">
   <header class="page-banner">
@@ -522,7 +702,7 @@
     <div class="hero-left">
       <h2 class="hero-headline">
         <span class="blue">JEE College Predictor</span>
-        2025
+        2026
       </h2>
       <p class="hero-subtitle">Built by <strong>Prayush Bhaiya</strong> for Smarter Counselling Decisions</p>
 
@@ -1056,6 +1236,9 @@ function runPredict(){
   buildFilters();
   renderTable();
   $('resultsSection').scrollIntoView({behavior:'smooth', block:'start'});
+
+  // Reveal the counselling pop-up 40 s after the user predicts (once per session)
+  scheduleCounsellingModal();
 }
 
 function buildFilters(){
@@ -1227,6 +1410,93 @@ function resetAll(){
   $('resultsSection').classList.add('hidden');
   window.scrollTo({top: 0, behavior: 'smooth'});
 }
+
+// === Theme toggle ===
+function toggleTheme(){
+  var current = document.documentElement.getAttribute('data-theme') || 'light';
+  var next = current === 'light' ? 'dark' : 'light';
+  document.documentElement.setAttribute('data-theme', next);
+  try { localStorage.setItem('prayush-theme', next); } catch (_) {}
+}
+
+// === Counselling pop-up modal (40 seconds after Predict) ===
+let counsellingModalShown = false;
+let counsellingModalTimer = null;
+
+function scheduleCounsellingModal(){
+  if (counsellingModalShown) return;
+  if (counsellingModalTimer) return;
+  counsellingModalTimer = setTimeout(function(){
+    counsellingModalTimer = null;
+    if (counsellingModalShown) return;
+    counsellingModalShown = true;
+    var m = $('counsellingModal');
+    if (m) m.classList.remove('hidden');
+  }, 40000);
+}
+
+function closeCounsellingModal(){
+  var m = $('counsellingModal');
+  if (m) m.classList.add('hidden');
+}
+
+document.addEventListener('keydown', function(e){
+  if (e.key === 'Escape') closeCounsellingModal();
+});
+</script>
+
+<!-- Sticky bottom Razorpay CTA — present on every screen, follows scroll -->
+<div class="razorpay-sticky">
+  <div class="razorpay-embed-btn"
+       data-url="https://pages.razorpay.com/pl_Sft6W2qxhB1ed1/view"
+       data-text="Save your Career - ₹299 Only"
+       data-color="#c2410c"
+       data-size="large"></div>
+</div>
+
+<!-- Counselling pop-up modal (revealed 40s after Predict) -->
+<div id="counsellingModal" class="modal-overlay hidden" onclick="if(event.target===this) closeCounsellingModal();">
+  <div class="modal-content" role="dialog" aria-labelledby="counsellingModalTitle" aria-modal="true">
+    <button class="modal-close" type="button" aria-label="Close" onclick="closeCounsellingModal()">×</button>
+    <h3 class="modal-title" id="counsellingModalTitle">Get 1-1 Counselling by Prayush Bhaiya</h3>
+    <p class="modal-subtitle">Personalised guidance, every step till the seat is yours.</p>
+    <ul class="modal-list">
+      <li>
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 8 7 12 13 4"/></svg>
+        Helps in choosing best ROI College
+      </li>
+      <li>
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 8 7 12 13 4"/></svg>
+        Helps in securing maximum Scholarship
+      </li>
+      <li>
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 8 7 12 13 4"/></svg>
+        Unlimited Support till you get best college
+      </li>
+    </ul>
+    <div class="razorpay-embed-btn"
+         data-url="https://pages.razorpay.com/pl_Sft6W2qxhB1ed1/view"
+         data-text="Save your Career - ₹299 Only"
+         data-color="#c2410c"
+         data-size="large"></div>
+  </div>
+</div>
+
+<!-- Bootstrap the Razorpay embed-button bundle (renders all .razorpay-embed-btn elements) -->
+<script>
+  (function(){
+    var d = document; var x = !d.getElementById('razorpay-embed-btn-js');
+    if (x) {
+      var s = d.createElement('script');
+      s.defer = true;
+      s.id = 'razorpay-embed-btn-js';
+      s.src = 'https://cdn.razorpay.com/static/embed_btn/bundle.js';
+      d.body.appendChild(s);
+    } else {
+      var rzp = window['__rzp__'];
+      rzp && rzp.init && rzp.init();
+    }
+  })();
 </script>
 </body>
 </html>
