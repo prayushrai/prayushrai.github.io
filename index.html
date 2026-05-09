@@ -516,6 +516,31 @@
   .rzp-cta:active { transform: translateY(0); }
   .rzp-cta-block { display: flex; width: 100%; }    /* full-width inside modal */
 
+  /* === WhatsApp CTA — used inside the free-guidance modal === */
+  .wa-cta {
+    display: inline-flex;
+    align-items: center; justify-content: center;
+    gap: 10px;
+    background: #25d366;        /* WhatsApp brand green */
+    color: #ffffff;
+    font-size: 15px; font-weight: 700;
+    font-family: inherit; letter-spacing: 0.01em;
+    padding: 14px 28px;
+    border: none; border-radius: 10px;
+    text-decoration: none; white-space: nowrap;
+    cursor: pointer;
+    box-shadow: 0 8px 22px rgba(37, 211, 102, 0.32), 0 2px 6px rgba(37, 211, 102, 0.18);
+    transition: transform 0.15s, box-shadow 0.18s, background 0.15s;
+  }
+  .wa-cta:hover {
+    background: #1ebe5a;
+    transform: translateY(-1px);
+    box-shadow: 0 12px 28px rgba(37, 211, 102, 0.40), 0 3px 8px rgba(37, 211, 102, 0.22);
+  }
+  .wa-cta:active { transform: translateY(0); }
+  .wa-cta svg { width: 20px; height: 20px; flex-shrink: 0; }
+  .wa-cta-block { display: flex; width: 100%; }
+
   .razorpay-sticky {
     position: fixed;
     bottom: 18px; left: 50%;
@@ -1205,8 +1230,11 @@ function runPredict(){
   renderTable();
   $('resultsSection').scrollIntoView({behavior:'smooth', block:'start'});
 
-  // Reveal the counselling pop-up 40 s after the user predicts (once per session)
+  // Reveal the counselling pop-up 30 s after the user predicts (once per session)
   scheduleCounsellingModal();
+  // For high-budget OR low-rank+mid-budget leads, also schedule the free-WhatsApp
+  // guidance modal at 60 s (replaces the counselling modal if still open).
+  scheduleWhatsappModal(crl, budget);
 }
 
 function buildFilters(){
@@ -1387,7 +1415,7 @@ function toggleTheme(){
   try { localStorage.setItem('prayush-theme', next); } catch (_) {}
 }
 
-// === Counselling pop-up modal (40 seconds after Predict) ===
+// === Counselling pop-up modal (30 seconds after Predict) ===
 let counsellingModalShown = false;
 let counsellingModalTimer = null;
 
@@ -1400,7 +1428,7 @@ function scheduleCounsellingModal(){
     counsellingModalShown = true;
     var m = $('counsellingModal');
     if (m) m.classList.remove('hidden');
-  }, 40000);
+  }, 30000);
 }
 
 function closeCounsellingModal(){
@@ -1408,8 +1436,60 @@ function closeCounsellingModal(){
   if (m) m.classList.add('hidden');
 }
 
+// === WhatsApp free-guidance modal (60s after Predict, conditional) ===
+// Triggers when the lead is unlikely to convert to the ₹299 paid plan:
+//   • Budget bracket upper-bound > 15 Lakhs (premium audience), OR
+//   • CRL > 3 Lakhs AND budget upper-bound > 7 Lakhs (low rank, decent budget — likely needs management/private guidance).
+let whatsappModalShown = false;
+let whatsappModalTimer = null;
+
+// Returns the upper-bound of the selected budget bracket, in lakhs.
+//   "Under 5 Lakhs"      -> 5
+//   "5-7 Lakhs"          -> 7
+//   "7-10 Lakhs"         -> 10
+//   "No budget constraints" -> 999
+//   anything unparseable -> 0
+function budgetUpperLakhs(budgetStr){
+  if (!budgetStr) return 0;
+  if (budgetStr === 'No budget constraints') return 999;
+  if (budgetStr.indexOf('Under') === 0) {
+    var u = budgetStr.match(/(\d+)/);
+    return u ? parseInt(u[1], 10) : 0;
+  }
+  var m = budgetStr.match(/(\d+)\s*-\s*(\d+)/);
+  return m ? parseInt(m[2], 10) : 0;
+}
+
+function shouldShowWhatsappModal(crl, budgetStr){
+  var b = budgetUpperLakhs(budgetStr);
+  if (b > 15) return true;
+  if (crl > 300000 && b > 7) return true;
+  return false;
+}
+
+function scheduleWhatsappModal(crl, budgetStr){
+  if (whatsappModalShown) return;
+  if (whatsappModalTimer) return;
+  if (!shouldShowWhatsappModal(crl, budgetStr)) return;
+  whatsappModalTimer = setTimeout(function(){
+    whatsappModalTimer = null;
+    if (whatsappModalShown) return;
+    whatsappModalShown = true;
+    // If counselling modal is still open from the 30s trigger, close it first
+    // so the WhatsApp modal isn't visually stacked behind/over it.
+    closeCounsellingModal();
+    var m = $('whatsappModal');
+    if (m) m.classList.remove('hidden');
+  }, 60000);
+}
+
+function closeWhatsappModal(){
+  var m = $('whatsappModal');
+  if (m) m.classList.add('hidden');
+}
+
 document.addEventListener('keydown', function(e){
-  if (e.key === 'Escape') closeCounsellingModal();
+  if (e.key === 'Escape') { closeCounsellingModal(); closeWhatsappModal(); }
 });
 </script>
 
@@ -1423,7 +1503,7 @@ document.addEventListener('keydown', function(e){
   </a>
 </div>
 
-<!-- Counselling pop-up modal (revealed 40s after Predict) -->
+<!-- Counselling pop-up modal (revealed 30s after Predict) -->
 <div id="counsellingModal" class="modal-overlay hidden" onclick="if(event.target===this) closeCounsellingModal();">
   <div class="modal-content" role="dialog" aria-labelledby="counsellingModalTitle" aria-modal="true">
     <button class="modal-close" type="button" aria-label="Close" onclick="closeCounsellingModal()">×</button>
@@ -1446,6 +1526,22 @@ document.addEventListener('keydown', function(e){
     <a class="rzp-cta rzp-cta-block" target="_blank" rel="noopener"
        href="https://pages.razorpay.com/pl_Sft6W2qxhB1ed1/view">
       Save your Career — ₹299 Only
+    </a>
+  </div>
+</div>
+
+<!-- WhatsApp free-guidance modal (revealed 60s after Predict, conditional on budget/rank) -->
+<div id="whatsappModal" class="modal-overlay hidden" onclick="if(event.target===this) closeWhatsappModal();">
+  <div class="modal-content" role="dialog" aria-labelledby="whatsappModalTitle" aria-modal="true">
+    <button class="modal-close" type="button" aria-label="Close" onclick="closeWhatsappModal()">×</button>
+    <h3 class="modal-title" id="whatsappModalTitle">For free guidance, chat with us on WhatsApp.</h3>
+    <p class="modal-subtitle">Talk to Prayush Bhaiya's team directly — no payment required.</p>
+    <a class="wa-cta wa-cta-block" target="_blank" rel="noopener"
+       href="https://wa.me/91967429207?text=Hi%20Prayush%20Bhaiya%2C%20I%20just%20used%20the%20College%20Predictor%20and%20would%20like%20free%20guidance.">
+      <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+        <path d="M19.05 4.91A9.82 9.82 0 0012.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38a9.9 9.9 0 004.74 1.21h.01c5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.91-7.01zM12.04 20.15h-.01a8.23 8.23 0 01-4.2-1.15l-.3-.18-3.12.82.83-3.04-.2-.31a8.22 8.22 0 01-1.26-4.38c0-4.54 3.7-8.24 8.25-8.24 2.2 0 4.27.86 5.83 2.42a8.18 8.18 0 012.42 5.83c0 4.55-3.7 8.23-8.24 8.23zm4.52-6.16c-.25-.12-1.47-.72-1.69-.81-.23-.08-.39-.12-.56.12-.17.25-.64.81-.78.97-.14.17-.29.19-.54.06-.25-.12-1.05-.39-1.99-1.23-.73-.65-1.23-1.46-1.37-1.71-.14-.25-.02-.38.11-.51.11-.11.25-.29.37-.43.12-.14.17-.25.25-.41.08-.17.04-.31-.02-.43-.06-.12-.56-1.34-.76-1.84-.2-.48-.41-.42-.56-.42-.14-.01-.31-.01-.48-.01-.17 0-.43.06-.66.31-.23.25-.86.85-.86 2.07s.88 2.39 1 2.56c.12.17 1.74 2.65 4.21 3.72.59.25 1.05.4 1.41.51.59.19 1.13.16 1.55.1.47-.07 1.47-.6 1.67-1.18.21-.58.21-1.07.14-1.18-.06-.11-.22-.17-.47-.29z"/>
+      </svg>
+      Chat with us on WhatsApp
     </a>
   </div>
 </div>
