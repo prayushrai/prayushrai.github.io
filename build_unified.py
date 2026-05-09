@@ -1690,7 +1690,7 @@ document.addEventListener('keydown', function(e){
 <div class="razorpay-sticky">
   <a class="rzp-cta" target="_blank" rel="noopener"
      href="https://pages.razorpay.com/pl_Sft6W2qxhB1ed1/view">
-    Save your Career — ₹299 Only
+    Get 1-1 Counselling — ₹299 Only
   </a>
 </div>
 
@@ -1716,7 +1716,7 @@ document.addEventListener('keydown', function(e){
     </ul>
     <a class="rzp-cta rzp-cta-block" target="_blank" rel="noopener"
        href="https://pages.razorpay.com/pl_Sft6W2qxhB1ed1/view">
-      Save your Career — ₹299 Only
+      Get 1-1 Counselling — ₹299 Only
     </a>
   </div>
 </div>
