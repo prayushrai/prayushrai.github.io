@@ -107,83 +107,52 @@
     display: grid;
     grid-template-columns: minmax(0, 1.15fr) minmax(380px, 1fr);
     gap: 60px;
-    align-items: start;
+    align-items: center;
   }
+
+  .hero-left { text-align: center; }
 
   .hero-headline {
     font-size: clamp(38px, 4.4vw, 56px);
-    line-height: 1.05;
+    line-height: 1.08;
     letter-spacing: -0.025em;
     font-weight: 700;
-    margin: 0 0 20px;
+    margin: 0 0 22px;
     color: var(--ink);
   }
   .hero-headline .blue { color: var(--accent); display: block; }
 
   .hero-subtitle {
-    font-size: 16px; font-weight: 500; font-style: italic;
+    font-size: 16.5px; font-weight: 500; font-style: italic;
     color: var(--ink-dim);
-    margin: -10px 0 22px;
+    margin: 0 auto 20px;
     letter-spacing: 0.005em;
-    max-width: 580px;
+    max-width: 560px;
+    line-height: 1.55;
   }
   .hero-subtitle strong {
     color: var(--ink); font-weight: 700; font-style: normal;
   }
 
   .hero-lead {
-    font-size: 16.5px; line-height: 1.6;
+    font-size: 16.5px; line-height: 1.65;
     color: var(--ink-dim);
-    max-width: 580px; margin: 0 0 24px;
+    max-width: 600px;
+    margin: 0 auto 22px;
   }
   .hero-lead b { color: var(--ink-2); font-weight: 600; }
 
-  .hero-cta-line {
-    display: flex; align-items: center;
-    font-size: 15px; font-weight: 600;
-    color: var(--ink-2);
-    margin: 8px 0 16px;
-    padding: 6px 0 6px 14px;
-    border-left: 3px solid var(--accent);
-    background: linear-gradient(90deg, var(--accent-soft) 0%, transparent 65%);
-    border-radius: 0 8px 8px 0;
-  }
-
-  .hero-features {
-    list-style: none; padding: 0; margin: 0 0 22px;
-    display: grid; grid-template-columns: 1fr 1fr;
-    gap: 10px 28px;
-    max-width: 580px;
-  }
-  .hero-features li {
-    display: flex; align-items: center; gap: 10px;
-    font-size: 14.5px; font-weight: 500;
-    color: var(--ink-2);
-    line-height: 1.4;
-  }
-  .hero-features li svg {
-    width: 16px; height: 16px; flex-shrink: 0;
-    color: var(--accent);
-    padding: 2px;
-    background: var(--accent-soft);
-    border-radius: 50%;
-    box-sizing: content-box;
-  }
-
   .hero-tagline {
-    font-size: 14px; line-height: 1.6;
+    font-size: 14.5px; line-height: 1.7;
     color: var(--ink-dim);
     font-style: italic;
-    margin: 0;
-    max-width: 580px;
-    padding-top: 14px;
+    margin: 0 auto;
+    max-width: 600px;
+    padding-top: 16px;
     border-top: 1px dashed var(--line);
   }
   .hero-tagline em { color: var(--accent); font-style: normal; font-weight: 600; }
-
-  @media (max-width: 720px) {
-    .hero-features { grid-template-columns: 1fr; }
-  }
+  .hero-tagline .heart { font-style: normal; }
 
   /* === Form card === */
   .form-card {
@@ -526,7 +495,29 @@
   [data-theme="dark"] .theme-toggle .icon-moon { display: none; }
   [data-theme="dark"] .theme-toggle .icon-sun  { display: block; }
 
-  /* === Sticky bottom Razorpay button === */
+  /* === Razorpay CTA — native styled link, both sticky + modal use it === */
+  .rzp-cta {
+    display: inline-flex;
+    align-items: center; justify-content: center;
+    background: var(--accent);
+    color: #ffffff;
+    font-size: 15px; font-weight: 700;
+    font-family: inherit; letter-spacing: 0.01em;
+    padding: 14px 28px;
+    border: none; border-radius: 10px;
+    text-decoration: none; white-space: nowrap;
+    cursor: pointer;
+    box-shadow: 0 8px 22px rgba(194, 65, 12, 0.32), 0 2px 6px rgba(194, 65, 12, 0.18);
+    transition: transform 0.15s, box-shadow 0.18s, background 0.15s;
+  }
+  .rzp-cta:hover {
+    background: var(--accent-hover);
+    transform: translateY(-1px);
+    box-shadow: 0 12px 28px rgba(194, 65, 12, 0.40), 0 3px 8px rgba(194, 65, 12, 0.22);
+  }
+  .rzp-cta:active { transform: translateY(0); }
+  .rzp-cta-block { display: flex; width: 100%; }    /* full-width inside modal */
+
   .razorpay-sticky {
     position: fixed;
     bottom: 18px; left: 50%;
@@ -701,35 +692,14 @@
   <section class="hero">
     <div class="hero-left">
       <h2 class="hero-headline">
-        <span class="blue">JEE College Predictor</span>
+        <span class="blue">FREE JEE Mains College Predictor</span>
         2026
       </h2>
-      <p class="hero-subtitle">Built by <strong>Prayush Bhaiya</strong> for Smarter Counselling Decisions</p>
+      <p class="hero-subtitle">Built by <strong>Prayush Bhaiya</strong> to help students choose the best college at their rank.</p>
 
-      <p class="hero-lead">Get accurate college predictions using official cutoff trends and real counselling data from 2025. Explore your best options across <b>NITs, IIITs, GFTIs, UPTAC, JAC Delhi, GGSIPU,</b> and other major counselling platforms — all in one place.</p>
+      <p class="hero-lead">The <b>first of its kind</b> tool in <b>INDIA</b> where you get college options from the <b>Top 5 College Counsellings</b> of India — including <b>JoSAA, CSAB, IPU, UPTAC &amp; JAC-Delhi</b>.</p>
 
-      <div class="hero-cta-line">Just enter your JEE rank to instantly see:</div>
-
-      <ul class="hero-features">
-        <li>
-          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 8 7 12 13 4"/></svg>
-          Best-fit colleges &amp; branches
-        </li>
-        <li>
-          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 8 7 12 13 4"/></svg>
-          Dream, safe, and realistic options
-        </li>
-        <li>
-          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 8 7 12 13 4"/></svg>
-          Counselling-wise predictions
-        </li>
-        <li>
-          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 8 7 12 13 4"/></svg>
-          Ranked college lists based on past cutoffs
-        </li>
-      </ul>
-
-      <p class="hero-tagline">Designed to make counselling <em>simpler</em>, <em>faster</em>, and <em>less confusing</em> for every JEE aspirant.</p>
+      <p class="hero-tagline">Prayush bhaiya ka yahi hai <em>sapna</em> — har baccha <em>informed decision</em> lekar best deserved college tak pahuche, aur uske liye hi yeh college predictor banaaya hai <span class="heart">❤️</span></p>
     </div>
 
     <aside class="hero-right">
@@ -1445,13 +1415,14 @@ document.addEventListener('keydown', function(e){
 });
 </script>
 
-<!-- Sticky bottom Razorpay CTA — present on every screen, follows scroll -->
+<!-- Sticky bottom CTA — links straight to the Razorpay-hosted payment page.
+     Native <a> on purpose: the embed bundle renders inside an iframe and
+     forces a "Powered by Razorpay" badge we can't style away from the parent. -->
 <div class="razorpay-sticky">
-  <div class="razorpay-embed-btn"
-       data-url="https://pages.razorpay.com/pl_Sft6W2qxhB1ed1/view"
-       data-text="Save your Career - ₹299 Only"
-       data-color="#c2410c"
-       data-size="large"></div>
+  <a class="rzp-cta" target="_blank" rel="noopener"
+     href="https://pages.razorpay.com/pl_Sft6W2qxhB1ed1/view">
+    Save your Career — ₹299 Only
+  </a>
 </div>
 
 <!-- Counselling pop-up modal (revealed 40s after Predict) -->
@@ -1474,29 +1445,11 @@ document.addEventListener('keydown', function(e){
         Unlimited Support till you get best college
       </li>
     </ul>
-    <div class="razorpay-embed-btn"
-         data-url="https://pages.razorpay.com/pl_Sft6W2qxhB1ed1/view"
-         data-text="Save your Career - ₹299 Only"
-         data-color="#c2410c"
-         data-size="large"></div>
+    <a class="rzp-cta rzp-cta-block" target="_blank" rel="noopener"
+       href="https://pages.razorpay.com/pl_Sft6W2qxhB1ed1/view">
+      Save your Career — ₹299 Only
+    </a>
   </div>
 </div>
-
-<!-- Bootstrap the Razorpay embed-button bundle (renders all .razorpay-embed-btn elements) -->
-<script>
-  (function(){
-    var d = document; var x = !d.getElementById('razorpay-embed-btn-js');
-    if (x) {
-      var s = d.createElement('script');
-      s.defer = true;
-      s.id = 'razorpay-embed-btn-js';
-      s.src = 'https://cdn.razorpay.com/static/embed_btn/bundle.js';
-      d.body.appendChild(s);
-    } else {
-      var rzp = window['__rzp__'];
-      rzp && rzp.init && rzp.init();
-    }
-  })();
-</script>
 </body>
 </html>
