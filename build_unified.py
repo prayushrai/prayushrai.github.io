@@ -298,48 +298,44 @@ HTML = r"""<!DOCTYPE html>
     display: grid;
     grid-template-columns: minmax(0, 1.15fr) minmax(380px, 1fr);
     gap: 60px;
-    align-items: center;
+    align-items: start;
   }
-
-  .hero-left { text-align: center; }
 
   .hero-headline {
     font-size: clamp(38px, 4.4vw, 56px);
-    line-height: 1.08;
+    line-height: 1.05;
     letter-spacing: -0.025em;
     font-weight: 700;
-    margin: 0 0 22px;
+    margin: 0 0 20px;
     color: var(--ink);
   }
   .hero-headline .blue { color: var(--accent); display: block; }
 
   .hero-subtitle {
-    font-size: 16.5px; font-weight: 500; font-style: italic;
+    font-size: 16px; font-weight: 500; font-style: italic;
     color: var(--ink-dim);
-    margin: 0 auto 20px;
+    margin: -10px 0 22px;
     letter-spacing: 0.005em;
-    max-width: 560px;
-    line-height: 1.55;
+    max-width: 580px;
   }
   .hero-subtitle strong {
     color: var(--ink); font-weight: 700; font-style: normal;
   }
 
   .hero-lead {
-    font-size: 16.5px; line-height: 1.65;
+    font-size: 16.5px; line-height: 1.6;
     color: var(--ink-dim);
-    max-width: 600px;
-    margin: 0 auto 22px;
+    max-width: 580px; margin: 0 0 24px;
   }
   .hero-lead b { color: var(--ink-2); font-weight: 600; }
 
   .hero-tagline {
-    font-size: 14.5px; line-height: 1.7;
+    font-size: 14px; line-height: 1.6;
     color: var(--ink-dim);
     font-style: italic;
-    margin: 0 auto;
-    max-width: 600px;
-    padding-top: 16px;
+    margin: 0;
+    max-width: 580px;
+    padding-top: 14px;
     border-top: 1px dashed var(--line);
   }
   .hero-tagline em { color: var(--accent); font-style: normal; font-weight: 600; }
