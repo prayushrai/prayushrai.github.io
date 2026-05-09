@@ -1244,18 +1244,22 @@ function runPredict(){
   if (activeRounds().size === 0) { alert('Pick at least one counselling.'); return; }
 
   // Log this submission to the Google Sheet (fire-and-forget — never blocks the user).
-  logSubmissionToSheet({
-    name,
-    phone: '+91' + phone.replace(/\D/g, ''),
-    email,
-    rank: crl,
-    categoryRank: categoryRank || '',
-    category: seat,
-    seatPool: gender === 'F' ? 'Female' : 'Gender Neutral',
-    homeState: home,
-    budget,
-    management: $('mgmtQuota').checked ? 'Yes' : 'No',
-  });
+  // Skip if we already know this phone is in the sheet (verified via sheet-hit, not OTP)
+  // — server still has a dedup guard, but this saves an unnecessary webhook call.
+  if (phoneVerifyToken !== 'sheet:known') {
+    logSubmissionToSheet({
+      name,
+      phone: '+91' + phone.replace(/\D/g, ''),
+      email,
+      rank: crl,
+      categoryRank: categoryRank || '',
+      category: seat,
+      seatPool: gender === 'F' ? 'Female' : 'Gender Neutral',
+      homeState: home,
+      budget,
+      management: $('mgmtQuota').checked ? 'Yes' : 'No',
+    });
+  }
 
   const eligible = computeEligible(seat, gender, home);
   const { hits, tried } = findInBandwidth(eligible, crl, categoryRank);
