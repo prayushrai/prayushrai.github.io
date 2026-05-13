@@ -793,6 +793,17 @@
         </div>
 
         <div class="field">
+          <label>IPU Sub-quota <span class="opt">(GGSIPU only)</span></label>
+          <select id="ipuSubQuota">
+            <option value="">None — General seats</option>
+            <option value="Defence">Defence</option>
+            <option value="Jain Minority">Jain Minority</option>
+            <option value="Kashmiri Migrant">Kashmiri Migrant</option>
+            <option value="Sikh Minority">Sikh Minority</option>
+          </select>
+        </div>
+
+        <div class="field">
           <label>Budget for Full Course <span class="req">*</span></label>
           <select id="budget" required>
             <option value="" disabled selected>Select Budget</option>
@@ -915,7 +926,7 @@
         </table>
       </div>
       <div class="footer-note">
-        <b>How the match works:</b> shows every seat where your rank qualifies — closing rank ≥ your rank − 5% (small reach allowed). When more than 500 seats qualify, only the 500 sharpest cutoffs are shown — narrow further with the filters above. <b>Quotas</b> (HS / OS / AI / GO / JK / LA) are auto-gated against your home state. Sub-quotas — <b>UPTAC</b> (AF / TF / FF), <b>GGSIPU</b> (Defence / Jain / Kashmiri / Sikh), <b>JAC</b> (Defence / Single Girl / Kashmiri Migrant) — appear as small purple tags. Sources: <a href="https://josaa.admissions.nic.in" target="_blank">JoSAA</a> · <a href="https://admissions.nic.in/csabspl/" target="_blank">CSAB</a> · <a href="https://admissions.nic.in/UPTAC/" target="_blank">UPTAC</a> · <a href="https://admissions.nic.in/UPTAC/" target="_blank">GGSIPU</a> · <a href="https://jacdelhi.admissions.nic.in" target="_blank">JAC Delhi</a>.
+        <b>How the match works:</b> shows every seat where your rank qualifies — closing rank ≥ your rank − 5% (small reach allowed). When more than 500 seats qualify, only the 500 sharpest cutoffs are shown — narrow further with the filters above. <b>Quotas</b> (HS / OS / AI / GO / JK / LA) are auto-gated against your home state. <b>GGSIPU sub-quota</b> (Defence / Jain / Kashmiri / Sikh) is gated against the field you selected — pick "None" to see general seats only, or your sub-quota to also see those reserved seats. Other sub-quotas — <b>UPTAC</b> (AF / TF / FF), <b>JAC</b> (Defence / Single Girl / Kashmiri Migrant) — appear as small purple tags. Sources: <a href="https://josaa.admissions.nic.in" target="_blank">JoSAA</a> · <a href="https://admissions.nic.in/csabspl/" target="_blank">CSAB</a> · <a href="https://admissions.nic.in/UPTAC/" target="_blank">UPTAC</a> · <a href="https://admissions.nic.in/UPTAC/" target="_blank">GGSIPU</a> · <a href="https://jacdelhi.admissions.nic.in" target="_blank">JAC Delhi</a>.
       </div>
     </div>
   </div>
@@ -1183,7 +1194,14 @@ function rowRank(r, crl, categoryRank){
   return crl;
 }
 
-function computeEligible(seatType, gender, homeState){
+// GGSIPU sub-quota tags as they appear in the row's `note` column.
+// A general candidate (no sub-quota declared) must NOT see these seats —
+// they close at much sharper ranks because only the small sub-pool competes.
+// Note: only GGSIPU is gated here. UPTAC/JAC sub-quotas remain side-tags
+// per the existing product decision.
+const GGSIPU_SUBQUOTAS = new Set(['Defence', 'Jain Minority', 'Kashmiri Migrant', 'Sikh Minority']);
+
+function computeEligible(seatType, gender, homeState, ipuSubQuota){
   const eligibleGenders = gender==='F'
     ? new Set(['Gender-Neutral','Female-only (including Supernumerary)'])
     : new Set(['Gender-Neutral']);
@@ -1192,6 +1210,10 @@ function computeEligible(seatType, gender, homeState){
     if (!rounds.has(r.round)) return false;
     if (r.seat !== seatType) return false;
     if (!eligibleGenders.has(r.gender)) return false;
+    // GGSIPU sub-quota gate: tagged sub-quota rows only show if the user
+    // declared that sub-quota. General-pool (empty-note) rows always show
+    // — sub-quota candidates also compete in the general pool.
+    if (r.round === 'GGSIPU' && GGSIPU_SUBQUOTAS.has(r.note) && r.note !== ipuSubQuota) return false;
     const q = r.quota;
     if (q === 'AI') return true;
     if (q === 'HS') return INST_STATE[r.inst] === homeState;
@@ -1238,6 +1260,7 @@ function runPredict(){
   const seat = $('seatType').value;
   const gender = $('gender').value;
   const home = $('homeState').value;
+  const ipuSubQuota = $('ipuSubQuota').value;
   const budget = $('budget').value;
   if (!budget) { alert('Please select a budget — it is required.'); $('budget').focus(); return; }
 
@@ -1258,10 +1281,11 @@ function runPredict(){
       homeState: home,
       budget,
       management: $('mgmtQuota').checked ? 'Yes' : 'No',
+      ipuSubQuota: ipuSubQuota || 'None',
     });
   }
 
-  const eligible = computeEligible(seat, gender, home);
+  const eligible = computeEligible(seat, gender, home, ipuSubQuota);
   const { hits, tried } = findInBandwidth(eligible, crl, categoryRank);
 
   currentResults = hits;
@@ -1367,6 +1391,7 @@ function exportPayload(){
   const seat = $('seatType').value;
   const gen = $('gender').value==='F'?'Female':'Male';
   const hs = $('homeState').value;
+  const ipuSubQuota = $('ipuSubQuota').value || 'None';
   const budget = $('budget').value || '—';
   const mgmtQuota = $('mgmtQuota').checked ? 'Yes' : 'No';
   const meta = [
@@ -1377,6 +1402,7 @@ function exportPayload(){
     ['JEE Main CRL', crl],
     ['Category Rank (JoSAA only)', rank || '—'],
     ['Category', seat], ['Gender', gen], ['Home State', hs],
+    ['IPU Sub-quota', ipuSubQuota],
     ['Budget for Full Course', budget],
     ['Management Quota Interest', mgmtQuota],
     ['Generated at', new Date().toLocaleString('en-IN')],
@@ -1440,6 +1466,7 @@ function resetAll(){
   $('seatType').value = 'OPEN';
   setGender('M');
   $('homeState').value = 'Uttar Pradesh';
+  $('ipuSubQuota').value = '';
   $('budget').value = '';
   $('mgmtQuota').checked = false;
   document.querySelectorAll('#roundToggle .round-card').forEach(c=>c.classList.add('on'));
