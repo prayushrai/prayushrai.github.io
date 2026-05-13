@@ -793,13 +793,17 @@
         </div>
 
         <div class="field">
-          <label>IPU Sub-quota <span class="opt">(GGSIPU only)</span></label>
+          <label>Sub-quota <span class="opt">(reserved-pool seats)</span></label>
           <select id="ipuSubQuota">
-            <option value="">None — General seats</option>
-            <option value="Defence">Defence</option>
-            <option value="Jain Minority">Jain Minority</option>
-            <option value="Kashmiri Migrant">Kashmiri Migrant</option>
-            <option value="Sikh Minority">Sikh Minority</option>
+            <option value="">None — General seats only</option>
+            <option value="Defence">Defence (GGSIPU / JAC)</option>
+            <option value="Single Girl">Single Girl (JAC)</option>
+            <option value="Jain Minority">Jain Minority (GGSIPU)</option>
+            <option value="Kashmiri Migrant">Kashmiri Migrant (GGSIPU / JAC)</option>
+            <option value="Sikh Minority">Sikh Minority (GGSIPU)</option>
+            <option value="AF">Armed Forces (UPTAC AF)</option>
+            <option value="TF">Tuition Fee Waiver (UPTAC TF)</option>
+            <option value="FF">Freedom Fighter (UPTAC FF)</option>
           </select>
         </div>
 
@@ -926,7 +930,7 @@
         </table>
       </div>
       <div class="footer-note">
-        <b>How the match works:</b> shows every seat where your rank qualifies — closing rank ≥ your rank − 5% (small reach allowed). When more than 500 seats qualify, only the 500 sharpest cutoffs are shown — narrow further with the filters above. <b>Quotas</b> (HS / OS / AI / GO / JK / LA) are auto-gated against your home state. <b>GGSIPU sub-quota</b> (Defence / Jain / Kashmiri / Sikh) is gated against the field you selected — pick "None" to see general seats only, or your sub-quota to also see those reserved seats. Other sub-quotas — <b>UPTAC</b> (AF / TF / FF), <b>JAC</b> (Defence / Single Girl / Kashmiri Migrant) — appear as small purple tags. Sources: <a href="https://josaa.admissions.nic.in" target="_blank">JoSAA</a> · <a href="https://admissions.nic.in/csabspl/" target="_blank">CSAB</a> · <a href="https://admissions.nic.in/UPTAC/" target="_blank">UPTAC</a> · <a href="https://admissions.nic.in/UPTAC/" target="_blank">GGSIPU</a> · <a href="https://jacdelhi.admissions.nic.in" target="_blank">JAC Delhi</a>.
+        <b>How the match works:</b> shows every seat where your rank qualifies — closing rank ≥ your rank − 5% (small reach allowed). When more than 500 seats qualify, only the 500 sharpest cutoffs are shown — narrow further with the filters above. <b>Quotas</b> (HS / OS / AI / GO / JK / LA) are auto-gated against your home state. <b>Sub-quotas</b> — GGSIPU (Defence / Jain / Kashmiri / Sikh), JAC (Defence / Single Girl / Kashmiri Migrant), UPTAC (AF / TF / FF) — are gated against the Sub-quota field. Pick "None" to see general seats only, or your reservation to also see those reserved-pool seats; the small purple tags on rows tell you which pool a seat belongs to. Sources: <a href="https://josaa.admissions.nic.in" target="_blank">JoSAA</a> · <a href="https://admissions.nic.in/csabspl/" target="_blank">CSAB</a> · <a href="https://admissions.nic.in/UPTAC/" target="_blank">UPTAC</a> · <a href="https://admissions.nic.in/UPTAC/" target="_blank">GGSIPU</a> · <a href="https://jacdelhi.admissions.nic.in" target="_blank">JAC Delhi</a>.
       </div>
     </div>
   </div>
@@ -1194,12 +1198,17 @@ function rowRank(r, crl, categoryRank){
   return crl;
 }
 
-// GGSIPU sub-quota tags as they appear in the row's `note` column.
-// A general candidate (no sub-quota declared) must NOT see these seats —
-// they close at much sharper ranks because only the small sub-pool competes.
-// Note: only GGSIPU is gated here. UPTAC/JAC sub-quotas remain side-tags
-// per the existing product decision.
-const GGSIPU_SUBQUOTAS = new Set(['Defence', 'Jain Minority', 'Kashmiri Migrant', 'Sikh Minority']);
+// Every reserved-pool tag that can appear in `note`, across all counsellings.
+// A candidate who didn't declare a sub-quota must NOT see these seats — they
+// close at much sharper ranks because only the small sub-pool competes.
+//   GGSIPU: Defence / Jain Minority / Kashmiri Migrant / Sikh Minority
+//   JAC:    Defence / Kashmiri Migrant / Single Girl
+//   UPTAC:  AF (Armed Forces) / TF (Tuition Fee Waiver) / FF (Freedom Fighter)
+// JoSAA and CSAB have no sub-quota tags in their data.
+const SUBQUOTA_TAGS = new Set([
+  'Defence', 'Jain Minority', 'Kashmiri Migrant', 'Sikh Minority',
+  'Single Girl', 'AF', 'TF', 'FF',
+]);
 
 function computeEligible(seatType, gender, homeState, ipuSubQuota){
   const eligibleGenders = gender==='F'
@@ -1210,10 +1219,12 @@ function computeEligible(seatType, gender, homeState, ipuSubQuota){
     if (!rounds.has(r.round)) return false;
     if (r.seat !== seatType) return false;
     if (!eligibleGenders.has(r.gender)) return false;
-    // GGSIPU sub-quota gate: tagged sub-quota rows only show if the user
-    // declared that sub-quota. General-pool (empty-note) rows always show
-    // — sub-quota candidates also compete in the general pool.
-    if (r.round === 'GGSIPU' && GGSIPU_SUBQUOTAS.has(r.note) && r.note !== ipuSubQuota) return false;
+    // Sub-quota gate: any tagged reserved-pool row only shows if the user
+    // declared that exact sub-quota. General-pool (empty-note) rows always
+    // show — sub-quota candidates also compete in the general pool. A
+    // shared tag like "Defence" surfaces matching rows from both GGSIPU
+    // and JAC at once.
+    if (SUBQUOTA_TAGS.has(r.note) && r.note !== ipuSubQuota) return false;
     const q = r.quota;
     if (q === 'AI') return true;
     if (q === 'HS') return INST_STATE[r.inst] === homeState;
