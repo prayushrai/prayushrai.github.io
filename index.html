@@ -447,6 +447,72 @@
   .footer-note a { color: var(--accent); text-decoration: none; }
   .footer-note a:hover { text-decoration: underline; }
 
+  /* === Bottom-of-page legal disclaimer (always visible) === */
+  .site-disclaimer {
+    margin: 28px 0 12px;
+    padding: 14px 18px;
+    background: var(--surface-2);
+    border: 1px solid var(--line);
+    border-left: 3px solid var(--ink-dim);
+    border-radius: 6px;
+    font-size: 12.5px;
+    color: var(--ink-dim);
+    line-height: 1.6;
+  }
+  .site-disclaimer strong { color: var(--ink-2); }
+
+  /* === Institute-filter select all/clear mini bar === */
+  .inst-filter-bar { font-size: 11px; margin: 2px 0 4px; }
+  .link-btn {
+    background: none; border: 0; padding: 0;
+    color: var(--accent); font-size: 11px; font-weight: 600;
+    cursor: pointer; text-decoration: underline;
+  }
+  .link-btn:hover { opacity: 0.8; }
+  .inst-filter-bar .sep { color: var(--ink-dim); margin: 0 6px; }
+
+  /* === Premium recommendation row (slotted between college rows) === */
+  .premium-row td { padding: 0 !important; background: transparent; }
+  .premium-card {
+    margin: 6px 0;
+    background: linear-gradient(0deg, #fff7ed, #fff7ed);
+    border: 1px solid #fed7aa;
+    border-left: 4px solid var(--accent);
+    border-radius: 8px;
+    padding: 14px 18px;
+    display: flex; flex-direction: column; gap: 6px;
+  }
+  [data-theme="dark"] .premium-card {
+    background: rgba(234, 88, 12, 0.10);
+    border-color: rgba(234, 88, 12, 0.35);
+    border-left-color: var(--accent);
+  }
+  .premium-tag {
+    font-size: 10px; font-weight: 700; letter-spacing: 0.06em;
+    color: var(--accent); text-transform: uppercase;
+  }
+  .premium-name { font-size: 15px; font-weight: 700; color: var(--ink-2); }
+  .premium-bullets {
+    margin: 4px 0 4px 18px; padding: 0; font-size: 12.5px; color: var(--ink-1);
+    line-height: 1.55;
+  }
+  .premium-bullets li { margin-bottom: 2px; }
+  .premium-foot {
+    display: flex; gap: 14px; align-items: center; flex-wrap: wrap;
+    font-size: 12.5px; margin-top: 4px;
+  }
+  .premium-foot a {
+    color: var(--accent); font-weight: 600; text-decoration: none;
+  }
+  .premium-foot a:hover { text-decoration: underline; }
+  .premium-code {
+    font-family: 'JetBrains Mono', monospace;
+    background: rgba(0,0,0,0.06); padding: 2px 8px; border-radius: 4px;
+    font-size: 11px; color: var(--ink-2);
+  }
+  [data-theme="dark"] .premium-code { background: rgba(255,255,255,0.10); }
+  .premium-caveat { font-size: 11px; color: var(--ink-dim); }
+
   /* === Empty hero === */
   .empty-hero {
     background: var(--surface-2);
@@ -823,10 +889,21 @@
         </div>
 
         <div class="field">
-          <label class="field-checkbox">
-            <input type="checkbox" id="mgmtQuota">
-            <span class="field-checkbox-text">Are you interested in Management Quota options?</span>
-          </label>
+          <label>Interested in Management Quota options? <span class="req">*</span></label>
+          <div class="radio-group" id="mgmtQuotaGroup">
+            <div class="radio-option" data-value="Yes"><span class="dot"></span><span>Yes</span></div>
+            <div class="radio-option" data-value="No"><span class="dot"></span><span>No</span></div>
+          </div>
+          <input type="hidden" id="mgmtQuota" value="">
+        </div>
+
+        <div class="field">
+          <label>Open to new-age tech schools (Scaler, Polaris, UpGrad)? <span class="req">*</span></label>
+          <div class="radio-group" id="techSchoolsGroup">
+            <div class="radio-option" data-value="Yes"><span class="dot"></span><span>Yes</span></div>
+            <div class="radio-option" data-value="No"><span class="dot"></span><span>No</span></div>
+          </div>
+          <input type="hidden" id="techSchools" value="">
         </div>
 
         <div class="field" style="margin-bottom:20px;">
@@ -888,6 +965,11 @@
         </div>
         <div class="filter-group">
           <label>Institute</label>
+          <div class="inst-filter-bar">
+            <button type="button" class="link-btn" onclick="selectAllInstitutes()">Select all</button>
+            <span class="sep">·</span>
+            <button type="button" class="link-btn" onclick="clearInstitutes()">Clear</button>
+          </div>
           <select id="instFilter" multiple size="1" style="min-width:220px"></select>
         </div>
         <div class="filter-group">
@@ -936,6 +1018,10 @@
   </div>
 
   <div id="emptyHero" class="hidden"></div>
+
+  <aside class="site-disclaimer" role="note">
+    <strong>Disclaimer</strong> — The cutoff numbers shown here are scraped from publicly available official sources (JoSAA, CSAB, UPTAC, GGSIPU, JAC Delhi). They can contain errors, OCR misreads, or stale rounds, and counselling rules change every cycle. This tool is informational only and is not affiliated with any counselling authority — always verify cutoffs and your own eligibility on the official portals before locking your choices.
+  </aside>
 </main>
 
 <script>
@@ -946,7 +1032,12 @@ const STATES = ["Andaman & Nicobar Islands", "Andhra Pradesh", "Arunachal Prades
 const MSG91_WIDGET_ID = "366568707934343431383237";
 const MSG91_TOKEN_AUTH = "515031T0KNeFSm69fe0f76P1";
 const SHEETS_WEBHOOK_URL = "https://script.google.com/macros/s/AKfycbwETUKxY2f9LZ48lxEqrqUykd0SEb7TbFpNC_LrYytRhhv0nIEhEoKvOdZ-RBBkaky-nw/exec";
-const ROWS = RAW.map(r => { const o = {}; COLS.forEach((c,i)=>o[c]=r[i]); return o; });
+// Drop close-rank outliers. JEE Main 2025 had ~14L candidates total — any
+// closing rank above 17L is data noise (~857 such rows, all in UPTAC, with
+// max 21.2L) and we never show them anywhere in the UI.
+const MAX_CLOSE_RANK = 1700000;
+const ROWS = RAW.map(r => { const o = {}; COLS.forEach((c,i)=>o[c]=r[i]); return o; })
+                .filter(r => typeof r.close === 'number' && r.close <= MAX_CLOSE_RANK);
 
 const $ = id => document.getElementById(id);
 const fmt = n => n==null ? '' : n.toLocaleString('en-IN');
@@ -994,6 +1085,27 @@ function animateCount(el, target, dur=900){
   // Seat-pool radio behavior — keep #gender hidden input in sync.
   document.querySelectorAll('#genderGroup .radio-option').forEach(o => {
     o.addEventListener('click', () => setGender(o.dataset.value));
+  });
+
+  // Generic Yes/No chip groups (management quota, tech-school openness).
+  // Each group binds to a hidden input via data-target attribute on the wrapper.
+  [
+    { group: '#mgmtQuotaGroup',   hidden: 'mgmtQuota'   },
+    { group: '#techSchoolsGroup', hidden: 'techSchools' },
+  ].forEach(({ group, hidden }) => {
+    const wrap = document.querySelector(group);
+    if (!wrap) return;
+    wrap.querySelectorAll('.radio-option').forEach(o => {
+      o.addEventListener('click', () => {
+        wrap.querySelectorAll('.radio-option').forEach(x => x.classList.toggle('selected', x === o));
+        $(hidden).value = o.dataset.value;
+        // If user just opted INTO tech schools and results are already
+        // visible, re-render so the PREMIUM cards show without a re-Predict.
+        if (hidden === 'techSchools' && !$('resultsSection').classList.contains('hidden')) {
+          renderTable();
+        }
+      });
+    });
   });
 
   document.querySelectorAll('#resultTable th.sortable').forEach(th=>{
@@ -1274,6 +1386,10 @@ function runPredict(){
   const ipuSubQuota = $('ipuSubQuota').value;
   const budget = $('budget').value;
   if (!budget) { alert('Please select a budget — it is required.'); $('budget').focus(); return; }
+  const mgmt = $('mgmtQuota').value;
+  if (!mgmt) { alert('Please tell us if you are interested in Management Quota — pick Yes or No.'); return; }
+  const techSchools = $('techSchools').value;
+  if (!techSchools) { alert('Please tell us if you are open to new-age tech schools — pick Yes or No.'); return; }
 
   if (activeRounds().size === 0) { alert('Pick at least one counselling.'); return; }
 
@@ -1291,8 +1407,9 @@ function runPredict(){
       seatPool: gender === 'F' ? 'Female' : 'Gender Neutral',
       homeState: home,
       budget,
-      management: $('mgmtQuota').checked ? 'Yes' : 'No',
+      management: mgmt,
       ipuSubQuota: ipuSubQuota || 'None',
+      techSchools,
     });
   }
 
@@ -1333,6 +1450,15 @@ function resetFilters(){
   renderTable();
 }
 
+function selectAllInstitutes(){
+  [...$('instFilter').options].forEach(o => o.selected = true);
+  renderTable();
+}
+function clearInstitutes(){
+  [...$('instFilter').options].forEach(o => o.selected = false);
+  renderTable();
+}
+
 function activeTypes(){ return new Set([...document.querySelectorAll('#typeChips .chip.on')].map(c=>c.dataset.type)); }
 function activeSrcs(){ return new Set([...document.querySelectorAll('#srcChips .chip.on')].map(c=>c.dataset.src)); }
 function selectedMulti(id){ return new Set([...$(id).selectedOptions].map(o=>o.value)); }
@@ -1359,6 +1485,63 @@ function sortRows(rows){
   });
 }
 
+// === PREMIUM RECOMMENDATIONS ===
+// When a candidate answers Yes to "open to new-age tech schools", we surface
+// these three options interspersed in their results. Kept low-key on purpose
+// — soft-orange card with a small "premium recommendation" tag, not a popup
+// or ad-style banner. The boards-percentage caveat sits in the card itself
+// so we don't need an extra form field.
+const TECH_SCHOOLS = [
+  { name: 'Scaler School of Technology',  url: 'https://scalerschooloftech.com/3PiDXY7', code: 'RANK500' },
+  { name: 'Upgrad School of Technology',  url: 'https://tinyurl.com/UgetOfficial',       code: 'TECH50' },
+  { name: 'Polaris School of Technology', url: 'https://tinyurl.com/px3ns3vc',           code: 'POLARIS2026' },
+];
+const TECH_BULLETS = [
+  'Internships from 2nd year with stipends up to ₹2–3 Lakhs/month',
+  'Coding from day 1',
+  'Guaranteed placements',
+];
+
+// Returns a <tr> styled as a premium-recommendation card. The card spans
+// all 10 columns of the result table via colspan, so it slots in between
+// real college rows without breaking column layout.
+function buildPremiumRow(school){
+  const tr = document.createElement('tr');
+  tr.className = 'premium-row';
+  tr.innerHTML = `
+    <td colspan="10">
+      <div class="premium-card">
+        <div class="premium-tag">★ Premium Recommendation</div>
+        <div class="premium-name">${school.name}</div>
+        <ul class="premium-bullets">
+          ${TECH_BULLETS.map(b => `<li>${b}</li>`).join('')}
+        </ul>
+        <div class="premium-foot">
+          <a href="${school.url}" target="_blank" rel="noopener">Learn more →</a>
+          <span>Use code <span class="premium-code">${school.code}</span></span>
+          <span class="premium-caveat">Best fit if you scored 55%+ in boards.</span>
+        </div>
+      </div>
+    </td>`;
+  return tr;
+}
+
+// Pick 3 positions in [0, N] where to slot the premium rows. We aim for
+// roughly 20% / 50% / 80% through the visible list so they're spread out
+// rather than all stacked at the top. For very short lists we clamp.
+function premiumPositions(visibleCount){
+  if (visibleCount <= 0) return [];
+  if (visibleCount <= 4) {
+    // Just append after the last row — 3 positions all at the end.
+    return [visibleCount, visibleCount, visibleCount];
+  }
+  return [
+    Math.max(1, Math.floor(visibleCount * 0.20)),
+    Math.max(2, Math.floor(visibleCount * 0.50)),
+    Math.max(3, Math.floor(visibleCount * 0.80)),
+  ];
+}
+
 function renderTable(){
   if (!currentResults.length) return;
   const rows = sortRows(filteredRows());
@@ -1368,7 +1551,15 @@ function renderTable(){
   $('visCount').textContent = capped
     ? `${shown} shown · ${totalQualifying.toLocaleString('en-IN')} qualify`
     : `${shown} options`;
+
+  // Pre-compute where premium recommendations get slotted in — only when the
+  // user opted in via the techSchools field. positions[i] = index in the
+  // visible-rows list AFTER which the i-th premium row should appear.
+  const showPremium = $('techSchools') && $('techSchools').value === 'Yes';
+  const positions = showPremium ? premiumPositions(rows.length) : [];
+
   const frag = document.createDocumentFragment();
+  let nextPremium = 0;
   rows.forEach((r,i)=>{
     const tr = document.createElement('tr');
     const roundPill = r.round === 'UPTAC' ? 'UPTAC-r' : r.round === 'GGSIPU' ? 'GGSIPU-r' : r.round === 'JAC' ? 'JAC-r' : r.round;
@@ -1385,7 +1576,20 @@ function renderTable(){
       <td class="numcell">${fmt(r.open)}</td>
       <td class="numcell">${fmt(r.close)}</td>`;
     frag.appendChild(tr);
+    // After this row's index (i+1, 1-based) matches the next premium slot,
+    // splice in a premium card. Loop because positions may repeat for short lists.
+    while (nextPremium < positions.length && positions[nextPremium] === i + 1) {
+      frag.appendChild(buildPremiumRow(TECH_SCHOOLS[nextPremium]));
+      nextPremium++;
+    }
   });
+  // For very-short result lists, premiumPositions returns positions equal to
+  // rows.length — any premium rows that haven't been added yet (because their
+  // position fired AT row count, not before) get appended here.
+  while (nextPremium < positions.length) {
+    frag.appendChild(buildPremiumRow(TECH_SCHOOLS[nextPremium]));
+    nextPremium++;
+  }
   tb.innerHTML = '';
   tb.appendChild(frag);
 }
@@ -1404,7 +1608,8 @@ function exportPayload(){
   const hs = $('homeState').value;
   const ipuSubQuota = $('ipuSubQuota').value || 'None';
   const budget = $('budget').value || '—';
-  const mgmtQuota = $('mgmtQuota').checked ? 'Yes' : 'No';
+  const mgmtQuota = $('mgmtQuota').value || '—';
+  const techSchools = $('techSchools').value || '—';
   const meta = [
     ['Generated by','PRAYUSH Unified Predictor'],
     ['Student', name],
@@ -1416,6 +1621,7 @@ function exportPayload(){
     ['IPU Sub-quota', ipuSubQuota],
     ['Budget for Full Course', budget],
     ['Management Quota Interest', mgmtQuota],
+    ['Open to New-age Tech Schools', techSchools],
     ['Generated at', new Date().toLocaleString('en-IN')],
     ['Sources', 'JoSAA 2025 R6 + CSAB Special 2025 R3 + UPTAC 2025 final + GGSIPU 2025 R3 + JAC Delhi 2025 R5'],
     [],
@@ -1479,7 +1685,12 @@ function resetAll(){
   $('homeState').value = 'Uttar Pradesh';
   $('ipuSubQuota').value = '';
   $('budget').value = '';
-  $('mgmtQuota').checked = false;
+  // Reset both Yes/No chip groups (mgmt quota + tech schools).
+  ['mgmtQuotaGroup', 'techSchoolsGroup'].forEach(gid => {
+    document.querySelectorAll('#' + gid + ' .radio-option').forEach(o => o.classList.remove('selected'));
+  });
+  $('mgmtQuota').value = '';
+  $('techSchools').value = '';
   document.querySelectorAll('#roundToggle .round-card').forEach(c=>c.classList.add('on'));
   resetPhoneVerification();
   currentResults = [];
