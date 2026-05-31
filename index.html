@@ -1686,7 +1686,7 @@ function renderTable(){
   // Toggle the new-age tech-schools box on every render so switching the
   // form's Yes/No chip after predicting reflects immediately.
   const techPanel = $('techSchoolsPanel');
-  if (techPanel) techPanel.classList.toggle('hidden', !($('techSchools') && $('techSchools').value === 'Yes'));
+  if (techPanel) techPanel.classList.remove('hidden');
 
   if (!currentResults.length) return;
   const rows = sortRows(filteredRows());
